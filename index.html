@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Catálogo Cauchos KSM · Dijes, Oro Laminado, Aretería y Neopreno | Cotizador WhatsApp</title>
   <meta name="description" content="Catálogo interactivo oficial de Cauchos KSM (Colombia). Cotiza dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno con envío directo a WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,7 +15,7 @@
   <!-- Contenedor de Notificaciones Toast -->
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-  <!-- 1. BARRA SUPERIOR INSTITUCIONAL -->
+  <!-- 1. BARRA SUPERIOR MINIMALISTA -->
   <div class="topbar">
     <div class="topbar-inner">
       <div class="brand-mini">
@@ -23,9 +26,9 @@
         <button type="button" class="top-pill-btn open-catalogs-hub-btn" id="topCatalogsHubBtn">
           📷 Catálogos en Canva (12)
         </button>
-        <a href="#neopreno" class="top-pill-btn gold-accent">
-          ⚡ Configurar Neopreno
-        </a>
+        <button type="button" class="top-pill-btn go-neopreno-tab">
+          🟠 Configurar Neopreno
+        </button>
         <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="top-pill-btn joy18k">
           💎 Catálogo Joyería 18K
         </a>
@@ -39,175 +42,167 @@
   <!-- CONTENEDOR PRINCIPAL -->
   <main class="app-shell">
 
-    <!-- 2. ENCABEZADO EDITORIAL SEMI-FORMAL MINIMALISTA -->
-    <header class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="hero-brand-row">
-            <div class="ksm-emblem" aria-hidden="true">
-              <span class="ksm-emblem-main">KSM</span>
-              <span class="ksm-emblem-sub">CAUCHOS</span>
-            </div>
-            <div>
-              <div class="brand-eyebrow">Catálogo Oficial Interactivo · Mayoristas y Detal</div>
-              <h1 class="hero-title">Catálogo de Dijes, Insumos y Neopreno</h1>
-            </div>
-          </div>
-          <p class="hero-subtitle">Alta bisutería, rodio, acero, oro laminado, piedras naturales y bolas de neopreno</p>
-          <p class="hero-desc">
-            Explora nuestras <strong>1.179 referencias</strong> organizadas en 11 líneas especializadas y nuestro estudio de <strong>786 combinaciones de bolas de neopreno</strong>. Visualiza cada pieza en los catálogos oficiales de Canva y envía tu cotización directa por WhatsApp.
-          </p>
-          <div class="hero-ctas">
-            <button type="button" class="btn primary open-quote-btn" id="heroVerPedidoBtn">
-              🧾 Ver mi cotización
-              <span class="pill-badge num" id="topOrderCountPill">0</span>
-            </button>
-            <a href="#neopreno" class="btn neobtn">
-              🟠 Pedir Bolas de Neopreno
-            </a>
-            <button type="button" class="btn cat open-catalogs-hub-btn">
-              📷 Ver Catálogos con Fotos (Canva)
-            </button>
-          </div>
+    <!-- 2. CABECERA LIMPIA Y AIREADA -->
+    <header class="hero-clean">
+      <div class="hero-brand-group">
+        <div class="ksm-emblem" aria-hidden="true">
+          <span class="ksm-emblem-main">KSM</span>
+          <span class="ksm-emblem-sub">CAUCHOS</span>
         </div>
+        <div>
+          <div class="brand-eyebrow">Catálogo Oficial · Mayoristas y Detal · Pedido mínimo $30.000 COP</div>
+          <h1 class="hero-title">Catálogo de Dijes, Insumos y Neopreno</h1>
+          <p class="hero-subtitle">Toca + para armar tu pedido · Enlaces directos a fotos en Canva · Envío inmediato a WhatsApp</p>
+        </div>
+      </div>
 
-        <!-- Tarjeta Derecha: Guía en 4 pasos y Reglas Claras -->
-        <aside class="hero-info-card" aria-label="Cómo hacer tu cotización">
-          <div class="hero-info-header">
-            <span class="hero-info-title">✨ ¿Cómo cotizar por WhatsApp?</span>
-            <span class="min-order-pill">Mínimo $30.000 COP</span>
-          </div>
-          <ol class="steps-compact">
-            <li>
-              <span class="step-num">1</span>
-              <span><strong>Filtra por línea o busca:</strong> Usa los filtros adaptados a cada categoría y toca <strong>+</strong> para elegir cantidades, colores o letras.</span>
-            </li>
-            <li>
-              <span class="step-num">2</span>
-              <span><strong>Mira la foto en Canva:</strong> Cada producto tiene enlace directo a su página exacta en el catálogo de Canva y visor de escala en milímetros.</span>
-            </li>
-            <li>
-              <span class="step-num">3</span>
-              <span><strong>¿Bolas de Neopreno?</strong> Configura referencia (RF2–RF18), calibre en mm y color en el <a href="#neopreno" style="color:var(--cat);font-weight:700;text-decoration:underline;">Estudio de Neopreno</a>.</span>
-            </li>
-            <li>
-              <span class="step-num">4</span>
-              <span><strong>Envía a WhatsApp:</strong> Abre <em>Tu Cotización</em>, escribe tu nombre y envíala en 1 clic como mensaje, imagen de recibo o PDF.</span>
-            </li>
-          </ol>
-        </aside>
+      <div class="hero-right-actions">
+        <button type="button" class="btn cat open-catalogs-hub-btn">
+          📷 Catálogos Canva
+        </button>
+        <button type="button" class="btn primary open-quote-btn" id="heroVerPedidoBtn">
+          🧾 Ver mi cotización
+          <span class="pill-badge num" id="topOrderCountPill">0</span>
+        </button>
       </div>
     </header>
 
-    <!-- 3. CONSOLA DE FILTROS ADAPTADOS Y BIEN DISTRIBUIDOS (STICKY) -->
-    <section class="filter-console" aria-label="Filtros del catálogo">
-      <div class="filter-console-card">
+    <!-- 3. SELECTOR DE 2 PESTAÑAS PRINCIPALES (DIJES E INSUMOS vs BOLAS DE NEOPRENO) -->
+    <nav class="workspace-tabs" aria-label="Secciones principales del catálogo">
+      <button type="button" id="tabBtnDijes" class="workspace-tab-btn tab-dijes active" data-tab="dijes">
+        <span>💍 Catálogo de Dijes, Joyería e Insumos</span>
+        <span class="tab-count-badge">1.179 ref.</span>
+      </button>
+      <button type="button" id="tabBtnNeopreno" class="workspace-tab-btn tab-neopreno" data-tab="neopreno">
+        <span>🟠 Pedido de Bolas de Neopreno</span>
+        <span class="tab-count-badge">13 ref · 786 colores</span>
+      </button>
+    </nav>
 
-        <!-- Nivel 1: Cinta de las 11 Líneas de Productos -->
-        <div class="lines-ribbon" id="linesRibbon" role="tablist" aria-label="Líneas de producto"></div>
+    <!-- ==================== PESTAÑA 1: CATÁLOGO DE DIJES E INSUMOS ==================== -->
+    <div id="workspaceDijesPanel">
 
-        <!-- Nivel 2: Buscador Instantáneo + Selectores de Rango, Orden y Vista -->
-        <div class="search-and-controls">
-          <div class="search-box-wrap">
-            <span class="search-icon" aria-hidden="true">🔍</span>
-            <input
-              type="search"
-              id="q"
-              class="search-input"
-              placeholder="Buscar por nombre, #ID, equipo, piedra, calibre (ej: corona, san benito, van cleef, #142)..."
-              autocomplete="off"
-            />
-            <button type="button" id="clearSearchBtn" class="search-clear" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">✕</button>
+      <!-- CONSOLA DE FILTROS MINIMALISTA PROGRESIVA (STICKY) -->
+      <section class="filter-console" aria-label="Filtros del catálogo">
+        <div class="filter-console-card">
+
+          <!-- Fila 1: Buscador limpio + Botón de Filtros y Orden + Contador -->
+          <div class="search-row-clean">
+            <div class="search-box-wrap">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input
+                type="search"
+                id="q"
+                class="search-input"
+                placeholder="Buscar producto, #ID, equipo, piedra o medida (ej: corona, san benito, van cleef, #142)..."
+                autocomplete="off"
+              />
+              <button type="button" id="clearSearchBtn" class="search-clear" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">✕</button>
+            </div>
+
+            <button type="button" id="toggleExtraFiltersBtn" class="more-filters-btn" aria-expanded="false" title="Mostrar u ocultar filtros de precio, medida y orden">
+              <span>⚙️ Filtros y Orden</span>
+              <span id="extraFiltersBadge" class="pill-badge num" style="display:none;min-width:19px;height:19px;font-size:11px;padding:0 5px;">0</span>
+            </button>
+
+            <button type="button" id="clearAllFiltersBtn" class="btn ghost" style="padding:8px 11px;font-size:12.5px;color:var(--warn);display:none;">
+              ✕ Limpiar
+            </button>
+
+            <span id="resultsCountLabel" class="num" style="font-size:12.5px;color:var(--muted);white-space:nowrap;padding:0 4px;">
+              1.179 prod.
+            </span>
           </div>
 
-          <div class="controls-group">
-            <select id="sizeFilterSelect" class="filter-select" aria-label="Filtrar por medida o calibre"></select>
+          <!-- Fila 2: Cinta de Líneas de Producto con Identidad de Color -->
+          <div class="lines-ribbon" id="linesRibbon" role="tablist" aria-label="Líneas de producto"></div>
 
-            <select id="priceFilterSelect" class="filter-select" aria-label="Filtrar por rango de precio">
-              <option value="all">Cualquier precio</option>
-              <option value="up-to-3k">Hasta $3.000 COP</option>
-              <option value="3k-to-8k">$3.001 a $8.000 COP</option>
-              <option value="8k-to-35k">$8.001 a $35.000 COP</option>
-              <option value="over-35k">Más de $35.000 COP</option>
-            </select>
+          <!-- Fila 3 (PROGRESIVA): Subcategorías — SOLO aparece cuando eliges una Línea específica -->
+          <div id="progressiveSubBar" class="progressive-sub-bar">
+            <span style="font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--line-text);white-space:nowrap;">
+              Subcategoría:
+            </span>
+            <div class="sub-pills-scroll" id="subPillsScroll"></div>
+          </div>
 
-            <select id="specialFilterSelect" class="filter-select" aria-label="Filtrar por característica">
-              <option value="all">Todos los tipos</option>
-              <option value="wholesale">Con tarifa por mayor / docena</option>
-              <option value="customizable">Personalizables (Color / Letra)</option>
-              <option value="in-cart">En mi cotización (0)</option>
-            </select>
+          <!-- Cajón Desplegable de Filtros Secundarios (Oculto por defecto para máxima limpieza visual) -->
+          <div id="extraFiltersCollapse" class="extra-filters-Collapse">
+            <div class="controls-group">
+              <select id="sortSelect" class="filter-select" aria-label="Ordenar productos">
+                <option value="catalog">Orden: Catálogo Canva</option>
+                <option value="price-asc">Precio: Menor a Mayor</option>
+                <option value="price-desc">Precio: Mayor a Menor</option>
+                <option value="name-asc">Nombre: A → Z</option>
+              </select>
 
-            <select id="sortSelect" class="filter-select" aria-label="Ordenar productos">
-              <option value="catalog">Orden: Catálogo Canva</option>
-              <option value="price-asc">Precio: Menor a Mayor</option>
-              <option value="price-desc">Precio: Mayor a Menor</option>
-              <option value="name-asc">Nombre: A → Z</option>
-            </select>
+              <select id="priceFilterSelect" class="filter-select" aria-label="Filtrar por rango de precio">
+                <option value="all">Cualquier precio</option>
+                <option value="up-to-3k">Hasta $3.000 COP</option>
+                <option value="3k-to-8k">$3.001 a $8.000 COP</option>
+                <option value="8k-to-35k">$8.001 a $35.000 COP</option>
+                <option value="over-35k">Más de $35.000 COP</option>
+              </select>
 
-            <label class="toggle-chip" title="Ocultar productos temporalmente agotados">
-              <input type="checkbox" id="hideSoldOutCheck" />
-              <span>Ocultar agotados</span>
-            </label>
+              <select id="sizeFilterSelect" class="filter-select" aria-label="Filtrar por medida o calibre"></select>
+
+              <select id="specialFilterSelect" class="filter-select" aria-label="Filtrar por característica">
+                <option value="all">Todos los tipos</option>
+                <option value="wholesale">Con tarifa por mayor / docena</option>
+                <option value="customizable">Personalizables (Color / Letra)</option>
+                <option value="in-cart">En mi cotización (0)</option>
+              </select>
+
+              <label class="toggle-chip" title="Ocultar productos temporalmente agotados">
+                <input type="checkbox" id="hideSoldOutCheck" />
+                <span>Ocultar agotados</span>
+              </label>
+            </div>
 
             <div class="view-switcher" role="group" aria-label="Modo de vista">
               <button type="button" class="view-btn active" data-view="grid" title="Vista en tarjetas">Tarjetas</button>
               <button type="button" class="view-btn" data-view="compact" title="Vista compacta mayorista">Lista</button>
             </div>
           </div>
-        </div>
 
-        <!-- Nivel 3: Subcategorías Dinámicas Adaptadas a la Línea Seleccionada -->
-        <div class="adapted-filters-drawer">
-          <div class="filter-row-group">
-            <span class="filter-row-label">Colecciones:</span>
-            <div class="sub-pills-scroll" id="subPillsScroll"></div>
+        </div>
+      </section>
+
+      <!-- Banner Contextual Coloreado de la Línea Seleccionada -->
+      <div id="lineContextBanner" class="line-context-banner" style="display:none;"></div>
+
+      <!-- LISTADO DINÁMICO DE PRODUCTOS DEL CATÁLOGO -->
+      <div id="catalogListContainer"></div>
+
+    </div>
+
+    <!-- ==================== PESTAÑA 2: ESTUDIO DE BOLAS DE NEOPRENO ==================== -->
+    <div id="workspaceNeoprenoPanel" style="display:none;">
+      <section id="neopreno" class="neopreno-studio" data-line-theme="neopreno" aria-labelledby="neoStudioTitle">
+        <div class="studio-header">
+          <div>
+            <span class="brand-eyebrow" style="color:#EA580C;">Configurador Oficial · 13 Referencias · 786 Colores</span>
+            <h2 id="neoStudioTitle" class="studio-title">Estudio de Pedido de Bolas de Neopreno</h2>
+            <p style="font-size:14px;color:var(--muted);max-width:68ch;">
+              Se vende por docena (12+), por cien (100+) o por mil (1.000+). Selecciona el tipo de bola (REF), el tamaño en milímetros y el color para calcular tu tarifa automática por volumen.
+            </p>
           </div>
-
-          <div class="filter-status-bar">
-            <div class="quick-suggestions" id="quickSuggestions"></div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <button type="button" id="clearAllFiltersBtn" class="btn ghost" style="padding:3px 9px;font-size:12px;color:var(--warn);display:none;">
-                ✕ Limpiar filtros
-              </button>
-              <span id="resultsCountLabel" class="num">Mostrando 1179 productos</span>
-            </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn outline go-dijes-tab">
+              ← Volver a Dijes e Insumos
+            </button>
+            <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="btn cat">
+              📷 Catálogo General Neopreno (Canva)
+            </a>
+            <a href="https://www.canva.com/design/DAG_JmgpRQA/HfmI6C6Yc-XZS6ADOxilcQ/view?utlId=h9854511ee0" target="_blank" rel="noopener" class="btn outline">
+              🎨 Catálogo Bola Lisa por Color
+            </a>
+            <a href="https://photos.app.goo.gl/NdrgHXMsU4NmMtVF8" target="_blank" rel="noopener" class="btn outline">
+              📷 Earcuffs de Neopreno
+            </a>
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- Banner Contextual de la Línea Seleccionada -->
-    <div id="lineContextBanner" class="line-context-banner" style="display:none;"></div>
-
-    <!-- 4. LISTADO DINÁMICO DE PRODUCTOS DEL CATÁLOGO -->
-    <div id="catalogListContainer"></div>
-
-    <!-- 5. ESTUDIO INTERACTIVO DE BOLAS DE NEOPRENO (#neopreno) -->
-    <section id="neopreno" class="neopreno-studio" aria-labelledby="neoStudioTitle">
-      <div class="studio-header">
-        <div>
-          <span class="brand-eyebrow">Configurador Oficial · 13 Referencias · 786 Colores</span>
-          <h2 id="neoStudioTitle" class="studio-title">Estudio de Pedido de Bolas de Neopreno</h2>
-          <p style="font-size:14px;color:var(--muted);max-width:68ch;">
-            Se vende por docena (12+), por cien (100+) o por mil (1.000+). Selecciona el tipo de bola (REF), el tamaño en milímetros y el color para calcular tu tarifa automática por volumen.
-          </p>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="btn cat">
-            📷 Catálogo General Neopreno (Canva)
-          </a>
-          <a href="https://www.canva.com/design/DAG_JmgpRQA/HfmI6C6Yc-XZS6ADOxilcQ/view?utlId=h9854511ee0" target="_blank" rel="noopener" class="btn outline">
-            🎨 Catálogo Bola Lisa por Color
-          </a>
-          <a href="https://photos.app.goo.gl/NdrgHXMsU4NmMtVF8" target="_blank" rel="noopener" class="btn outline">
-            📷 Earcuffs de Neopreno
-          </a>
-        </div>
-      </div>
-
-      <div class="studio-layout">
+        <div class="studio-layout">
         <!-- Columna Izquierda: Pasos de Configuración -->
         <div>
           <!-- Paso 1: Referencia -->
@@ -324,7 +319,8 @@
           <div id="neoAddedLinesPreview"></div>
         </div>
       </div>
-    </section>
+      </section>
+    </div>
 
     <!-- 6. PIE DE PÁGINA Y AVISOS DE NEGOCIO -->
     <footer class="site-footer">
@@ -425,7 +421,7 @@
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
             <span style="font-size:13px;font-weight:800;text-transform:uppercase;color:var(--gold);">1. Referencias Seleccionadas</span>
             <div style="display:flex;gap:8px;">
-              <a href="#neopreno" class="scale-btn" data-close-modal="quoteSheetModal">➕ Agregar Neopreno</a>
+              <button type="button" class="scale-btn go-neopreno-tab" data-close-modal="quoteSheetModal">➕ Agregar Neopreno</button>
               <button type="button" id="clearOrderBtn" class="scale-btn" style="color:var(--warn);">🗑️ Vaciar todo</button>
             </div>
           </div>

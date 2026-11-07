@@ -434,64 +434,74 @@
   }
 
   // ==========================================================================
+  // TEMA DE COLOR SEMÁNTICO POR CADA LÍNEA DE PRODUCTO
+  // ==========================================================================
+  function getLineThemeKey(lineName) {
+    const l = String(lineName || '');
+    if (l.includes('Oro Laminado')) return 'oro';
+    if (l.includes('Acero')) return 'acero';
+    if (l.includes('Aretería')) return 'areteria';
+    if (l.includes('Económica')) return 'economica';
+    if (l.includes('Fimo') || l.includes('Piedras')) return 'fimo';
+    if (l.includes('Hilos') || l.includes('Expansión')) return 'hilos';
+    return 'rodio';
+  }
+
+  // ==========================================================================
   // GENERADOR DE ICONOS SVG ARTÍSTICOS DE REFERENCIA POR PRODUCTO
   // ==========================================================================
   function getProductSvgThumb(prod) {
     const l = prod.l;
     const s = norm(prod.s);
     const n = norm(prod.n);
+    const theme = getLineThemeKey(l);
 
-    let stroke = '#2B4550';
-    let fill = '#F3E7C9';
-    if (l.includes('Oro Laminado')) {
-      stroke = '#9A7220';
-      fill = '#FDF3D7';
-    } else if (l.includes('Acero')) {
-      stroke = '#4A5B63';
-      fill = '#E8EEF1';
-    } else if (l.includes('Aretería')) {
-      stroke = '#B85D18';
-      fill = '#FDF1E6';
-    } else if (l.includes('Fimo')) {
-      stroke = '#1E8E4E';
-      fill = '#E6F6EC';
-    }
+    const palette = {
+      rodio:     { stroke: '#1D4ED8', fill: '#DBEAFE' },
+      oro:       { stroke: '#B45309', fill: '#FEF3C7' },
+      acero:     { stroke: '#334155', fill: '#E2E8F0' },
+      areteria:  { stroke: '#BE185D', fill: '#FFE4E6' },
+      economica: { stroke: '#047857', fill: '#D1FAE5' },
+      fimo:      { stroke: '#6D28D9', fill: '#EDE9FE' },
+      hilos:     { stroke: '#0F766E', fill: '#CCFBF1' }
+    };
+    const { stroke, fill } = palette[theme] || palette.rodio;
 
     // Geometría según tipo de pieza
     if (n.includes('corona')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M4 15l-1-9 5 4 4-6 4 6 5-4-1 9H4z"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M4 15l-1-9 5 4 4-6 4 6 5-4-1 9H4z"/></svg>`;
     }
     if (n.includes('corazon') || n.includes('corazón') || s.includes('corazones')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><path d="M12 20.5s-7.5-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 5.5c-1.8 4.4-9.3 9-9.3 9z"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><path d="M12 20.5s-7.5-4.6-9.3-9A5.3 5.3 0 0 1 12 6a5.3 5.3 0 0 1 9.3 5.5c-1.8 4.4-9.3 9-9.3 9z"/></svg>`;
     }
     if (n.includes('cruz') || s.includes('cruces') || s.includes('religiosos')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M7 8h10"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M7 8h10"/></svg>`;
     }
     if (l === 'Aretería' || n.includes('candonga') || n.includes('topo')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2"><circle cx="12" cy="13" r="7" fill="${fill}" fill-opacity="0.4"/><path d="M12 3v3"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2"><circle cx="12" cy="13" r="7" fill="${fill}" fill-opacity="0.55"/><path d="M12 3v3"/></svg>`;
     }
     if (s.includes('cadenas')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.8"><rect x="4" y="8" width="9" height="6" rx="3"/><rect x="11" y="10" width="9" height="6" rx="3"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.8"><rect x="4" y="8" width="9" height="6" rx="3"/><rect x="11" y="10" width="9" height="6" rx="3"/></svg>`;
     }
     if (l.startsWith('Balines') || n.includes('balín') || n.includes('balin') || n.includes('bola')) {
-      const gradColor = prod.f === 'ros' || n.includes('rosado') ? '#E8A598' : (l.includes('Oro') || n.includes('dorado') ? '#E5C158' : '#C9D3D8');
-      return `<svg width="32" height="32" viewBox="0 0 32 32"><defs><radialGradient id="g_${prod.i}" cx="35%" cy="32%" r="65%"><stop offset="0%" stop-color="#fff"/><stop offset="45%" stop-color="${gradColor}"/><stop offset="100%" stop-color="${stroke}"/></radialGradient></defs><circle cx="16" cy="16" r="10" fill="url(#g_${prod.i})" stroke="${stroke}" stroke-width="1"/></svg>`;
+      const gradColor = prod.f === 'ros' || n.includes('rosado') ? '#F4AF9D' : (l.includes('Oro') || n.includes('dorado') ? '#FBBF24' : '#94A3B8');
+      return `<svg width="30" height="30" viewBox="0 0 32 32"><defs><radialGradient id="g_${prod.i}" cx="35%" cy="32%" r="65%"><stop offset="0%" stop-color="#fff"/><stop offset="45%" stop-color="${gradColor}"/><stop offset="100%" stop-color="${stroke}"/></radialGradient></defs><circle cx="16" cy="16" r="10" fill="url(#g_${prod.i})" stroke="${stroke}" stroke-width="1"/></svg>`;
     }
     if (l === 'Hilos') {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><rect x="6" y="4" width="12" height="4" rx="1"/><rect x="6" y="16" width="12" height="4" rx="1"/><path d="M8 8v8M12 8v8M16 8v8"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><rect x="6" y="4" width="12" height="4" rx="1"/><rect x="6" y="16" width="12" height="4" rx="1"/><path d="M8 8v8M12 8v8M16 8v8"/></svg>`;
     }
     if (l === 'Fimo y Piedras') {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><circle cx="8" cy="12" r="3.5"/><circle cx="16" cy="12" r="3.5"/><circle cx="12" cy="7" r="3.5"/><circle cx="12" cy="17" r="3.5"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><circle cx="8" cy="12" r="3.5"/><circle cx="16" cy="12" r="3.5"/><circle cx="12" cy="7" r="3.5"/><circle cx="12" cy="17" r="3.5"/></svg>`;
     }
     if (s.includes('letras')) {
-      return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 16l3-8 3 8M10 14h4"/></svg>`;
+      return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 16l3-8 3 8M10 14h4"/></svg>`;
     }
     // Dije medallón por defecto
-    return `<svg width="30" height="30" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><circle cx="12" cy="4" r="2"/><polygon points="12,7 19,13 12,21 5,13"/></svg>`;
+    return `<svg width="28" height="28" viewBox="0 0 24 24" fill="${fill}" stroke="${stroke}" stroke-width="1.7"><circle cx="12" cy="4" r="2"/><polygon points="12,7 19,13 12,21 5,13"/></svg>`;
   }
 
   // ==========================================================================
-  // RENDERIZADO DE LA BARRA DE FILTROS ADAPTADOS Y LISTA DE PRODUCTOS
+  // RENDERIZADO DE LA BARRA DE FILTROS MINIMALISTA PROGRESIVA Y PRODUCTOS
   // ==========================================================================
   function renderLinesRibbon() {
     const ribbon = document.getElementById('linesRibbon');
@@ -500,7 +510,7 @@
     const totalCount = DATA.length;
     let html = `
       <button type="button" class="line-chip" aria-pressed="${state.activeLine === 'Todos'}" data-line="Todos">
-        <span>Todos</span>
+        <span>Todas las líneas</span>
         <span class="line-chip-count">${totalCount}</span>
       </button>
     `;
@@ -508,8 +518,10 @@
     LINES_META.forEach(lm => {
       const count = DATA.filter(p => p.l === lm.name).length;
       const isPressed = state.activeLine === lm.name;
+      const themeKey = getLineThemeKey(lm.name);
       html += `
-        <button type="button" class="line-chip" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
+        <button type="button" class="line-chip" data-line-theme="${themeKey}" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
+          <span class="line-chip-dot"></span>
           <span>${escapeHtml(lm.short)}</span>
           <span class="line-chip-count">${count}</span>
         </button>
@@ -530,17 +542,43 @@
     });
   }
 
+  function updateExtraFiltersBadge() {
+    const badge = document.getElementById('extraFiltersBadge');
+    const toggleBtn = document.getElementById('toggleExtraFiltersBtn');
+    let count = 0;
+    if (state.sizeFilter !== 'all') count++;
+    if (state.priceFilter !== 'all') count++;
+    if (state.specialFilter !== 'all') count++;
+    if (state.sortBy !== 'catalog') count++;
+    if (state.hideSoldOut) count++;
+
+    if (badge) {
+      badge.textContent = String(count);
+      badge.style.display = count > 0 ? 'inline-flex' : 'none';
+    }
+    if (toggleBtn) {
+      const collapse = document.getElementById('extraFiltersCollapse');
+      const isOpen = collapse && collapse.classList.contains('open');
+      toggleBtn.classList.toggle('active', Boolean(isOpen || count > 0));
+    }
+  }
+
   function renderAdaptedFilters() {
+    const progressiveSubBar = document.getElementById('progressiveSubBar');
     const subScroll = document.getElementById('subPillsScroll');
     const sizeSelect = document.getElementById('sizeFilterSelect');
-    const suggestionsBox = document.getElementById('quickSuggestions');
     const lineBanner = document.getElementById('lineContextBanner');
+    const themeKey = getLineThemeKey(state.activeLine);
 
-    // 1. Subsecciones adaptadas a la línea activa
-    if (subScroll) {
-      const baseProds = state.activeLine === 'Todos'
-        ? DATA
-        : DATA.filter(p => p.l === state.activeLine);
+    // 1. Subcategorías PROGRESIVAS: Solo visibles cuando el usuario selecciona una Línea específica
+    if (progressiveSubBar) {
+      const showSubBar = state.activeLine !== 'Todos';
+      progressiveSubBar.classList.toggle('visible', showSubBar);
+      progressiveSubBar.setAttribute('data-line-theme', themeKey);
+    }
+
+    if (subScroll && state.activeLine !== 'Todos') {
+      const baseProds = DATA.filter(p => p.l === state.activeLine);
 
       const subCounts = {};
       const subOrder = [];
@@ -584,39 +622,21 @@
       ).join('');
     }
 
-    // 3. Sugerencias rápidas de búsqueda adaptadas a la línea activa
-    if (suggestionsBox) {
-      const sugs = LINE_SUGGESTIONS[state.activeLine] || LINE_SUGGESTIONS['Todos'];
-      suggestionsBox.innerHTML = `
-        <span style="font-size:12px;font-weight:700;color:var(--gold);">Sugerencias:</span>
-        ${sugs.map(s => `<button type="button" class="sug-tag" data-sug="${escapeHtml(s)}">${escapeHtml(s)}</button>`).join('')}
-      `;
-      suggestionsBox.querySelectorAll('.sug-tag').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const val = btn.getAttribute('data-sug');
-          const qInput = document.getElementById('q');
-          if (qInput) qInput.value = val;
-          state.query = val;
-          updateClearSearchBtn();
-          renderProductCatalog();
-        });
-      });
-    }
-
-    // 4. Banner contextual de la línea activa (con botón directo al catálogo de Canva)
+    // 3. Banner contextual de la línea activa con su tema de color propio
     if (lineBanner) {
       if (state.activeLine === 'Todos') {
         lineBanner.style.display = 'none';
       } else {
         const meta = LINES_META.find(m => m.name === state.activeLine);
         if (meta) {
+          lineBanner.setAttribute('data-line-theme', themeKey);
           lineBanner.style.display = 'flex';
           lineBanner.innerHTML = `
             <div class="line-context-info">
               <h2>
-                <span class="co-flag" aria-hidden="true"></span>
+                <span class="line-chip-dot" style="width:12px;height:12px;"></span>
                 <span>${escapeHtml(meta.name)}</span>
-                <span class="min-order-pill">${escapeHtml(meta.badge)}</span>
+                <span class="line-badge-colored">${escapeHtml(meta.badge)}</span>
               </h2>
               <p>${escapeHtml(meta.desc)}</p>
               ${meta.note ? `<div class="line-context-note">ℹ️ ${escapeHtml(meta.note)}</div>` : ''}
@@ -643,6 +663,8 @@
         }
       }
     }
+
+    updateExtraFiltersBadge();
   }
 
   function renderAllCatalogControls() {
@@ -672,15 +694,17 @@
       state.sizeFilter !== 'all' ||
       state.priceFilter !== 'all' ||
       state.specialFilter !== 'all' ||
+      state.sortBy !== 'catalog' ||
       state.hideSoldOut ||
       state.query.trim() !== '';
 
     if (clearFiltersBtn) {
       clearFiltersBtn.style.display = hasActiveFilters ? 'inline-flex' : 'none';
     }
+    updateExtraFiltersBadge();
 
     if (countLabel) {
-      countLabel.innerHTML = `Mostrando <strong class="num" style="color:var(--fg);">${filtered.length}</strong> de <span class="num">${DATA.length}</span> productos`;
+      countLabel.innerHTML = `<strong class="num" style="color:var(--fg);">${filtered.length}</strong> ref.`;
     }
 
     if (filtered.length === 0) {
@@ -691,13 +715,13 @@
       container.innerHTML = `
         <div class="hero-info-card" style="text-align:center;padding:38px 20px;margin:20px 0;">
           <div style="font-size:32px;margin-bottom:8px;">${is18kQuery ? '💎' : '🔍'}</div>
-          <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:6px;">
+          <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:6px;">
             ${is18kQuery ? 'Producto del Catálogo Exclusivo Joyería Oro 18K' : 'No encontramos productos con esos filtros'}
           </h3>
           <p style="color:var(--muted);max-width:480px;margin:0 auto 16px;">
             ${is18kQuery
               ? 'Los separadores de neopreno (mín. 50 und), modelos exclusivos, orings, correas y mortadelas se atienden en nuestro catálogo de Joyería Oro 18K.'
-              : 'Prueba buscando otra palabra clave, cambiando la subcategoría o limpiando los filtros activos.'}
+              : 'Prueba buscando otra palabra clave, cambiando la categoría o limpiando los filtros activos.'}
           </p>
           <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
             ${is18kQuery ? `
@@ -716,7 +740,7 @@
       return;
     }
 
-    // Si hay ordenamiento por precio o nombre, mostramos lista agrupada o directa; si es 'catalog', agrupamos por Línea › Subsección
+    // Si hay ordenamiento por precio o nombre, mostramos lista directa; si es 'catalog', agrupamos por Línea › Subsección
     if (state.sortBy !== 'catalog') {
       container.innerHTML = `
         <div class="products-grid ${state.viewMode === 'compact' ? 'compact-view' : ''}">
@@ -748,15 +772,16 @@
     groupedByLine.forEach(lGroup => {
       const meta = LINES_META.find(m => m.name === lGroup.lineName);
       const lineTotal = lGroup.subs.reduce((acc, s) => acc + s.items.length, 0);
+      const themeKey = getLineThemeKey(lGroup.lineName);
 
       html += `
-        <section class="line-section" id="${meta ? meta.id : ''}">
+        <section class="line-section" data-line-theme="${themeKey}" id="${meta ? meta.id : ''}">
           ${state.activeLine === 'Todos' ? `
             <div class="line-header">
               <h2 class="line-header-title">
-                <span class="co-flag" aria-hidden="true"></span>
+                <span class="line-chip-dot" style="width:12px;height:12px;"></span>
                 <span>${escapeHtml(lGroup.lineName)}</span>
-                <span class="min-order-pill">${lineTotal} prod.</span>
+                <span class="line-badge-colored">${lineTotal} ref.</span>
               </h2>
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                 ${meta && meta.canvaUrl ? `
@@ -765,7 +790,7 @@
                   </a>
                 ` : ''}
                 <button type="button" class="scale-btn filter-this-line-btn" data-line="${escapeHtml(lGroup.lineName)}">
-                  Ver solo esta línea →
+                  Ver subcategorías (${lGroup.subs.length}) →
                 </button>
               </div>
             </div>
@@ -798,6 +823,7 @@
     const canvaUrl = getProductCanvaUrl(prod);
     const noteVal = state.cnote[prod.i] || '';
     const isBalinDocena = prod.l === 'Balines de Rodio' || prod.l === 'Balines de Acero';
+    const themeKey = getLineThemeKey(prod.l);
 
     // Mostrar personalizador si el producto está en el carrito (qty > 0) o si es Letras / Hilos / Neopreno con oro laminado
     const showCustomizer = !isSoldOut && !isConsult && (
@@ -812,7 +838,7 @@
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
               <span>🔤 Toca las letras para agregar o escribe (ej: A2, M1):</span>
-              <span class="num" style="color:var(--teal);">${qty} und</span>
+              <span class="num" style="color:var(--wa);">${qty} und</span>
             </div>
             <div class="letters-grid">
               ${allLetters.map(letter => `
@@ -874,7 +900,7 @@
     }
 
     return `
-      <article class="prod-card ${qty > 0 ? 'in-cart' : ''} ${isSoldOut || isConsult ? 'out-of-stock' : ''}" id="prod-card-${prod.i}" data-id="${prod.i}">
+      <article class="prod-card ${qty > 0 ? 'in-cart' : ''} ${isSoldOut || isConsult ? 'out-of-stock' : ''}" data-line-theme="${themeKey}" id="prod-card-${prod.i}" data-id="${prod.i}">
         <div class="prod-card-top">
           <div class="prod-visual-thumb open-ref-modal-btn" data-id="${prod.i}" title="Ver referencia, foto en Canva y escala en mm">
             <span class="prod-id-tag">#${prod.i}</span>
@@ -892,7 +918,7 @@
                       : `<span class="prod-price ${hasVolumeDiscountApplied ? 'tier-active' : ''}">${fmtCOP(effectiveUnit)}</span>`
                     )
                 }
-                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--gold);">Sub: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
+                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);">Sub: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
               </div>
             </div>
             <div class="prod-meta-tags">
@@ -2438,6 +2464,7 @@
     // 3. Búsqueda directa de productos en el catálogo
     const matches = DATA.filter(p => matchesSearchQuery(p, text) && p.v !== 'AGOTADO').slice(0, 5);
     if (matches.length > 0) {
+      switchWorkspaceTab('dijes');
       state.query = text;
       const qInp = document.getElementById('q');
       if (qInp) qInp.value = text;
@@ -2456,6 +2483,22 @@
       'bot',
       `No encontré una coincidencia exacta para "${escapeHtml(text)}", pero puedes usar los filtros de línea arriba o consultar directamente con un asesor en WhatsApp.`
     );
+  }
+
+  // Cambio entre las 2 Pestañas Principales (Dijes e Insumos vs Pedido de Bolas de Neopreno)
+  function switchWorkspaceTab(tabName) {
+    const isNeo = tabName === 'neopreno';
+    const dijesPanel = document.getElementById('workspaceDijesPanel');
+    const neoPanel = document.getElementById('workspaceNeoprenoPanel');
+    const btnDijes = document.getElementById('tabBtnDijes');
+    const btnNeo = document.getElementById('tabBtnNeopreno');
+
+    if (dijesPanel) dijesPanel.style.display = isNeo ? 'none' : 'block';
+    if (neoPanel) neoPanel.style.display = isNeo ? 'block' : 'none';
+    if (btnDijes) btnDijes.classList.toggle('active', !isNeo);
+    if (btnNeo) btnNeo.classList.toggle('active', isNeo);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ==========================================================================
@@ -2494,6 +2537,38 @@
     renderNeoprenoStudio();
     renderNeoAddedMiniList();
     updateCartBar();
+
+    // Eventos de las 2 Pestañas Principales (Dijes vs Neopreno)
+    const tabBtnDijes = document.getElementById('tabBtnDijes');
+    const tabBtnNeopreno = document.getElementById('tabBtnNeopreno');
+    if (tabBtnDijes) {
+      tabBtnDijes.addEventListener('click', () => switchWorkspaceTab('dijes'));
+    }
+    if (tabBtnNeopreno) {
+      tabBtnNeopreno.addEventListener('click', () => switchWorkspaceTab('neopreno'));
+    }
+    document.querySelectorAll('.go-neopreno-tab').forEach(btn => {
+      btn.addEventListener('click', () => switchWorkspaceTab('neopreno'));
+    });
+    document.querySelectorAll('.go-dijes-tab').forEach(btn => {
+      btn.addEventListener('click', () => switchWorkspaceTab('dijes'));
+    });
+
+    // Si la URL entra con #neopreno, activar la pestaña Neopreno
+    if (window.location.hash === '#neopreno') {
+      switchWorkspaceTab('neopreno');
+    }
+
+    // Botón Desplegable de Filtros Secundarios (⚙️ Filtros y Orden)
+    const toggleExtraBtn = document.getElementById('toggleExtraFiltersBtn');
+    const extraCollapse = document.getElementById('extraFiltersCollapse');
+    if (toggleExtraBtn && extraCollapse) {
+      toggleExtraBtn.addEventListener('click', () => {
+        const isOpen = extraCollapse.classList.toggle('open');
+        toggleExtraBtn.setAttribute('aria-expanded', String(isOpen));
+        updateExtraFiltersBadge();
+      });
+    }
 
     // Buscador #q
     const qInput = document.getElementById('q');
