@@ -145,6 +145,19 @@
       .replace(/"/g, '&quot;');
   }
 
+  function highlightMatch(text, q) {
+    if (!q || !q.trim()) return escapeHtml(text);
+    const escaped = escapeHtml(text);
+    const words = q.trim().split(/\s+/).filter(w => w.length >= 2).map(w => norm(w));
+    if (words.length === 0) return escaped;
+    try {
+      const pattern = new RegExp(`(${words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+      return escaped.replace(pattern, '<mark class="search-highlight">$1</mark>');
+    } catch (e) {
+      return escaped;
+    }
+  }
+
   function showToast(msg) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -638,6 +651,7 @@
         state.activeLine = selectedLine;
         state.activeSub = 'Todas';
         state.sizeFilter = 'all';
+        try { btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch(e){}
         renderAllCatalogControls();
         renderProductCatalog();
       });
@@ -713,6 +727,7 @@
       subScroll.querySelectorAll('.sub-pill').forEach(btn => {
         btn.addEventListener('click', () => {
           state.activeSub = btn.getAttribute('data-sub');
+          try { btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch(e){}
           renderAdaptedFilters();
           renderProductCatalog();
         });
@@ -1023,7 +1038,7 @@
           </div>
           <div class="prod-main-info">
             <div class="prod-title-row">
-              <h4 class="prod-name">${escapeHtml(prod.n)}</h4>
+              <h4 class="prod-name">${highlightMatch(prod.n, state.query)}</h4>
               <div class="prod-price-box">
                 ${isSoldOut
                   ? `<span class="meta-badge soldout-badge">AGOTADO</span>`
@@ -1282,6 +1297,307 @@
     if (btn) {
       btn.classList.toggle('visible', Boolean(state.query && state.query.length > 0));
     }
+  }
+
+  // ==========================================================================
+  // BÚSQUEDA DINÁMICA, AUTOCOMPLETADO, SUGERENCIAS MÓVILES Y RECONOCIMIENTO DE VOZ
+  // ==========================================================================
+  let searchDebounceTimer = null;
+  function handleSearchInput(val) {
+    state.query = val;
+    updateClearSearchBtn();
+    updateQuickPillsActiveState();
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+      renderProductCatalog();
+      renderSearchSuggestions();
+    }, 70);
+  }
+
+  function applyQuickQuery(query) {
+    const qInput = document.getElementById('q');
+    if (state.query === query) {
+      state.query = '';
+      if (qInput) qInput.value = '';
+    } else {
+      state.query = query;
+      if (qInput) qInput.value = query;
+    }
+    updateQuickPillsActiveState();
+    updateClearSearchBtn();
+    hideSearchSuggestions();
+    renderProductCatalog();
+    window.scrollTo({ top: 180, behavior: 'smooth' });
+  }
+
+  function updateQuickPillsActiveState() {
+    const currentQ = norm(state.query);
+    document.querySelectorAll('.quick-pill').forEach(pill => {
+      const qVal = norm(pill.getAttribute('data-q') || '');
+      const priceVal = pill.getAttribute('data-price');
+      if (qVal) {
+        pill.classList.toggle('active', Boolean(currentQ && currentQ.includes(qVal)));
+      } else if (priceVal) {
+        pill.classList.toggle('active', state.priceFilter === priceVal);
+      }
+    });
+  }
+
+  function renderSearchSuggestions() {
+    const dropdown = document.getElementById('searchSuggestionsDropdown');
+    const qInput = document.getElementById('q');
+    if (!dropdown || !qInput) return;
+
+    const q = (state.query || '').trim();
+    if (!q) {
+      dropdown.innerHTML = `
+        <div class="sugg-header">
+          <span>⚡ Búsquedas Populares</span>
+          <span style="font-size:10px;color:var(--muted);">Toca para buscar</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;background:var(--bg);">
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Corona">👑 Corona</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="San Benito">✝️ San Benito</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Van Cleef">🍀 Van Cleef</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Candongas">🌸 Candongas</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Letras">🔤 Letras</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Balines">🟡 Balines</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cuarzo">💎 Cuarzo</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cruces">📿 Cruces</button>
+        </div>
+      `;
+      dropdown.style.display = 'block';
+      bindSuggestionsEvents(dropdown);
+      return;
+    }
+
+    const filtered = getFilteredProducts();
+    const topMatches = filtered.slice(0, 4);
+
+    if (topMatches.length === 0) {
+      dropdown.innerHTML = `
+        <div class="sugg-header">
+          <span>🔍 Sin resultados directos</span>
+        </div>
+        <div style="padding:12px;text-align:center;font-size:13px;color:var(--muted);">
+          No encontramos referencias con "${escapeHtml(q)}".<br/>
+          Prueba buscando por medalla, equipo, flor o medida.
+        </div>
+      `;
+      dropdown.style.display = 'block';
+      return;
+    }
+
+    const matchedLines = LINES_META.filter(lm => norm(lm.name).includes(norm(q)));
+
+    let html = `
+      <div class="sugg-header">
+        <span>Resultados Rápidos (${filtered.length})</span>
+        <span style="font-size:10px;color:var(--muted);">Toca para ver o cotizar</span>
+      </div>
+    `;
+
+    if (matchedLines.length > 0) {
+      matchedLines.forEach(lm => {
+        const count = DATA.filter(p => p.l === lm.name).length;
+        html += `
+          <div class="sugg-category-jump" data-jump-line="${escapeHtml(lm.name)}">
+            <span>📁 Ver colección <strong>${escapeHtml(lm.name)}</strong></span>
+            <span class="min-order-pill num">${count} ref.</span>
+          </div>
+        `;
+      });
+    }
+
+    topMatches.forEach(prod => {
+      const unit = getEffectiveUnitPrice(prod, 1);
+      html += `
+        <div class="sugg-item" data-jump-prod="${prod.i}">
+          <div class="sugg-thumb">
+            ${getProductSvgThumb(prod)}
+          </div>
+          <div class="sugg-info">
+            <div class="sugg-title">${highlightMatch(prod.n, q)}</div>
+            <div class="sugg-meta">#${prod.i} · ${escapeHtml(prod.l)} ${prod.t ? `· ${escapeHtml(prod.t)}` : ''}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="sugg-price">${fmtCOP(unit)}</span>
+            <button type="button" class="sugg-add-btn" data-add-id="${prod.i}" title="Agregar 1 unidad a la cotización">+1</button>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="sugg-footer-action" id="suggViewAllAction">
+        Ver las ${filtered.length} referencias en el catálogo ↓
+      </div>
+    `;
+
+    dropdown.innerHTML = html;
+    dropdown.style.display = 'block';
+    bindSuggestionsEvents(dropdown);
+  }
+
+  function bindSuggestionsEvents(dropdown) {
+    dropdown.querySelectorAll('.sugg-shortcut').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const query = btn.getAttribute('data-q');
+        applyQuickQuery(query);
+      });
+    });
+
+    dropdown.querySelectorAll('[data-jump-line]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        const line = el.getAttribute('data-jump-line');
+        state.activeLine = line;
+        state.activeSub = 'Todas';
+        state.query = '';
+        const qInput = document.getElementById('q');
+        if (qInput) qInput.value = '';
+        renderAllCatalogControls();
+        renderProductCatalog();
+        hideSearchSuggestions();
+        window.scrollTo({ top: 180, behavior: 'smooth' });
+      });
+    });
+
+    dropdown.querySelectorAll('[data-jump-prod]').forEach(el => {
+      el.addEventListener('click', e => {
+        if (e.target.closest('.sugg-add-btn')) return;
+        const id = el.getAttribute('data-jump-prod');
+        hideSearchSuggestions();
+        const card = document.getElementById(`prod-card-${id}`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.style.transition = 'box-shadow 300ms ease';
+          card.style.boxShadow = '0 0 0 3px var(--hi)';
+          setTimeout(() => { card.style.boxShadow = ''; }, 1800);
+        }
+      });
+    });
+
+    dropdown.querySelectorAll('.sugg-add-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const id = parseInt(btn.getAttribute('data-add-id'), 10);
+        updateProductQty(id, (state.cart[id] || 0) + 1);
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = '+1'; }, 1000);
+        showToast(`Agregado a tu pedido #${id}`);
+      });
+    });
+
+    const viewAll = dropdown.querySelector('#suggViewAllAction');
+    if (viewAll) {
+      viewAll.addEventListener('click', () => {
+        hideSearchSuggestions();
+        window.scrollTo({ top: 220, behavior: 'smooth' });
+      });
+    }
+  }
+
+  function hideSearchSuggestions() {
+    const dropdown = document.getElementById('searchSuggestionsDropdown');
+    if (dropdown) dropdown.style.display = 'none';
+  }
+
+  function setupVoiceSearch() {
+    const voiceBtn = document.getElementById('voiceSearchBtn');
+    const qInput = document.getElementById('q');
+    if (!voiceBtn || !qInput) return;
+
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRec) {
+      voiceBtn.title = 'Búsqueda por voz no disponible en este navegador';
+      voiceBtn.addEventListener('click', () => {
+        showToast('ℹ️ Tu navegador no soporta búsqueda por voz. Puedes escribir directo.');
+      });
+      return;
+    }
+
+    const recognition = new SpeechRec();
+    recognition.lang = 'es-CO';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    let isListening = false;
+
+    voiceBtn.addEventListener('click', () => {
+      if (isListening) {
+        recognition.stop();
+        return;
+      }
+      try {
+        recognition.start();
+        isListening = true;
+        voiceBtn.classList.add('listening');
+        voiceBtn.textContent = '🔴';
+        showToast('🎤 Escuchando... Di el producto que buscas (ej: San Benito)');
+      } catch (e) {
+        isListening = false;
+        voiceBtn.classList.remove('listening');
+        voiceBtn.textContent = '🎤';
+      }
+    });
+
+    recognition.onresult = e => {
+      isListening = false;
+      voiceBtn.classList.remove('listening');
+      voiceBtn.textContent = '🎤';
+      const transcript = e.results && e.results[0] && e.results[0][0] ? e.results[0][0].transcript : '';
+      if (transcript) {
+        qInput.value = transcript;
+        state.query = transcript;
+        updateClearSearchBtn();
+        updateQuickPillsActiveState();
+        renderProductCatalog();
+        showToast(`🔍 Buscando: "${transcript}"`);
+      }
+    };
+
+    recognition.onerror = () => {
+      isListening = false;
+      voiceBtn.classList.remove('listening');
+      voiceBtn.textContent = '🎤';
+    };
+
+    recognition.onend = () => {
+      isListening = false;
+      voiceBtn.classList.remove('listening');
+      voiceBtn.textContent = '🎤';
+    };
+  }
+
+  function setupMobileViewSwitcher() {
+    const btn = document.getElementById('mobileQuickViewBtn');
+    const icon = document.getElementById('mobileViewIcon');
+    const txt = document.getElementById('mobileViewText');
+    if (!btn) return;
+
+    function updateMobileViewBtn() {
+      if (state.viewMode === 'compact') {
+        if (icon) icon.textContent = '🎴';
+        if (txt) txt.textContent = 'Tarjetas';
+      } else {
+        if (icon) icon.textContent = '📱';
+        if (txt) txt.textContent = 'Lista';
+      }
+    }
+
+    btn.addEventListener('click', () => {
+      state.viewMode = state.viewMode === 'compact' ? 'grid' : 'compact';
+      document.querySelectorAll('.view-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-view') === state.viewMode);
+      });
+      updateMobileViewBtn();
+      renderProductCatalog();
+      showToast(state.viewMode === 'compact' ? 'Vista compacta de lista' : 'Vista de tarjetas');
+    });
+
+    updateMobileViewBtn();
   }
 
   // ==========================================================================
@@ -2722,13 +3038,14 @@
       });
     }
 
-    // Buscador #q
+    // Buscador #q y Sugerencias Dinámicas
     const qInput = document.getElementById('q');
     if (qInput) {
       qInput.addEventListener('input', () => {
-        state.query = qInput.value;
-        updateClearSearchBtn();
-        renderProductCatalog();
+        handleSearchInput(qInput.value);
+      });
+      qInput.addEventListener('focus', () => {
+        renderSearchSuggestions();
       });
     }
     const clearSearchBtn = document.getElementById('clearSearchBtn');
@@ -2737,9 +3054,46 @@
         state.query = '';
         if (qInput) qInput.value = '';
         updateClearSearchBtn();
+        updateQuickPillsActiveState();
+        hideSearchSuggestions();
         renderProductCatalog();
       });
     }
+
+    // Chips Rápidos de Búsqueda Móvil (1 Toque)
+    document.querySelectorAll('.quick-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const query = btn.getAttribute('data-q');
+        const price = btn.getAttribute('data-price');
+        if (query) {
+          applyQuickQuery(query);
+        } else if (price) {
+          state.priceFilter = state.priceFilter === price ? 'all' : price;
+          const priceSel = document.getElementById('priceFilterSelect');
+          if (priceSel) priceSel.value = state.priceFilter;
+          updateQuickPillsActiveState();
+          renderProductCatalog();
+        }
+      });
+    });
+
+    // Cerrar sugerencias al hacer clic fuera o al pulsar Escape
+    document.addEventListener('click', e => {
+      const wrap = document.querySelector('.search-box-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        hideSearchSuggestions();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        hideSearchSuggestions();
+      }
+    });
+
+    // Inicializar Búsqueda por Voz y Switcher de Vista Rápida para Móviles
+    setupVoiceSearch();
+    setupMobileViewSwitcher();
 
     // Selects de filtros adaptados
     const sizeSelect = document.getElementById('sizeFilterSelect');

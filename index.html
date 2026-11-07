@@ -86,7 +86,7 @@
       <section class="filter-console" aria-label="Filtros del catálogo">
         <div class="filter-console-card">
 
-          <!-- Fila 1: Buscador limpio + Botón rápido "En mi pedido" + Filtros y Orden + Contador -->
+          <!-- Fila 1: Buscador limpio + Micrófono + Botón rápido "En mi pedido" + Filtros y Orden + Contador -->
           <div class="search-row-clean">
             <div class="search-box-wrap">
               <span class="search-icon" aria-hidden="true">🔍</span>
@@ -94,10 +94,19 @@
                 type="search"
                 id="q"
                 class="search-input"
-                placeholder="Buscar producto, #ID, equipo, piedra o medida (ej: corona, san benito, van cleef, #142)..."
+                placeholder="Buscar dijes, #ID, candongas, piedras, medidas (ej: corona, san benito, van cleef, #142)..."
                 autocomplete="off"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
+                inputmode="search"
+                enterkeyhint="search"
               />
+              <button type="button" id="voiceSearchBtn" class="search-voice-btn" title="Buscar por voz con micrófono" aria-label="Buscar por voz">🎤</button>
               <button type="button" id="clearSearchBtn" class="search-clear" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">✕</button>
+
+              <!-- Dropdown de autocompletado y sugerencias dinámicas en vivo -->
+              <div id="searchSuggestionsDropdown" class="search-suggestions-dropdown" style="display:none;" role="listbox" aria-label="Sugerencias de búsqueda"></div>
             </div>
 
             <button type="button" id="quickCartFilterBtn" class="quick-cart-filter-btn" title="Ver únicamente los productos que llevas en tu pedido">
@@ -106,8 +115,14 @@
             </button>
 
             <button type="button" id="toggleExtraFiltersBtn" class="more-filters-btn" aria-expanded="false" title="Mostrar u ocultar filtros de precio, medida y orden">
-              <span>⚙️ Filtros y Orden</span>
+              <span>⚙️ Filtros</span>
               <span id="extraFiltersBadge" class="pill-badge num" style="display:none;min-width:19px;height:19px;font-size:11px;padding:0 5px;">0</span>
+            </button>
+
+            <!-- Botón de cambio de vista rápido para móviles (Tarjetas / Lista) -->
+            <button type="button" id="mobileQuickViewBtn" class="mobile-view-quick-btn" title="Cambiar entre vista de tarjetas y vista de lista compacta">
+              <span id="mobileViewIcon">📱</span>
+              <span id="mobileViewText">Lista</span>
             </button>
 
             <button type="button" id="clearAllFiltersBtn" class="btn ghost" style="padding:8px 11px;font-size:12.5px;color:var(--warn);display:none;">
@@ -117,6 +132,25 @@
             <span id="resultsCountLabel" class="num" style="font-size:12.5px;color:var(--muted);white-space:nowrap;padding:0 4px;">
               1.179 ref.
             </span>
+          </div>
+
+          <!-- Fila 1.5: Chips Rápidos de Búsqueda Inteligente Móvil (1 Toque) -->
+          <div class="quick-search-pills" id="quickSearchPills" role="region" aria-label="Búsquedas rápidas sugeridas">
+            <span class="quick-pills-label">⚡ Rápido:</span>
+            <div class="quick-pills-scroll" id="quickPillsScroll">
+              <button type="button" class="quick-pill" data-q="Corona">👑 Coronas</button>
+              <button type="button" class="quick-pill" data-q="San Benito">✝️ San Benito</button>
+              <button type="button" class="quick-pill" data-q="Van Cleef">🍀 Van Cleef</button>
+              <button type="button" class="quick-pill" data-q="Candonga">🌸 Candongas</button>
+              <button type="button" class="quick-pill" data-q="Letra">🔤 Letras</button>
+              <button type="button" class="quick-pill" data-q="Balin">🟡 Balines</button>
+              <button type="button" class="quick-pill" data-q="Cuarzo">💎 Cuarzo & Piedras</button>
+              <button type="button" class="quick-pill" data-q="Cruz">📿 Cruces</button>
+              <button type="button" class="quick-pill" data-q="Futbol">⚽ Equipos / Balón</button>
+              <button type="button" class="quick-pill" data-q="Oso">🧸 Oso Tous</button>
+              <button type="button" class="quick-pill" data-q="Hilo">🧵 Hilos</button>
+              <button type="button" class="quick-pill" data-price="up-to-3k">💲 ≤ $3.000 COP</button>
+            </div>
           </div>
 
           <!-- Fila 2: Cinta rápida de las 11 Líneas de Producto -->
