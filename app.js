@@ -434,38 +434,39 @@
   }
 
   // ==========================================================================
-  // TEMA DE COLOR SEMÁNTICO POR CADA LÍNEA DE PRODUCTO
+  // ICONOS REPRESENTATIVOS POR LÍNEA Y MINIATURAS SVG CON PALETA DEL .MD
   // ==========================================================================
-  function getLineThemeKey(lineName) {
-    const l = String(lineName || '');
-    if (l.includes('Oro Laminado')) return 'oro';
-    if (l.includes('Acero')) return 'acero';
-    if (l.includes('Aretería')) return 'areteria';
-    if (l.includes('Económica')) return 'economica';
-    if (l.includes('Fimo') || l.includes('Piedras')) return 'fimo';
-    if (l.includes('Hilos') || l.includes('Expansión')) return 'hilos';
-    return 'rodio';
-  }
+  const LINE_ICONS = {
+    'Dijes de Rodio': '👑',
+    'Línea Económica': '✨',
+    'Dijes de Acero': '🛡️',
+    'Aretería': '🌸',
+    'Dijes de Oro Laminado': '💛',
+    'Pulseras de Expansión': '📿',
+    'Fimo y Piedras': '💎',
+    'Hilos': '🧵',
+    'Balines Oro Laminado': '🟡',
+    'Balines de Rodio': '⚪',
+    'Balines de Acero': '⚙️'
+  };
 
-  // ==========================================================================
-  // GENERADOR DE ICONOS SVG ARTÍSTICOS DE REFERENCIA POR PRODUCTO
-  // ==========================================================================
+  let categoriesShowcaseHiddenByUser = false;
+
   function getProductSvgThumb(prod) {
     const l = prod.l;
     const s = norm(prod.s);
     const n = norm(prod.n);
-    const theme = getLineThemeKey(l);
 
-    const palette = {
-      rodio:     { stroke: '#1D4ED8', fill: '#DBEAFE' },
-      oro:       { stroke: '#B45309', fill: '#FEF3C7' },
-      acero:     { stroke: '#334155', fill: '#E2E8F0' },
-      areteria:  { stroke: '#BE185D', fill: '#FFE4E6' },
-      economica: { stroke: '#047857', fill: '#D1FAE5' },
-      fimo:      { stroke: '#6D28D9', fill: '#EDE9FE' },
-      hilos:     { stroke: '#0F766E', fill: '#CCFBF1' }
-    };
-    const { stroke, fill } = palette[theme] || palette.rodio;
+    // Colores fieles a Documentacion_Catalogo_KSM.md (§4.2)
+    let stroke = '#2F4A55'; // --teal
+    let fill = '#F3E7C9';   // --goldsoft
+    if (l.includes('Oro Laminado')) {
+      stroke = '#9A7220';   // --gold
+      fill = '#F3E7C9';
+    } else if (l.includes('Aretería')) {
+      stroke = '#C8691C';   // --cat
+      fill = '#FDF1E6';
+    }
 
     // Geometría según tipo de pieza
     if (n.includes('corona')) {
@@ -484,7 +485,7 @@
       return `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.8"><rect x="4" y="8" width="9" height="6" rx="3"/><rect x="11" y="10" width="9" height="6" rx="3"/></svg>`;
     }
     if (l.startsWith('Balines') || n.includes('balín') || n.includes('balin') || n.includes('bola')) {
-      const gradColor = prod.f === 'ros' || n.includes('rosado') ? '#F4AF9D' : (l.includes('Oro') || n.includes('dorado') ? '#FBBF24' : '#94A3B8');
+      const gradColor = prod.f === 'ros' || n.includes('rosado') ? '#E8A598' : (l.includes('Oro') || n.includes('dorado') ? '#E2BC63' : '#B8C4C8');
       return `<svg width="30" height="30" viewBox="0 0 32 32"><defs><radialGradient id="g_${prod.i}" cx="35%" cy="32%" r="65%"><stop offset="0%" stop-color="#fff"/><stop offset="45%" stop-color="${gradColor}"/><stop offset="100%" stop-color="${stroke}"/></radialGradient></defs><circle cx="16" cy="16" r="10" fill="url(#g_${prod.i})" stroke="${stroke}" stroke-width="1"/></svg>`;
     }
     if (l === 'Hilos') {
@@ -501,6 +502,108 @@
   }
 
   // ==========================================================================
+  // TARJETAS VISUALES DE LAS 11 CATEGORÍAS AL INICIO (#categoriesBentoGrid)
+  // ==========================================================================
+  function renderCategoriesBentoGrid() {
+    const grid = document.getElementById('categoriesBentoGrid');
+    const section = document.getElementById('categoriesShowcaseSection');
+    if (!grid || !section) return;
+
+    // Mostrar las tarjetas de categoría solo cuando estamos en "Todos", sin búsqueda activa y sin filtro especial
+    const shouldShowSection = state.activeLine === 'Todos' &&
+      !state.query.trim() &&
+      state.specialFilter === 'all';
+
+    section.style.display = shouldShowSection ? 'block' : 'none';
+    grid.style.display = categoriesShowcaseHiddenByUser ? 'none' : 'grid';
+
+    if (grid.dataset.rendered === '1') return;
+
+    let html = '';
+    LINES_META.forEach(lm => {
+      const prods = DATA.filter(p => p.l === lm.name);
+      const count = prods.length;
+      const icon = LINE_ICONS[lm.name] || '💍';
+      html += `
+        <div class="cat-bento-card" data-select-line="${escapeHtml(lm.name)}" role="button" tabindex="0">
+          <div class="cat-bento-top">
+            <div class="cat-bento-icon" aria-hidden="true">${icon}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+                <span class="cat-bento-name">${escapeHtml(lm.name)}</span>
+                <span class="min-order-pill num">${count} ref.</span>
+              </div>
+              <p class="cat-bento-desc">${escapeHtml(lm.desc)}</p>
+            </div>
+          </div>
+          <div class="cat-bento-footer">
+            <span class="cat-bento-enter">Explorar colección →</span>
+            ${lm.canvaUrl ? `
+              <a href="${escapeHtml(lm.canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link" title="Abrir catálogo con fotos en Canva">
+                📷 Fotos Canva
+              </a>
+            ` : `<span class="meta-badge">${escapeHtml(lm.badge)}</span>`}
+          </div>
+        </div>
+      `;
+    });
+
+    // Tarjeta 12 Destacada: Estudio de Bolas de Neopreno
+    html += `
+      <div class="cat-bento-card neopreno-highlight" data-open-neopreno="1" role="button" tabindex="0">
+        <div class="cat-bento-top">
+          <div class="cat-bento-icon" aria-hidden="true">🟠</div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+              <span class="cat-bento-name">Bolas de Neopreno</span>
+              <span class="min-order-pill num">786 colores</span>
+            </div>
+            <p class="cat-bento-desc">Configurador oficial RF2 a RF18 por docena (12+), cien (100+) y mil (1.000+).</p>
+          </div>
+        </div>
+        <div class="cat-bento-footer">
+          <span class="cat-bento-enter" style="color:var(--cat);">Abrir configurador →</span>
+          <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link">
+            📷 Fotos Canva
+          </a>
+        </div>
+      </div>
+    `;
+
+    grid.innerHTML = html;
+    grid.dataset.rendered = '1';
+
+    // Evitar que clic en "📷 Fotos Canva" dispare el filtro de la tarjeta
+    grid.querySelectorAll('.bento-canva-link').forEach(link => {
+      link.addEventListener('click', e => e.stopPropagation());
+    });
+
+    grid.querySelectorAll('[data-select-line]').forEach(card => {
+      const activate = () => {
+        const lineName = card.getAttribute('data-select-line');
+        state.activeLine = lineName;
+        state.activeSub = 'Todas';
+        state.sizeFilter = 'all';
+        renderAllCatalogControls();
+        renderProductCatalog();
+        window.scrollTo({ top: 180, behavior: 'smooth' });
+      };
+      card.addEventListener('click', activate);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
+      });
+    });
+
+    const neoCard = grid.querySelector('[data-open-neopreno]');
+    if (neoCard) {
+      neoCard.addEventListener('click', () => switchWorkspaceTab('neopreno'));
+    }
+  }
+
+  // ==========================================================================
   // RENDERIZADO DE LA BARRA DE FILTROS MINIMALISTA PROGRESIVA Y PRODUCTOS
   // ==========================================================================
   function renderLinesRibbon() {
@@ -510,7 +613,7 @@
     const totalCount = DATA.length;
     let html = `
       <button type="button" class="line-chip" aria-pressed="${state.activeLine === 'Todos'}" data-line="Todos">
-        <span>Todas las líneas</span>
+        <span>🏠 Todas las líneas</span>
         <span class="line-chip-count">${totalCount}</span>
       </button>
     `;
@@ -518,11 +621,10 @@
     LINES_META.forEach(lm => {
       const count = DATA.filter(p => p.l === lm.name).length;
       const isPressed = state.activeLine === lm.name;
-      const themeKey = getLineThemeKey(lm.name);
+      const icon = LINE_ICONS[lm.name] || '';
       html += `
-        <button type="button" class="line-chip" data-line-theme="${themeKey}" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
-          <span class="line-chip-dot"></span>
-          <span>${escapeHtml(lm.short)}</span>
+        <button type="button" class="line-chip" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
+          <span>${icon} ${escapeHtml(lm.short)}</span>
           <span class="line-chip-count">${count}</span>
         </button>
       `;
@@ -545,10 +647,12 @@
   function updateExtraFiltersBadge() {
     const badge = document.getElementById('extraFiltersBadge');
     const toggleBtn = document.getElementById('toggleExtraFiltersBtn');
+    const quickCartBtn = document.getElementById('quickCartFilterBtn');
+
     let count = 0;
     if (state.sizeFilter !== 'all') count++;
     if (state.priceFilter !== 'all') count++;
-    if (state.specialFilter !== 'all') count++;
+    if (state.specialFilter !== 'all' && state.specialFilter !== 'in-cart') count++;
     if (state.sortBy !== 'catalog') count++;
     if (state.hideSoldOut) count++;
 
@@ -561,6 +665,9 @@
       const isOpen = collapse && collapse.classList.contains('open');
       toggleBtn.classList.toggle('active', Boolean(isOpen || count > 0));
     }
+    if (quickCartBtn) {
+      quickCartBtn.classList.toggle('active', state.specialFilter === 'in-cart');
+    }
   }
 
   function renderAdaptedFilters() {
@@ -568,13 +675,11 @@
     const subScroll = document.getElementById('subPillsScroll');
     const sizeSelect = document.getElementById('sizeFilterSelect');
     const lineBanner = document.getElementById('lineContextBanner');
-    const themeKey = getLineThemeKey(state.activeLine);
 
     // 1. Subcategorías PROGRESIVAS: Solo visibles cuando el usuario selecciona una Línea específica
     if (progressiveSubBar) {
       const showSubBar = state.activeLine !== 'Todos';
       progressiveSubBar.classList.toggle('visible', showSubBar);
-      progressiveSubBar.setAttribute('data-line-theme', themeKey);
     }
 
     if (subScroll && state.activeLine !== 'Todos') {
@@ -622,21 +727,21 @@
       ).join('');
     }
 
-    // 3. Banner contextual de la línea activa con su tema de color propio
+    // 3. Banner contextual de la línea activa con la paleta oficial KSM
     if (lineBanner) {
       if (state.activeLine === 'Todos') {
         lineBanner.style.display = 'none';
       } else {
         const meta = LINES_META.find(m => m.name === state.activeLine);
         if (meta) {
-          lineBanner.setAttribute('data-line-theme', themeKey);
+          const icon = LINE_ICONS[meta.name] || '💍';
           lineBanner.style.display = 'flex';
           lineBanner.innerHTML = `
             <div class="line-context-info">
               <h2>
-                <span class="line-chip-dot" style="width:12px;height:12px;"></span>
+                <span>${icon}</span>
                 <span>${escapeHtml(meta.name)}</span>
-                <span class="line-badge-colored">${escapeHtml(meta.badge)}</span>
+                <span class="min-order-pill">${escapeHtml(meta.badge)}</span>
               </h2>
               <p>${escapeHtml(meta.desc)}</p>
               ${meta.note ? `<div class="line-context-note">ℹ️ ${escapeHtml(meta.note)}</div>` : ''}
@@ -647,7 +752,7 @@
                   📷 Abrir Catálogo Canva de ${escapeHtml(meta.short)}
                 </a>
               ` : ''}
-              <button type="button" class="btn outline" id="resetLineBtn">Ver todas las líneas</button>
+              <button type="button" class="btn outline" id="resetLineBtn">← Volver a las 11 Categorías</button>
             </div>
           `;
           const resetBtn = document.getElementById('resetLineBtn');
@@ -664,6 +769,7 @@
       }
     }
 
+    renderCategoriesBentoGrid();
     updateExtraFiltersBadge();
   }
 
@@ -677,10 +783,15 @@
     const container = document.getElementById('catalogListContainer');
     const countLabel = document.getElementById('resultsCountLabel');
     const clearFiltersBtn = document.getElementById('clearAllFiltersBtn');
+    const quickCartCount = document.getElementById('quickCartFilterCount');
     if (!container) return;
 
     const filtered = getFilteredProducts();
     const inCartCount = Object.values(state.cart).filter(q => q > 0).length;
+
+    if (quickCartCount) {
+      quickCartCount.textContent = `(${inCartCount})`;
+    }
 
     // Actualizar opción "En mi cotización"
     const specSelect = document.getElementById('specialFilterSelect');
@@ -701,6 +812,7 @@
     if (clearFiltersBtn) {
       clearFiltersBtn.style.display = hasActiveFilters ? 'inline-flex' : 'none';
     }
+    renderCategoriesBentoGrid();
     updateExtraFiltersBadge();
 
     if (countLabel) {
@@ -772,15 +884,15 @@
     groupedByLine.forEach(lGroup => {
       const meta = LINES_META.find(m => m.name === lGroup.lineName);
       const lineTotal = lGroup.subs.reduce((acc, s) => acc + s.items.length, 0);
-      const themeKey = getLineThemeKey(lGroup.lineName);
+      const icon = LINE_ICONS[lGroup.lineName] || '💍';
 
       html += `
-        <section class="line-section" data-line-theme="${themeKey}" id="${meta ? meta.id : ''}">
+        <section class="line-section" id="${meta ? meta.id : ''}">
           ${state.activeLine === 'Todos' ? `
             <div class="line-header">
               <h2 class="line-header-title">
-                <span class="line-chip-dot" style="width:12px;height:12px;"></span>
-                <span>${escapeHtml(lGroup.lineName)}</span>
+                <span class="co-flag" aria-hidden="true"></span>
+                <span>${icon} ${escapeHtml(lGroup.lineName)}</span>
                 <span class="line-badge-colored">${lineTotal} ref.</span>
               </h2>
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -789,17 +901,20 @@
                     📷 Catálogo Canva · ${escapeHtml(meta.short)}
                   </a>
                 ` : ''}
-                <button type="button" class="scale-btn filter-this-line-btn" data-line="${escapeHtml(lGroup.lineName)}">
-                  Ver subcategorías (${lGroup.subs.length}) →
+                <button type="button" class="scale-btn filter-this-line-btn" style="background:#F3E7C9;color:#5B4E1A;border-color:#DEC484;font-weight:700;" data-line="${escapeHtml(lGroup.lineName)}">
+                  Filtrar esta categoría (${lGroup.subs.length} subsecciones) →
                 </button>
               </div>
             </div>
           ` : ''}
           ${lGroup.subs.map(subGroup => `
             <div class="sub-section">
-              <div class="sub-header">
-                <h3>${escapeHtml(subGroup.subName)}</h3>
-                <span class="sub-header-count num">${subGroup.items.length} ${subGroup.items.length === 1 ? 'referencia' : 'referencias'}</span>
+              <div class="sub-header" title="Toca para colapsar o expandir esta subsección">
+                <h3><span>🔸</span> <span>${escapeHtml(subGroup.subName)}</span></h3>
+                <div class="sub-header-right">
+                  <span class="sub-header-count num">${subGroup.items.length} ${subGroup.items.length === 1 ? 'referencia' : 'referencias'}</span>
+                  <span class="sub-collapse-icon">▾</span>
+                </div>
               </div>
               <div class="products-grid ${state.viewMode === 'compact' ? 'compact-view' : ''}">
                 ${subGroup.items.map(prod => renderProductCardHtml(prod)).join('')}
@@ -823,7 +938,6 @@
     const canvaUrl = getProductCanvaUrl(prod);
     const noteVal = state.cnote[prod.i] || '';
     const isBalinDocena = prod.l === 'Balines de Rodio' || prod.l === 'Balines de Acero';
-    const themeKey = getLineThemeKey(prod.l);
 
     // Mostrar personalizador si el producto está en el carrito (qty > 0) o si es Letras / Hilos / Neopreno con oro laminado
     const showCustomizer = !isSoldOut && !isConsult && (
@@ -900,7 +1014,7 @@
     }
 
     return `
-      <article class="prod-card ${qty > 0 ? 'in-cart' : ''} ${isSoldOut || isConsult ? 'out-of-stock' : ''}" data-line-theme="${themeKey}" id="prod-card-${prod.i}" data-id="${prod.i}">
+      <article class="prod-card ${qty > 0 ? 'in-cart' : ''} ${isSoldOut || isConsult ? 'out-of-stock' : ''}" id="prod-card-${prod.i}" data-id="${prod.i}">
         <div class="prod-card-top">
           <div class="prod-visual-thumb open-ref-modal-btn" data-id="${prod.i}" title="Ver referencia, foto en Canva y escala en mm">
             <span class="prod-id-tag">#${prod.i}</span>
@@ -918,7 +1032,7 @@
                       : `<span class="prod-price ${hasVolumeDiscountApplied ? 'tier-active' : ''}">${fmtCOP(effectiveUnit)}</span>`
                     )
                 }
-                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);">Sub: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
+                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);">✓ En pedido: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
               </div>
             </div>
             <div class="prod-meta-tags">
@@ -969,6 +1083,16 @@
   }
 
   function bindProductCardEvents(container) {
+    // Cabeceras de Subsección colapsables (.sub-header)
+    container.querySelectorAll('.sub-header').forEach(hdr => {
+      if (hdr.dataset.bound === '1') return;
+      hdr.dataset.bound = '1';
+      hdr.addEventListener('click', () => {
+        const subSec = hdr.closest('.sub-section');
+        if (subSec) subSec.classList.toggle('collapsed');
+      });
+    });
+
     // Botones "Ver solo esta línea"
     container.querySelectorAll('.filter-this-line-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -977,7 +1101,7 @@
         state.sizeFilter = 'all';
         renderAllCatalogControls();
         renderProductCatalog();
-        window.scrollTo({ top: 280, behavior: 'smooth' });
+        window.scrollTo({ top: 180, behavior: 'smooth' });
       });
     });
 
@@ -1785,6 +1909,7 @@
     const totals = calculateQuoteTotals();
     const cartbar = document.getElementById('cartbar');
     const topCounterPill = document.getElementById('topOrderCountPill');
+    const quickCartCount = document.getElementById('quickCartFilterCount');
     const totalEl = document.getElementById('cartbarTotalVal');
     const countEl = document.getElementById('cartbarCountTxt');
     const progFill = document.getElementById('minProgressFill');
@@ -1793,6 +1918,9 @@
     const totalItemsBadge = totals.prodRefs + totals.neoLines;
     if (topCounterPill) {
       topCounterPill.textContent = totalItemsBadge;
+    }
+    if (quickCartCount) {
+      quickCartCount.textContent = `(${totals.prodRefs})`;
     }
 
     if (!cartbar) return;
@@ -2567,6 +2695,30 @@
         const isOpen = extraCollapse.classList.toggle('open');
         toggleExtraBtn.setAttribute('aria-expanded', String(isOpen));
         updateExtraFiltersBadge();
+      });
+    }
+
+    // Botón rápido "🛒 En mi pedido (X)"
+    const quickCartBtn = document.getElementById('quickCartFilterBtn');
+    if (quickCartBtn) {
+      quickCartBtn.addEventListener('click', () => {
+        state.specialFilter = state.specialFilter === 'in-cart' ? 'all' : 'in-cart';
+        const specSel = document.getElementById('specialFilterSelect');
+        if (specSel) specSel.value = state.specialFilter;
+        renderAllCatalogControls();
+        renderProductCatalog();
+      });
+    }
+
+    // Botón Mostrar/Ocultar Tarjetas de Categoría al inicio
+    const toggleCatsBtn = document.getElementById('toggleCategoriesShowcaseBtn');
+    if (toggleCatsBtn) {
+      toggleCatsBtn.addEventListener('click', () => {
+        categoriesShowcaseHiddenByUser = !categoriesShowcaseHiddenByUser;
+        toggleCatsBtn.textContent = categoriesShowcaseHiddenByUser
+          ? 'Mostrar tarjetas de categorías ▼'
+          : 'Ocultar tarjetas de categorías ▲';
+        renderCategoriesBentoGrid();
       });
     }
 

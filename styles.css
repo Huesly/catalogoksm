@@ -1,216 +1,137 @@
 /* ==========================================================================
-   CAUCHOS KSM · CATÁLOGO INTERACTIVO & COTIZADOR WHATSAPP (V2)
+   CAUCHOS KSM · CATÁLOGO INTERACTIVO & COTIZADOR WHATSAPP (V3)
+   Paleta Oficial del Documento (.md) + UI/UX Ágil por Categorías
    Tipografía: Plus Jakarta Sans + Inter
-   Diseño: Minimalista Progresivo con Identidad de Color por Línea
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
-  /* Tipografías Modernas y Ultra-Legibles */
+  /* Tipografías Limpias y Ultra-Legibles */
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Superficies Limpias y Aireadas (Modo Claro) */
-  --bg: #F8FAFC;
-  --bg-elevated: #F1F5F9;
+  /* ==========================================================================
+     PALETA OFICIAL CAUCHOS KSM (Definida en Documentacion_Catalogo_KSM.md §4.2)
+     ========================================================================== */
+  --bg: #F6F4EF;
+  --bg-elevated: #EFECE4;
   --card: #FFFFFF;
-  --card-hover: #FFFFFF;
-  --fg: #0F172A;
-  --fg-secondary: #334155;
-  --muted: #64748B;
-  --line: #E2E8F0;
-  --line-strong: #CBD5E1;
+  --card-hover: #FCFBF9;
+  --fg: #1F2A2E;
+  --fg-secondary: #39484E;
+  --muted: #5E6A6E;
+  --line: #E3DED3;
+  --line-strong: #CFC8B8;
 
-  /* Colores Base de Marca e Interacción */
-  --brand: #0F172A;
-  --brand-hover: #1E293B;
-  --onbrand: #FFFFFF;
+  /* Verde Azulado Institucional (Teal) */
+  --teal: #2F4A55;
+  --teal-hover: #233841;
+  --teal-soft: #E9F0F2;
+  --onteal: #FFFFFF;
 
-  --gold: #D97706;
-  --gold-bright: #F59E0B;
-  --goldsoft: #FFFBEB;
-  --gold-border: #FDE68A;
+  /* Dorado Institucional y Dorado Suave (Filas seleccionadas / Cajas info) */
+  --gold: #9A7220;
+  --gold-bright: #C69632;
+  --goldsoft: #F3E7C9;
+  --gold-border: #DEC484;
 
-  --cat: #EA580C;
-  --cat-hover: #C2410C;
-  --cat-soft: #FFF7ED;
+  /* Naranja Quemado: Exclusivo para botones "Ver catálogo Canva" */
+  --cat: #C8691C;
+  --cat-hover: #A95512;
+  --cat-soft: #FDF1E6;
   --oncat: #FFFFFF;
 
-  --wa: #16A34A;
-  --wa-hover: #15803D;
-  --wa-soft: #F0FDF4;
+  /* Naranja Destacado: Exclusivo para Bolas de Neopreno y Acciones Clave */
+  --hi: #F28C1B;
+  --onhi: #2A1600;
+  --hidark: #B8620A;
+  --hi-soft: #FFF4E5;
+
+  /* Verde WhatsApp: Botones de envío y confirmación */
+  --wa: #1E8E4E;
+  --wa-hover: #17723E;
+  --wa-soft: #E8F6EE;
   --onwa: #FFFFFF;
 
-  --warn: #DC2626;
-  --warnsoft: #FEF2F2;
-  --info: #92400E;
+  /* Alertas y Estados */
+  --warn: #A3242F;
+  --warnsoft: #F8E3E3;
+  --info: #5B4E1A;
+
+  /* Velo de modales y Tarjeta Pantallazo (§4.2) */
+  --shade: rgba(20, 28, 31, 0.45);
+  --capbg: #E9E5DC;
+  --capcard: #FFFFFF;
+  --capfg: #1F2A2E;
+  --capmuted: #5E6A6E;
+  --capline: #E3DED3;
+  --capteal: #2F4A55;
+  --capgold: #9A7220;
+  --capsoft: #F3EFE6;
 
   /* Bandera Colombia */
   --co-y: #FCD116;
   --co-b: #003893;
   --co-r: #CE1126;
 
-  /* Sombras Suaves de Alta Precisión */
-  --shade: rgba(15, 23, 42, 0.55);
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
-  --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 24px 48px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(15, 23, 42, 0.06);
+  /* Sombras Cálidas y Radios */
+  --shadow-xs: 0 1px 3px rgba(31, 42, 46, 0.05);
+  --shadow-sm: 0 4px 14px rgba(31, 42, 46, 0.06), 0 1px 3px rgba(31, 42, 46, 0.04);
+  --shadow-md: 0 10px 26px rgba(31, 42, 46, 0.10), 0 2px 6px rgba(31, 42, 46, 0.05);
+  --shadow-lg: 0 22px 48px rgba(20, 28, 31, 0.22);
 
-  /* Radios y Transiciones */
-  --radius-sm: 10px;
-  --radius-md: 14px;
+  --radius-sm: 9px;
+  --radius-md: 13px;
   --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-pill: 999px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-fast: 160ms cubic-bezier(0.22, 1, 0.36, 1);
-  --transition-med: 260ms cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Variables dinámicas por línea (por defecto Zafiro) */
-  --line-accent: #2563EB;
-  --line-soft: #EFF6FF;
-  --line-border: #BFDBFE;
-  --line-text: #1D4ED8;
+  --transition-fast: 150ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-med: 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ==========================================================================
-   SISTEMA DE IDENTIDAD DE COLOR POR CADA LÍNEA DE PRODUCTO
-   ========================================================================== */
-[data-line-theme="rodio"] {
-  --line-accent: #2563EB;
-  --line-soft: #EFF6FF;
-  --line-border: #BFDBFE;
-  --line-text: #1D4ED8;
-}
-
-[data-line-theme="oro"] {
-  --line-accent: #D97706;
-  --line-soft: #FFFBEB;
-  --line-border: #FDE68A;
-  --line-text: #B45309;
-}
-
-[data-line-theme="acero"] {
-  --line-accent: #475569;
-  --line-soft: #F1F5F9;
-  --line-border: #CBD5E1;
-  --line-text: #334155;
-}
-
-[data-line-theme="areteria"] {
-  --line-accent: #E11D48;
-  --line-soft: #FFF1F2;
-  --line-border: #FECDD3;
-  --line-text: #BE185D;
-}
-
-[data-line-theme="economica"] {
-  --line-accent: #059669;
-  --line-soft: #ECFDF5;
-  --line-border: #A7F3D0;
-  --line-text: #047857;
-}
-
-[data-line-theme="fimo"] {
-  --line-accent: #7C3AED;
-  --line-soft: #F5F3FF;
-  --line-border: #DDD6FE;
-  --line-text: #6D28D9;
-}
-
-[data-line-theme="hilos"] {
-  --line-accent: #0D9488;
-  --line-soft: #F0FDFA;
-  --line-border: #99F6E4;
-  --line-text: #0F766E;
-}
-
-[data-line-theme="neopreno"] {
-  --line-accent: #EA580C;
-  --line-soft: #FFF7ED;
-  --line-border: #FED7AA;
-  --line-text: #C2410C;
-}
-
-/* Modo Oscuro */
+/* Modo Oscuro Oficial (§4.2) */
 [data-theme="dark"] {
-  --bg: #0B111E;
-  --bg-elevated: #111827;
-  --card: #1E293B;
-  --card-hover: #263349;
-  --fg: #F8FAFC;
-  --fg-secondary: #CBD5E1;
-  --muted: #94A3B8;
-  --line: #334155;
-  --line-strong: #475569;
+  --bg: #12191C;
+  --bg-elevated: #162024;
+  --card: #1A2428;
+  --card-hover: #212E33;
+  --fg: #ECE7DC;
+  --fg-secondary: #C8C2B4;
+  --muted: #A3ADB0;
+  --line: #2C3A3F;
+  --line-strong: #3D4F56;
 
-  --brand: #38BDF8;
-  --brand-hover: #7DD3FC;
-  --onbrand: #0F172A;
+  --teal: #9FC3CF;
+  --teal-hover: #B8D5DF;
+  --teal-soft: rgba(159, 195, 207, 0.14);
+  --onteal: #10181B;
 
-  --gold: #FBBF24;
-  --gold-bright: #FCD34D;
-  --goldsoft: rgba(245, 158, 11, 0.14);
-  --gold-border: rgba(245, 158, 11, 0.35);
+  --gold: #E2BC63;
+  --gold-bright: #F0CF7B;
+  --goldsoft: #3A3220;
+  --gold-border: #6B582D;
 
-  --cat: #FB923C;
-  --cat-hover: #FDBA74;
-  --cat-soft: rgba(234, 88, 12, 0.15);
+  --cat: #F29A4A;
+  --cat-hover: #F7B06E;
+  --cat-soft: rgba(242, 154, 74, 0.15);
   --oncat: #1A1008;
 
-  --wa: #22C55E;
-  --wa-hover: #4ADE80;
-  --wa-soft: rgba(34, 197, 94, 0.15);
-  --onwa: #052E16;
+  --hi: #FFA53D;
+  --onhi: #2A1600;
+  --hidark: #C26F12;
+  --hi-soft: rgba(255, 165, 61, 0.14);
 
-  --warn: #F87171;
-  --warnsoft: rgba(220, 38, 38, 0.18);
-  --info: #FDE68A;
-}
+  --wa: #3CC57A;
+  --wa-hover: #57D38F;
+  --wa-soft: rgba(60, 197, 122, 0.15);
+  --onwa: #08140D;
 
-[data-theme="dark"] [data-line-theme="rodio"] {
-  --line-accent: #60A5FA;
-  --line-soft: rgba(37, 99, 235, 0.16);
-  --line-border: rgba(96, 165, 250, 0.35);
-  --line-text: #93C5FD;
-}
-[data-theme="dark"] [data-line-theme="oro"] {
-  --line-accent: #FBBF24;
-  --line-soft: rgba(217, 119, 6, 0.16);
-  --line-border: rgba(251, 191, 36, 0.35);
-  --line-text: #FCD34D;
-}
-[data-theme="dark"] [data-line-theme="acero"] {
-  --line-accent: #94A3B8;
-  --line-soft: rgba(100, 116, 139, 0.18);
-  --line-border: rgba(148, 163, 184, 0.35);
-  --line-text: #E2E8F0;
-}
-[data-theme="dark"] [data-line-theme="areteria"] {
-  --line-accent: #FB7185;
-  --line-soft: rgba(225, 29, 72, 0.16);
-  --line-border: rgba(251, 113, 133, 0.35);
-  --line-text: #FDA4AF;
-}
-[data-theme="dark"] [data-line-theme="economica"] {
-  --line-accent: #34D399;
-  --line-soft: rgba(5, 150, 105, 0.16);
-  --line-border: rgba(52, 211, 153, 0.35);
-  --line-text: #6EE7B7;
-}
-[data-theme="dark"] [data-line-theme="fimo"] {
-  --line-accent: #A78BFA;
-  --line-soft: rgba(124, 58, 237, 0.16);
-  --line-border: rgba(167, 139, 250, 0.35);
-  --line-text: #C4B5FD;
-}
-[data-theme="dark"] [data-line-theme="hilos"] {
-  --line-accent: #2DD4BF;
-  --line-soft: rgba(13, 148, 136, 0.16);
-  --line-border: rgba(45, 212, 191, 0.35);
-  --line-text: #5EEAD4;
+  --warn: #F08A92;
+  --warnsoft: #3A2023;
+  --info: #E7D490;
+  --shade: rgba(0, 0, 0, 0.6);
 }
 
 /* Reset y Base */
@@ -228,7 +149,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: 15px;
-  line-height: 1.5;
+  line-height: 1.48;
   color: var(--fg);
   background-color: var(--bg);
   min-height: 100vh;
@@ -238,7 +159,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .btn, .mode-switch-btn, .line-chip {
+h1, h2, h3, h4, .btn, .workspace-tab-btn, .line-chip {
   font-family: var(--font-display);
 }
 
@@ -264,30 +185,31 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--line-accent);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
 .app-shell {
-  max-width: 1160px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 max(16px, env(safe-area-inset-left)) 40px max(16px, env(safe-area-inset-right));
 }
 
 /* ==========================================================================
-   1. BARRA SUPERIOR MINIMALISTA
+   1. BARRA SUPERIOR INSTITUCIONAL (TEAL #2F4A55 + DORADO #9A7220)
    ========================================================================== */
 .topbar {
-  background: var(--card);
-  border-bottom: 1px solid var(--line);
+  background: #2F4A55;
+  color: #FFFFFF;
+  border-bottom: 2px solid #9A7220;
   position: relative;
   z-index: 40;
 }
 
 .topbar-inner {
-  max-width: 1160px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 9px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -312,16 +234,20 @@ a {
     var(--co-b) 50%, var(--co-b) 75%,
     var(--co-r) 75%, var(--co-r) 100%
   );
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
 }
 
 .brand-eyebrow {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--gold);
+}
+
+.topbar .brand-eyebrow {
+  color: #F3E7C9;
 }
 
 .topbar-actions {
@@ -335,32 +261,38 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 13px;
+  padding: 5px 12px;
   border-radius: var(--radius-pill);
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--fg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.10);
+  color: #FFFFFF;
   transition: all var(--transition-fast);
 }
 
 .top-pill-btn:hover {
-  border-color: var(--fg-secondary);
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.top-pill-btn.neo-pill {
+  background: var(--hi);
+  color: var(--onhi);
+  border-color: var(--hidark);
+  font-weight: 700;
 }
 
 .top-pill-btn.joy18k {
   background: #141414;
-  color: #FCD34D;
-  border-color: #D97706;
+  color: #E2BC63;
+  border-color: #9A7220;
 }
 
 /* ==========================================================================
-   2. CABECERA LIMPIA Y SELECTOR DE 2 PESTAÑAS PRINCIPALES (DIJES vs NEOPRENO)
+   2. CABECERA PRINCIPAL Y PESTAÑAS DE TRABAJO (DIJES vs NEOPRENO)
    ========================================================================== */
 .hero-clean {
-  padding: 24px 0 18px;
+  padding: 22px 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -375,11 +307,11 @@ a {
 }
 
 .ksm-emblem {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-  border: 1.5px solid #F59E0B;
+  background: #2F4A55;
+  border: 2px solid #9A7220;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -395,13 +327,14 @@ a {
   font-weight: 800;
   letter-spacing: 0.04em;
   line-height: 1;
+  color: #F3E7C9;
 }
 
 .ksm-emblem-sub {
   font-size: 8.5px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: #FBBF24;
+  color: #E2BC63;
   margin-top: 2px;
 }
 
@@ -410,13 +343,13 @@ a {
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  color: var(--fg);
+  color: var(--teal);
 }
 
 .hero-subtitle {
   font-size: 14px;
   color: var(--muted);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .hero-right-actions {
@@ -426,7 +359,7 @@ a {
   flex-wrap: wrap;
 }
 
-/* Selector Principal de 2 Pestañas (Dijes e Insumos vs Bolas de Neopreno) */
+/* Selector Principal de 2 Pestañas (Dijes en Teal vs Neopreno en Naranja #F28C1B) */
 .workspace-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -434,7 +367,7 @@ a {
   background: var(--bg-elevated);
   padding: 6px;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   margin-bottom: 18px;
 }
 
@@ -449,56 +382,53 @@ a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 13px 18px;
+  padding: 12px 18px;
   border-radius: var(--radius-md);
-  font-family: var(--font-display);
   font-size: 15px;
   font-weight: 700;
-  color: var(--fg-secondary);
+  color: var(--muted);
   background: transparent;
   transition: all var(--transition-fast);
 }
 
 .workspace-tab-btn:hover {
   color: var(--fg);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.workspace-tab-btn.active {
-  background: var(--card);
-  color: var(--fg);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .workspace-tab-btn.active.tab-dijes {
-  border-bottom: 3px solid #2563EB;
+  background: var(--teal);
+  color: var(--onteal);
+  box-shadow: var(--shadow-sm);
 }
 
 .workspace-tab-btn.active.tab-neopreno {
-  border-bottom: 3px solid #EA580C;
-  color: var(--cat);
+  background: var(--hi);
+  color: var(--onhi);
+  border-bottom: 3px solid var(--hidark);
+  box-shadow: var(--shadow-sm);
 }
 
 .tab-count-badge {
   font-size: 11.5px;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 9px;
   border-radius: var(--radius-pill);
-  background: var(--bg-elevated);
-  color: var(--muted);
+  background: rgba(31, 42, 46, 0.08);
+  color: inherit;
 }
 
-.workspace-tab-btn.active .tab-count-badge {
-  background: #EFF6FF;
-  color: #1D4ED8;
+.workspace-tab-btn.active.tab-dijes .tab-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
 }
 
 .workspace-tab-btn.active.tab-neopreno .tab-count-badge {
-  background: #FFF7ED;
-  color: #C2410C;
+  background: rgba(42, 22, 0, 0.14);
+  color: var(--onhi);
 }
 
-/* Botones del Sistema */
+/* Botones del Sistema con los Colores Oficiales del .md */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -515,44 +445,44 @@ a {
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .btn.primary {
-  background: var(--brand);
-  color: var(--onbrand);
+  background: var(--teal);
+  color: var(--onteal);
 }
 
 .btn.primary:hover {
-  background: var(--brand-hover);
+  background: var(--teal-hover);
   transform: translateY(-1px);
 }
 
 .btn.neobtn {
-  background: #EA580C;
-  color: #FFFFFF;
+  background: var(--hi);
+  color: var(--onhi);
+  border-bottom: 3px solid var(--hidark);
 }
 
 .btn.neobtn:hover {
-  background: #C2410C;
+  filter: brightness(1.04);
   transform: translateY(-1px);
 }
 
 .btn.cat {
-  background: var(--cat-soft);
-  color: var(--cat);
-  border: 1px solid rgba(234, 88, 12, 0.25);
+  background: var(--cat);
+  color: var(--oncat);
 }
 
 .btn.cat:hover {
-  background: var(--cat);
-  color: var(--oncat);
+  background: var(--cat-hover);
+  transform: translateY(-1px);
 }
 
 .btn.wa {
   background: var(--wa);
   color: var(--onwa);
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.24);
+  box-shadow: 0 4px 12px rgba(30, 142, 78, 0.24);
 }
 
 .btn.wa:hover {
@@ -563,12 +493,22 @@ a {
 .btn.outline {
   background: var(--card);
   color: var(--fg);
-  border: 1px solid var(--line-strong);
+  border: 1.5px solid var(--line-strong);
 }
 
 .btn.outline:hover {
-  border-color: var(--fg);
-  background: var(--bg-elevated);
+  border-color: var(--teal);
+  background: var(--goldsoft);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--fg-secondary);
+}
+
+.btn.ghost:hover {
+  background: var(--goldsoft);
+  color: var(--fg);
 }
 
 .pill-badge {
@@ -581,8 +521,9 @@ a {
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 800;
-  background: var(--gold-bright);
-  color: #0F172A;
+  background: var(--goldsoft);
+  color: var(--info);
+  border: 1px solid var(--gold-border);
 }
 
 .min-order-pill {
@@ -593,9 +534,9 @@ a {
   font-weight: 700;
   padding: 3px 10px;
   border-radius: var(--radius-pill);
-  background: var(--line-soft, var(--goldsoft));
-  color: var(--line-text, var(--info));
-  border: 1px solid var(--line-border, var(--gold-border));
+  background: var(--goldsoft);
+  color: var(--info);
+  border: 1px solid var(--gold-border);
 }
 
 .hero-info-card {
@@ -606,32 +547,23 @@ a {
   box-shadow: var(--shadow-xs);
 }
 
-.btn.ghost {
-  background: transparent;
-  color: var(--fg-secondary);
-}
-.btn.ghost:hover {
-  background: var(--bg-elevated);
-  color: var(--fg);
-}
-
 /* ==========================================================================
-   3. CONSOLA DE FILTROS MINIMALISTA PROGRESIVA (LIMPIA Y ORDENADA)
+   3. CONSOLA DE BÚSQUEDA Y FILTROS ÁGILES (STICKY)
    ========================================================================== */
 .filter-console {
   position: sticky;
   top: 0;
   z-index: 35;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 93%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 10px 0;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .filter-console-card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 12px 14px;
   box-shadow: var(--shadow-sm);
@@ -640,11 +572,11 @@ a {
   gap: 10px;
 }
 
-/* Fila 1: Buscador limpio + Botón discreto "⚙️ Filtros" */
 .search-row-clean {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .search-box-wrap {
@@ -652,6 +584,7 @@ a {
   display: flex;
   align-items: center;
   flex: 1;
+  min-width: 220px;
 }
 
 .search-icon {
@@ -666,17 +599,18 @@ a {
   width: 100%;
   padding: 10px 36px 10px 38px;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-strong);
   background: var(--bg);
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--fg);
   transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #2563EB;
+  border-color: var(--gold);
   background: var(--card);
+  box-shadow: 0 0 0 3px var(--goldsoft);
 }
 
 .search-clear {
@@ -685,7 +619,7 @@ a {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--line);
+  background: var(--line-strong);
   color: var(--fg);
   font-size: 11px;
   display: none;
@@ -697,32 +631,56 @@ a {
   display: inline-flex;
 }
 
+/* Botón rápido "En mi pedido (X)" y Botón "⚙️ Filtros" */
+.quick-cart-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 13px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--gold-border);
+  background: var(--goldsoft);
+  color: var(--info);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.quick-cart-filter-btn:hover,
+.quick-cart-filter-btn.active {
+  background: var(--gold);
+  color: #FFFFFF;
+  border-color: var(--gold);
+}
+
 .more-filters-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 14px;
+  padding: 9px 13px;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-strong);
   background: var(--bg);
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--fg-secondary);
   white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
-.more-filters-btn:hover, .more-filters-btn.active {
-  border-color: var(--fg);
-  background: var(--card);
-  color: var(--fg);
+.more-filters-btn:hover,
+.more-filters-btn.active {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  color: var(--teal);
 }
 
-/* Fila 2: Cinta de Líneas con Color Distintivo por Categoría */
+/* Cinta horizontal de las 11 Líneas */
 .lines-ribbon {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   overflow-x: auto;
   padding-bottom: 2px;
   scrollbar-width: none;
@@ -734,7 +692,7 @@ a {
 .line-chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   padding: 7px 13px;
   border-radius: var(--radius-pill);
   font-size: 13px;
@@ -747,50 +705,38 @@ a {
 }
 
 .line-chip:hover {
-  border-color: var(--line-accent, #2563EB);
-  background: var(--line-soft, #EFF6FF);
+  border-color: var(--gold);
+  background: var(--goldsoft);
   color: var(--fg);
 }
 
-.line-chip-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--line-accent, #64748B);
-  flex-shrink: 0;
-}
-
 .line-chip[aria-pressed="true"] {
-  background: var(--line-accent, #0F172A);
-  color: #FFFFFF;
-  border-color: var(--line-accent, #0F172A);
+  background: var(--teal);
+  color: var(--onteal);
+  border-color: var(--teal);
   font-weight: 700;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-}
-
-.line-chip[aria-pressed="true"] .line-chip-dot {
-  background: #FFFFFF;
+  box-shadow: var(--shadow-xs);
 }
 
 .line-chip-count {
   font-size: 11px;
   padding: 1px 6px;
   border-radius: var(--radius-pill);
-  background: rgba(15, 23, 42, 0.06);
+  background: rgba(31, 42, 46, 0.08);
   font-variant-numeric: tabular-nums;
 }
 
 .line-chip[aria-pressed="true"] .line-chip-count {
   background: rgba(255, 255, 255, 0.22);
-  color: #FFFFFF;
+  color: var(--onteal);
 }
 
-/* Fila 3 (PROGRESIVA): Subcategorías — SOLO se muestra cuando el usuario elige una línea específica */
+/* Barra Progresiva de Subcategorías (Solo aparece cuando eliges una Línea) */
 .progressive-sub-bar {
   display: none;
   align-items: center;
   gap: 8px;
-  padding-top: 8px;
+  padding-top: 9px;
   border-top: 1px solid var(--line);
   animation: fadeSlideUp 180ms var(--ease-out);
 }
@@ -816,28 +762,29 @@ a {
   font-weight: 600;
   background: var(--bg);
   color: var(--fg-secondary);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
 .sub-pill:hover {
-  border-color: var(--line-accent);
+  border-color: var(--gold);
+  background: var(--goldsoft);
   color: var(--fg);
 }
 
 .sub-pill.active {
-  background: var(--line-soft);
-  color: var(--line-text);
-  border-color: var(--line-accent);
-  font-weight: 700;
+  background: var(--goldsoft);
+  color: var(--info);
+  border: 1.5px solid var(--gold);
+  font-weight: 800;
 }
 
-/* Cajón Oculto de Filtros Secundarios (Orden, Precio, Medida, Agotados) */
+/* Cajón Oculto de Filtros Secundarios */
 .extra-filters-Collapse {
   display: none;
   padding-top: 10px;
-  border-top: 1px dashed var(--line);
+  border-top: 1px dashed var(--line-strong);
   gap: 10px;
   flex-wrap: wrap;
   align-items: center;
@@ -863,7 +810,7 @@ a {
   background: var(--bg);
   font-size: 13px;
   font-weight: 600;
-  color: var(--fg-secondary);
+  color: var(--fg);
   cursor: pointer;
 }
 
@@ -877,13 +824,13 @@ a {
   background: var(--bg);
   font-size: 13px;
   font-weight: 600;
-  color: var(--fg-secondary);
+  color: var(--fg);
   cursor: pointer;
   user-select: none;
 }
 
 .toggle-chip input {
-  accent-color: #2563EB;
+  accent-color: var(--teal);
   width: 15px;
   height: 15px;
 }
@@ -905,105 +852,230 @@ a {
 }
 
 .view-btn.active {
-  background: var(--card);
-  color: var(--fg);
-  box-shadow: var(--shadow-xs);
+  background: var(--teal);
+  color: var(--onteal);
 }
 
 /* ==========================================================================
-   4. BANNER DE CATEGORÍA ACTIVA CON SU IDENTIDAD DE COLOR
+   4. TARJETAS VISUALES DE CATEGORÍA AL INICIO (NAVEGACIÓN ÁGIL EN 1 TOQUE)
+   ========================================================================== */
+.categories-showcase {
+  margin-bottom: 26px;
+  animation: fadeSlideUp 220ms var(--ease-out);
+}
+
+.categories-showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.categories-showcase-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categories-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.cat-bento-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: var(--shadow-xs);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  text-align: left;
+}
+
+.cat-bento-card:hover {
+  border-color: var(--gold);
+  border-left-color: var(--gold);
+  background: var(--card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.cat-bento-card.neopreno-highlight {
+  background: linear-gradient(135deg, var(--hi-soft) 0%, var(--card) 100%);
+  border-color: var(--hi);
+  border-left: 4px solid var(--hidark);
+}
+
+.cat-bento-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cat-bento-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: var(--goldsoft);
+  border: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.cat-bento-card.neopreno-highlight .cat-bento-icon {
+  background: var(--hi);
+  color: var(--onhi);
+  border-color: var(--hidark);
+}
+
+.cat-bento-name {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--fg);
+  line-height: 1.25;
+}
+
+.cat-bento-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cat-bento-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.cat-bento-enter {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--teal);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==========================================================================
+   5. BANNER DE LÍNEA ACTIVA (TEAL + DORADO DEL .MD)
    ========================================================================== */
 .line-context-banner {
-  background: var(--line-soft);
-  border: 1px solid var(--line-border);
-  border-left: 5px solid var(--line-accent);
+  background: var(--card);
+  border: 1.5px solid var(--gold-border);
+  border-left: 6px solid var(--teal);
   border-radius: var(--radius-lg);
   padding: 16px 20px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  animation: fadeSlideUp 220ms var(--ease-out);
+  box-shadow: var(--shadow-xs);
+  animation: fadeSlideUp 200ms var(--ease-out);
 }
 
 .line-context-info h2 {
   font-size: 20px;
   font-weight: 800;
-  color: var(--fg);
+  color: var(--teal);
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 3px;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
 }
 
 .line-context-info p {
   font-size: 13.5px;
-  color: var(--fg-secondary);
+  color: var(--muted);
 }
 
 .line-context-note {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12.5px;
-  font-weight: 600;
-  color: var(--line-text);
-  background: var(--card);
-  border: 1px solid var(--line-border);
-  padding: 4px 10px;
+  font-weight: 700;
+  color: var(--info);
+  background: var(--goldsoft);
+  border: 1px solid var(--gold-border);
+  padding: 5px 11px;
   border-radius: var(--radius-sm);
   display: inline-block;
 }
 
 /* ==========================================================================
-   5. SECCIONES Y TARJETAS DE PRODUCTO DIFERENCIADAS POR COLOR
+   6. SECCIONES, SUBSECCIONES COLAPSABLES Y TARJETAS DE PRODUCTO (.MD)
    ========================================================================== */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .line-section {
-  margin-bottom: 36px;
-  animation: fadeSlideUp 240ms var(--ease-out);
+  margin-bottom: 34px;
+  animation: fadeSlideUp 220ms var(--ease-out);
 }
 
-/* Cabecera de Línea con bloque de color distintivo */
+/* Cabecera de Línea en Verde Petróleo (--teal #2F4A55) con acento Dorado */
 .line-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 12px 16px;
+  padding: 12px 18px;
   margin-bottom: 16px;
-  background: var(--line-soft);
-  border: 1px solid var(--line-border);
-  border-left: 5px solid var(--line-accent);
+  background: #2F4A55;
+  color: #FFFFFF;
+  border-left: 5px solid #E2BC63;
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
 }
 
 .line-header-title {
   font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 800;
-  color: var(--fg);
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .line-badge-colored {
   font-size: 12px;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 2px 10px;
   border-radius: var(--radius-pill);
-  background: var(--card);
-  color: var(--line-text);
-  border: 1px solid var(--line-border);
+  background: #F3E7C9;
+  color: #5B4E1A;
 }
 
 .sub-section {
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .sub-header {
@@ -1012,28 +1084,57 @@ a {
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 12px;
-  padding: 6px 12px;
-  border-bottom: 2px solid var(--line-border);
+  padding: 8px 14px;
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.sub-header:hover {
+  background: var(--goldsoft);
 }
 
 .sub-header h3 {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--line-text);
+  letter-spacing: 0.06em;
+  color: var(--gold);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+}
+
+.sub-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sub-header-count {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--muted);
 }
 
-/* Grilla de Tarjetas Más Espaciosa y Clara */
+.sub-collapse-icon {
+  font-size: 12px;
+  color: var(--gold);
+  transition: transform var(--transition-fast);
+}
+
+.sub-section.collapsed .sub-collapse-icon {
+  transform: rotate(-90deg);
+}
+
+.sub-section.collapsed .products-grid {
+  display: none;
+}
+
+/* Grilla de Productos */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1045,37 +1146,41 @@ a {
   gap: 8px;
 }
 
+/* Tarjeta de Producto: Blanca sobre Fondo Crema #F6F4EF */
 .prod-card {
   background: var(--card);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--line-accent);
+  border: 1.5px solid var(--line);
+  border-left: 4px solid var(--teal);
   border-radius: var(--radius-md);
-  padding: 15px;
+  padding: 14px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
+  gap: 11px;
   box-shadow: var(--shadow-xs);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
   position: relative;
 }
 
 .prod-card:hover {
   box-shadow: var(--shadow-sm);
+  border-color: var(--gold-border);
+  border-left-color: var(--gold);
   transform: translateY(-2px);
 }
 
+/* Fila/Tarjeta Seleccionada en Dorado Suave (--goldsoft #F3E7C9 del .md) */
 .prod-card.in-cart {
-  background: color-mix(in srgb, var(--wa-soft) 55%, var(--card));
-  border-color: var(--wa);
-  border-top: 3px solid var(--wa);
-  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.12);
+  background: var(--goldsoft);
+  border-color: var(--gold);
+  border-left: 5px solid var(--wa);
+  box-shadow: 0 4px 16px rgba(154, 114, 32, 0.14);
 }
 
 .prod-card.out-of-stock {
-  opacity: 0.55;
+  opacity: 0.56;
   background: var(--bg);
-  border-top-color: var(--muted);
+  border-left-color: var(--muted);
 }
 
 .prod-card-top {
@@ -1084,13 +1189,13 @@ a {
   gap: 12px;
 }
 
-/* Miniatura coloreada según la línea del producto */
+/* Miniatura con Marco Crema/Dorado */
 .prod-visual-thumb {
   width: 58px;
   height: 58px;
   border-radius: 12px;
-  background: var(--line-soft);
-  border: 1px solid var(--line-border);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1099,11 +1204,17 @@ a {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.prod-card.in-cart .prod-visual-thumb {
+  background: var(--card);
+  border-color: var(--gold);
 }
 
 .prod-visual-thumb:hover {
   transform: scale(1.05);
+  border-color: var(--cat);
 }
 
 .prod-id-tag {
@@ -1112,8 +1223,7 @@ a {
   left: 5px;
   font-size: 9px;
   font-weight: 700;
-  color: var(--line-text);
-  opacity: 0.8;
+  color: var(--muted);
 }
 
 .prod-page-mini {
@@ -1121,8 +1231,8 @@ a {
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--line-accent);
-  color: #fff;
+  background: var(--cat);
+  color: var(--oncat);
   font-size: 9.5px;
   font-weight: 700;
   text-align: center;
@@ -1157,7 +1267,7 @@ a {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 16.5px;
-  color: var(--fg);
+  color: var(--teal);
 }
 
 .prod-price.tier-active {
@@ -1184,6 +1294,10 @@ a {
   color: var(--fg-secondary);
 }
 
+.prod-card.in-cart .meta-badge {
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .meta-badge.tier-badge {
   background: var(--goldsoft);
   color: var(--info);
@@ -1196,7 +1310,7 @@ a {
   font-weight: 700;
 }
 
-/* Pie de Tarjeta: Enlace Canva Naranja vs Stepper Azul/Verde */
+/* Pie de Tarjeta: Botón Naranja Quemado Canva (--cat #C8691C) vs Stepper Teal (#2F4A55) */
 .prod-card-actions {
   display: flex;
   align-items: center;
@@ -1205,6 +1319,10 @@ a {
   padding-top: 10px;
   border-top: 1px solid var(--line);
   flex-wrap: wrap;
+}
+
+.prod-card.in-cart .prod-card-actions {
+  border-top-color: var(--gold-border);
 }
 
 .ref-links-group {
@@ -1217,37 +1335,36 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 6px 10px;
+  padding: 6px 11px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 700;
-  background: var(--cat-soft);
-  color: var(--cat);
-  border: 1px solid rgba(234, 88, 12, 0.25);
+  background: var(--cat);
+  color: var(--oncat);
   transition: all var(--transition-fast);
 }
 
 .ver-canva-btn:hover {
-  background: var(--cat);
-  color: var(--oncat);
+  background: var(--cat-hover);
+  transform: translateY(-1px);
 }
 
 .scale-btn {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 8px;
+  padding: 6px 9px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
   background: var(--bg);
-  color: var(--muted);
-  border: 1px solid var(--line);
+  color: var(--fg-secondary);
+  border: 1px solid var(--line-strong);
 }
 
 .scale-btn:hover {
-  border-color: var(--fg);
-  color: var(--fg);
+  border-color: var(--teal);
+  color: var(--teal);
 }
 
 .stepper-wrap {
@@ -1261,21 +1378,21 @@ a {
   border-radius: 8px;
   font-size: 11.5px;
   font-weight: 700;
-  background: var(--line-soft);
-  color: var(--line-text);
-  border: 1px solid var(--line-border);
+  background: var(--goldsoft);
+  color: var(--info);
+  border: 1px solid var(--gold-border);
 }
 
 .doz-btn:hover {
-  background: var(--line-accent);
-  color: #fff;
+  background: var(--gold);
+  color: #FFFFFF;
 }
 
 .step {
   display: inline-flex;
   align-items: center;
-  background: var(--bg);
-  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  border: 1.5px solid var(--teal);
   border-radius: 9px;
   overflow: hidden;
 }
@@ -1294,13 +1411,12 @@ a {
 }
 
 .step button.step-inc {
-  background: var(--line-soft);
-  color: var(--line-text);
+  background: var(--teal);
+  color: var(--onteal);
 }
 
 .step button.step-inc:hover {
-  background: var(--line-accent);
-  color: #FFFFFF;
+  background: var(--teal-hover);
 }
 
 .step button.step-dec:hover {
@@ -1316,7 +1432,7 @@ a {
   text-align: center;
   font-size: 14.5px;
   font-weight: 700;
-  background: transparent;
+  background: var(--card);
   color: var(--fg);
   -moz-appearance: textfield;
 }
@@ -1329,8 +1445,8 @@ a {
 
 /* Personalizador Contextual (Metal, Letras A-Z, Colores) */
 .prod-customizer {
-  background: var(--bg);
-  border: 1px solid var(--line);
+  background: var(--card);
+  border: 1px solid var(--gold-border);
   border-radius: var(--radius-sm);
   padding: 10px;
   display: flex;
@@ -1341,7 +1457,7 @@ a {
 .customizer-label {
   font-size: 12px;
   font-weight: 700;
-  color: var(--fg-secondary);
+  color: var(--info);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1363,11 +1479,12 @@ a {
   font-size: 12px;
   font-weight: 600;
   border: 1px solid var(--line-strong);
-  background: var(--card);
+  background: var(--bg);
 }
 
 .metal-chip:hover {
-  border-color: var(--line-accent);
+  border-color: var(--gold);
+  background: var(--goldsoft);
 }
 
 .metal-dot {
@@ -1394,7 +1511,7 @@ a {
   border-radius: 6px;
   font-size: 12px;
   font-weight: 700;
-  background: var(--card);
+  background: var(--bg);
   border: 1px solid var(--line-strong);
   color: var(--fg);
   display: inline-flex;
@@ -1403,9 +1520,9 @@ a {
 }
 
 .letter-key:hover:not(:disabled) {
-  background: var(--line-accent);
-  color: #FFFFFF;
-  border-color: var(--line-accent);
+  background: var(--teal);
+  color: var(--onteal);
+  border-color: var(--teal);
 }
 
 .letter-key:disabled {
@@ -1419,18 +1536,18 @@ a {
   padding: 7px 10px;
   border-radius: 7px;
   border: 1px solid var(--line-strong);
-  background: var(--card);
-  font-size: 13px;
+  background: var(--bg);
+  font-size: 14px;
   color: var(--fg);
 }
 
 /* ==========================================================================
-   6. PESTAÑA 2: ESTUDIO CONFIGURADOR DE BOLAS DE NEOPRENO
+   7. PESTAÑA 2: ESTUDIO CONFIGURADOR DE BOLAS DE NEOPRENO (--hi #F28C1B)
    ========================================================================== */
 .neopreno-studio {
   background: var(--card);
-  border: 2px solid #FED7AA;
-  border-top: 5px solid #EA580C;
+  border: 2px solid var(--gold-border);
+  border-top: 6px solid var(--hi);
   border-radius: var(--radius-xl);
   padding: 24px;
   margin: 10px 0 36px;
@@ -1458,7 +1575,7 @@ a {
 .studio-title {
   font-size: clamp(22px, 3vw, 28px);
   font-weight: 800;
-  color: var(--fg);
+  color: var(--teal);
   margin-bottom: 4px;
 }
 
@@ -1484,7 +1601,7 @@ a {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #C2410C;
+  color: var(--gold);
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -1492,12 +1609,11 @@ a {
 }
 
 .step-num {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: #FFF7ED;
-  color: #EA580C;
-  border: 1px solid #FDBA74;
+  background: var(--hi);
+  color: var(--onhi);
   font-size: 12px;
   font-weight: 800;
   display: inline-flex;
@@ -1525,23 +1641,20 @@ a {
 }
 
 .neo-ref-card:hover {
-  border-color: #FB923C;
+  border-color: var(--gold);
   background: var(--card);
 }
 
 .neo-ref-card.active {
-  border-color: #EA580C;
-  background: #FFF7ED;
-  box-shadow: 0 0 0 1px #EA580C;
-}
-[data-theme="dark"] .neo-ref-card.active {
-  background: rgba(234, 88, 12, 0.2);
+  border-color: var(--hi);
+  background: var(--goldsoft);
+  box-shadow: 0 0 0 1.5px var(--hi);
 }
 
 .neo-ref-code {
   font-size: 11px;
   font-weight: 800;
-  color: #EA580C;
+  color: var(--cat);
 }
 
 .neo-ref-name {
@@ -1565,16 +1678,16 @@ a {
   min-width: 68px;
   padding: 9px 14px;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-strong);
   background: var(--bg);
   font-weight: 700;
   font-size: 14px;
 }
 
 .neo-size-pill.active {
-  background: #EA580C;
-  color: #FFFFFF;
-  border-color: #EA580C;
+  background: var(--teal);
+  color: var(--onteal);
+  border-color: var(--teal);
 }
 
 .neo-tiers-grid {
@@ -1599,11 +1712,8 @@ a {
 }
 
 .neo-tier-box.active-tier {
-  background: #FFF7ED;
-  border-color: #EA580C;
-}
-[data-theme="dark"] .neo-tier-box.active-tier {
-  background: rgba(234, 88, 12, 0.2);
+  background: var(--goldsoft);
+  border-color: var(--gold);
 }
 
 .neo-tier-range {
@@ -1616,7 +1726,7 @@ a {
 .neo-tier-price {
   font-size: 15px;
   font-weight: 800;
-  color: var(--fg);
+  color: var(--teal);
   margin-top: 2px;
   display: block;
 }
@@ -1645,9 +1755,9 @@ a {
 }
 
 .neo-color-item.active {
-  border-color: var(--wa);
-  background: var(--wa-soft);
-  box-shadow: 0 0 0 1px var(--wa);
+  border-color: var(--gold);
+  background: var(--goldsoft);
+  box-shadow: 0 0 0 1px var(--gold);
 }
 
 .neo-color-item:disabled {
@@ -1687,7 +1797,7 @@ a {
 
 .studio-preview-card {
   background: var(--bg);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-strong);
   border-radius: var(--radius-lg);
   padding: 18px;
   position: sticky;
@@ -1724,12 +1834,12 @@ a {
 }
 
 .qty-preset-btn:hover {
-  border-color: #EA580C;
-  color: #EA580C;
+  border-color: var(--gold);
+  background: var(--goldsoft);
 }
 
 /* ==========================================================================
-   7. BARRA INFERIOR DE COTIZACIÓN (#cartbar)
+   8. BARRA INFERIOR DE COTIZACIÓN (#cartbar · Teal #2F4A55 + Dorado)
    ========================================================================== */
 .cartbar {
   position: fixed;
@@ -1737,9 +1847,10 @@ a {
   left: 0;
   right: 0;
   z-index: 50;
-  background: var(--card);
-  border-top: 2px solid var(--wa);
-  box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.14);
+  background: #2F4A55;
+  color: #FFFFFF;
+  border-top: 3px solid #E2BC63;
+  box-shadow: 0 -8px 30px rgba(20, 28, 31, 0.24);
   padding: 10px max(16px, env(safe-area-inset-left)) max(10px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right));
   transform: translateY(110%);
   transition: transform 280ms var(--ease-out);
@@ -1750,7 +1861,7 @@ a {
 }
 
 .cartbar-inner {
-  max-width: 1160px;
+  max-width: 1180px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -1778,13 +1889,13 @@ a {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 800;
-  color: var(--fg);
+  color: #F3E7C9;
 }
 
 .cartbar-count-txt {
   font-size: 13px;
   font-weight: 600;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .min-progress-wrap {
@@ -1797,35 +1908,35 @@ a {
 .min-progress-track {
   flex: 1;
   height: 6px;
-  background: var(--line);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .min-progress-fill {
   height: 100%;
-  background: var(--gold-bright);
+  background: #F28C1B;
   border-radius: var(--radius-pill);
   transition: width 280ms var(--ease-out);
 }
 
 .min-progress-fill.met {
-  background: var(--wa);
+  background: #3CC57A;
 }
 
 .min-progress-label {
   font-size: 11.5px;
   font-weight: 700;
-  color: var(--muted);
+  color: #F3E7C9;
   white-space: nowrap;
 }
 
 .min-progress-label.met {
-  color: var(--wa);
+  color: #8CF0B6;
 }
 
 /* ==========================================================================
-   8. MODALES Y HOJAS DESLIZANTES
+   9. MODALES Y HOJAS DESLIZANTES
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
@@ -1872,8 +1983,9 @@ a {
 
 .modal-header {
   padding: 16px 22px;
-  background: #0F172A;
+  background: #2F4A55;
   color: #FFFFFF;
+  border-bottom: 2px solid #9A7220;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2008,7 +2120,7 @@ a {
   align-items: flex-start;
   gap: 3px;
   text-align: left;
-  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.2);
+  box-shadow: 0 3px 10px rgba(30, 142, 78, 0.2);
 }
 
 .wa-channel-name {
@@ -2022,7 +2134,7 @@ a {
 }
 
 /* ==========================================================================
-   9. UTILIDADES FLOTANTES Y ASISTENTE
+   10. UTILIDADES FLOTANTES Y ASISTENTE
    ========================================================================== */
 .floating-utils {
   position: fixed;
@@ -2039,8 +2151,9 @@ a {
   height: 46px;
   padding: 0 16px;
   border-radius: var(--radius-pill);
-  background: #0F172A;
+  background: #2F4A55;
   color: #FFFFFF;
+  border: 1.5px solid #E2BC63;
   font-weight: 700;
   font-size: 13.5px;
   box-shadow: var(--shadow-md);
@@ -2074,7 +2187,7 @@ a {
   width: min(380px, calc(100vw - 32px));
   max-height: 500px;
   background: var(--card);
-  border: 1px solid var(--line-strong);
+  border: 1.5px solid var(--gold);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   z-index: 65;
@@ -2114,7 +2227,7 @@ a {
 }
 
 .chat-bubble.user {
-  background: #2563EB;
+  background: #2F4A55;
   color: #FFFFFF;
   align-self: flex-end;
 }
@@ -2148,14 +2261,14 @@ a {
 }
 
 .toast {
-  background: #0F172A;
+  background: #2F4A55;
   color: #FFFFFF;
   padding: 11px 16px;
   border-radius: var(--radius-md);
   font-size: 13.5px;
   font-weight: 600;
   box-shadow: var(--shadow-md);
-  border-left: 4px solid #22C55E;
+  border-left: 4px solid #E2BC63;
 }
 
 .site-footer {
