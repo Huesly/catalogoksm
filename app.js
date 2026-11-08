@@ -450,18 +450,23 @@
   // ICONOS REPRESENTATIVOS POR LÍNEA Y MINIATURAS SVG CON PALETA DEL .MD
   // ==========================================================================
   const LINE_ICONS = {
-    'Dijes de Rodio': '👑',
-    'Línea Económica': '✨',
-    'Dijes de Acero': '🛡️',
-    'Aretería': '🌸',
-    'Dijes de Oro Laminado': '💛',
-    'Pulseras de Expansión': '📿',
-    'Fimo y Piedras': '💎',
-    'Hilos': '🧵',
-    'Balines Oro Laminado': '🟡',
-    'Balines de Rodio': '⚪',
-    'Balines de Acero': '⚙️'
+    'Dijes de Rodio': 'crown',
+    'Línea Económica': 'auto_awesome',
+    'Dijes de Acero': 'shield',
+    'Aretería': 'local_florist',
+    'Dijes de Oro Laminado': 'workspace_premium',
+    'Pulseras de Expansión': 'all_inclusive',
+    'Fimo y Piedras': 'diamond',
+    'Hilos': 'texture',
+    'Balines Oro Laminado': 'radio_button_checked',
+    'Balines de Rodio': 'adjust',
+    'Balines de Acero': 'settings'
   };
+
+  function renderLineIcon(lineName, className = 'icon-sm') {
+    const symbol = LINE_ICONS[lineName] || 'diamond';
+    return `<span class="material-symbols-outlined ${className}">${symbol}</span>`;
+  }
 
   let categoriesShowcaseHiddenByUser = false;
 
@@ -536,7 +541,7 @@
     LINES_META.forEach(lm => {
       const prods = DATA.filter(p => p.l === lm.name);
       const count = prods.length;
-      const icon = LINE_ICONS[lm.name] || '💍';
+      const icon = renderLineIcon(lm.name, 'icon-md');
       html += `
         <div class="cat-bento-card" data-select-line="${escapeHtml(lm.name)}" role="button" tabindex="0">
           <div class="cat-bento-top">
@@ -553,7 +558,7 @@
             <span class="cat-bento-enter">Explorar colección →</span>
             ${lm.canvaUrl ? `
               <a href="${escapeHtml(lm.canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link" title="Abrir catálogo con fotos en Canva">
-                📷 Fotos Canva
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Fotos Canva
               </a>
             ` : `<span class="meta-badge">${escapeHtml(lm.badge)}</span>`}
           </div>
@@ -565,7 +570,7 @@
     html += `
       <div class="cat-bento-card neopreno-highlight" data-open-neopreno="1" role="button" tabindex="0">
         <div class="cat-bento-top">
-          <div class="cat-bento-icon" aria-hidden="true">🟠</div>
+          <div class="cat-bento-icon" aria-hidden="true"><span class="material-symbols-outlined icon-md" style="color:var(--hi);">palette</span></div>
           <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
               <span class="cat-bento-name">Bolas de Neopreno</span>
@@ -577,7 +582,7 @@
         <div class="cat-bento-footer">
           <span class="cat-bento-enter" style="color:var(--cat);">Abrir configurador →</span>
           <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link">
-            📷 Fotos Canva
+            <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Fotos Canva
           </a>
         </div>
       </div>
@@ -586,7 +591,7 @@
     grid.innerHTML = html;
     grid.dataset.rendered = '1';
 
-    // Evitar que clic en "📷 Fotos Canva" dispare el filtro de la tarjeta
+    // Evitar que clic en "Fotos Canva" dispare el filtro de la tarjeta
     grid.querySelectorAll('.bento-canva-link').forEach(link => {
       link.addEventListener('click', e => e.stopPropagation());
     });
@@ -626,7 +631,7 @@
     const totalCount = DATA.length;
     let html = `
       <button type="button" class="line-chip" aria-pressed="${state.activeLine === 'Todos'}" data-line="Todos">
-        <span>🏠 Todas las líneas</span>
+        <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">grid_view</span> Todas las líneas</span>
         <span class="line-chip-count">${totalCount}</span>
       </button>
     `;
@@ -634,7 +639,7 @@
     LINES_META.forEach(lm => {
       const count = DATA.filter(p => p.l === lm.name).length;
       const isPressed = state.activeLine === lm.name;
-      const icon = LINE_ICONS[lm.name] || '';
+      const icon = renderLineIcon(lm.name);
       html += `
         <button type="button" class="line-chip" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
           <span>${icon} ${escapeHtml(lm.short)}</span>
@@ -749,7 +754,7 @@
       } else {
         const meta = LINES_META.find(m => m.name === state.activeLine);
         if (meta) {
-          const icon = LINE_ICONS[meta.name] || '💍';
+          const icon = renderLineIcon(meta.name, 'icon-md');
           lineBanner.style.display = 'flex';
           lineBanner.innerHTML = `
             <div class="line-context-info">
@@ -759,12 +764,12 @@
                 <span class="min-order-pill">${escapeHtml(meta.badge)}</span>
               </h2>
               <p>${escapeHtml(meta.desc)}</p>
-              ${meta.note ? `<div class="line-context-note">ℹ️ ${escapeHtml(meta.note)}</div>` : ''}
+              ${meta.note ? `<div class="line-context-note"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(meta.note)}</div>` : ''}
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               ${meta.canvaUrl ? `
                 <a href="${escapeHtml(meta.canvaUrl)}" target="_blank" rel="noopener" class="btn cat">
-                  📷 Abrir Catálogo Canva de ${escapeHtml(meta.short)}
+                  <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Abrir Catálogo Canva de ${escapeHtml(meta.short)}
                 </a>
               ` : ''}
               <button type="button" class="btn outline" id="resetLineBtn">← Volver a las 11 Categorías</button>
@@ -841,7 +846,7 @@
 
       container.innerHTML = `
         <div class="hero-info-card" style="text-align:center;padding:38px 20px;margin:20px 0;">
-          <div style="font-size:32px;margin-bottom:8px;">${is18kQuery ? '💎' : '🔍'}</div>
+          <div style="font-size:36px;margin-bottom:8px;color:var(--gold);"><span class="material-symbols-outlined" style="font-size:42px;">${is18kQuery ? 'diamond' : 'search'}</span></div>
           <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:6px;">
             ${is18kQuery ? 'Producto del Catálogo Exclusivo Joyería Oro 18K' : 'No encontramos productos con esos filtros'}
           </h3>
@@ -853,7 +858,7 @@
           <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
             ${is18kQuery ? `
               <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="btn primary">
-                💎 Abrir Catálogo Joyería Oro 18K
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">diamond</span> Abrir Catálogo Joyería Oro 18K
               </a>
             ` : ''}
             <button type="button" class="btn outline" id="emptyResetBtn">Restablecer todos los filtros</button>
@@ -899,7 +904,7 @@
     groupedByLine.forEach(lGroup => {
       const meta = LINES_META.find(m => m.name === lGroup.lineName);
       const lineTotal = lGroup.subs.reduce((acc, s) => acc + s.items.length, 0);
-      const icon = LINE_ICONS[lGroup.lineName] || '💍';
+      const icon = renderLineIcon(lGroup.lineName);
 
       html += `
         <section class="line-section" id="${meta ? meta.id : ''}">
@@ -913,7 +918,7 @@
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                 ${meta && meta.canvaUrl ? `
                   <a href="${escapeHtml(meta.canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn">
-                    📷 Catálogo Canva · ${escapeHtml(meta.short)}
+                    <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Catálogo Canva · ${escapeHtml(meta.short)}
                   </a>
                 ` : ''}
                 <button type="button" class="scale-btn filter-this-line-btn" style="background:#F3E7C9;color:#5B4E1A;border-color:#DEC484;font-weight:700;" data-line="${escapeHtml(lGroup.lineName)}">
@@ -925,10 +930,10 @@
           ${lGroup.subs.map(subGroup => `
             <div class="sub-section">
               <div class="sub-header" title="Toca para colapsar o expandir esta subsección">
-                <h3><span>🔸</span> <span>${escapeHtml(subGroup.subName)}</span></h3>
+                <h3><span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">arrow_right</span> <span>${escapeHtml(subGroup.subName)}</span></h3>
                 <div class="sub-header-right">
                   <span class="sub-header-count num">${subGroup.items.length} ${subGroup.items.length === 1 ? 'referencia' : 'referencias'}</span>
-                  <span class="sub-collapse-icon">▾</span>
+                  <span class="sub-collapse-icon"><span class="material-symbols-outlined icon-xs">expand_more</span></span>
                 </div>
               </div>
               <div class="products-grid ${state.viewMode === 'compact' ? 'compact-view' : ''}">
@@ -954,9 +959,10 @@
     const noteVal = state.cnote[prod.i] || '';
     const isBalinDocena = prod.l === 'Balines de Rodio' || prod.l === 'Balines de Acero';
 
-    // Mostrar personalizador si el producto está en el carrito (qty > 0) o si es Letras / Hilos / Neopreno con oro laminado
+    // Mostrar personalizador si el producto no está agotado y es Letras / Hilos / Neopreno con oro laminado / o Líneas con baño de metal
+    const hasMetals = productHasMetalChips(prod);
     const showCustomizer = !isSoldOut && !isConsult && (
-      qty > 0 || productIsLetters(prod) || productNeedsColorNote(prod)
+      qty > 0 || productIsLetters(prod) || productNeedsColorNote(prod) || hasMetals
     );
 
     let customizerHtml = '';
@@ -966,7 +972,10 @@
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>🔤 Toca las letras para agregar o escribe (ej: A2, M1):</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">spellcheck</span>
+                <span>Toca las letras para agregar o escribe:</span>
+              </span>
               <span class="num" style="color:var(--wa);">${qty} und</span>
             </div>
             <div class="letters-grid">
@@ -977,7 +986,7 @@
               `).join('')}
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: A2, B1, M1 (la cantidad se actualiza sola)"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
@@ -986,7 +995,10 @@
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>🎨 Especifica colores y cantidades:</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">palette</span>
+                <span>Especifica colores y cantidades:</span>
+              </span>
             </div>
             <div class="metal-chips-row">
               ${quickColors.map(col => `
@@ -996,32 +1008,41 @@
               `).join('')}
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: 2 rojo, 3 azul, 1 negro"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
-      } else if (productHasMetalChips(prod) && qty > 0) {
+      } else if (hasMetals) {
+        const currentLower = (noteVal || '').toLowerCase();
+        const isDorado = currentLower.includes('dorado');
+        const isPlateado = currentLower.includes('plateado');
+        const isNegro = currentLower.includes('negro');
+        const isRosado = currentLower.includes('rosado');
+
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>✨ Color de baño / metal (opcional):</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">palette</span>
+                <span>Color de baño / metal (Toca para seleccionar):</span>
+              </span>
             </div>
             <div class="metal-chips-row">
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="dorado">
+              <button type="button" class="metal-chip metal-add-btn ${isDorado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Dorado">
                 <span class="metal-dot dorado"></span> Dorado
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="plateado">
+              <button type="button" class="metal-chip metal-add-btn ${isPlateado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Plateado">
                 <span class="metal-dot plateado"></span> Plateado
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="negro">
+              <button type="button" class="metal-chip metal-add-btn ${isNegro ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Negro">
                 <span class="metal-dot negro"></span> Negro
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="rosado">
+              <button type="button" class="metal-chip metal-add-btn ${isRosado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Rosado">
                 <span class="metal-dot rosado"></span> Rosado
               </button>
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: 2 dorado, 3 plateado (o nota especial)"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
@@ -1034,7 +1055,7 @@
           <div class="prod-visual-thumb open-ref-modal-btn" data-id="${prod.i}" title="Ver referencia, foto en Canva y escala en mm">
             <span class="prod-id-tag">#${prod.i}</span>
             ${getProductSvgThumb(prod)}
-            ${prod.p ? `<span class="prod-page-mini">Pág. ${prod.p}</span>` : (prod.f ? `<span class="prod-page-mini">📷 Foto</span>` : '')}
+            ${prod.p ? `<span class="prod-page-mini">Pág. ${prod.p}</span>` : (prod.f ? `<span class="prod-page-mini"><span class="material-symbols-outlined icon-sm" style="font-size:12px;vertical-align:-1px;">photo_camera</span> Foto</span>` : '')}
           </div>
           <div class="prod-main-info">
             <div class="prod-title-row">
@@ -1047,12 +1068,12 @@
                       : `<span class="prod-price ${hasVolumeDiscountApplied ? 'tier-active' : ''}">${fmtCOP(effectiveUnit)}</span>`
                     )
                 }
-                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);">✓ En pedido: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
+                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;">check_circle</span> En pedido: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
               </div>
             </div>
             <div class="prod-meta-tags">
-              ${prod.t ? `<span class="meta-badge">📏 ${escapeHtml(prod.t)}</span>` : ''}
-              ${prod.o ? `<span class="meta-badge ${/\d+\+\s*und|12\s*und/i.test(prod.o) ? 'tier-badge' : ''}">💡 ${escapeHtml(prod.o)}</span>` : ''}
+              ${prod.t ? `<span class="meta-badge"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;">straighten</span> ${escapeHtml(prod.t)}</span>` : ''}
+              ${prod.o ? `<span class="meta-badge ${/\d+\+\s*und|12\s*und/i.test(prod.o) ? 'tier-badge' : ''}"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(prod.o)}</span>` : ''}
             </div>
           </div>
         </div>
@@ -1063,17 +1084,17 @@
           <div class="ref-links-group">
             ${canvaUrl ? `
               <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn" title="Abrir página ${prod.p} en el catálogo oficial de Canva">
-                📷 Canva · Pág. ${prod.p}
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Canva · Pág. ${prod.p}
               </a>
             ` : ''}
             ${prod.f ? `
               <button type="button" class="ver-canva-btn open-ref-modal-btn" data-id="${prod.i}">
-                📷 Ver foto ref.
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Ver foto ref.
               </button>
             ` : ''}
             ${prod.t ? `
               <button type="button" class="scale-btn open-ref-modal-btn" data-id="${prod.i}" title="Ver tamaño a escala real y detalles">
-                📐 Escala
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">straighten</span> Escala
               </button>
             ` : ''}
           </div>
@@ -1157,34 +1178,34 @@
     // Botones de teclado de letras A-Z
     container.querySelectorAll('.letter-key').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const letter = btn.getAttribute('data-letter');
-        appendTokenToProductNote(id, letter, true);
+        appendTokenToProductNote(id, letter);
       });
     });
 
     // Botones de color de baño/metal (Dorado, Plateado, Negro, Rosado)
     container.querySelectorAll('.metal-add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const metal = btn.getAttribute('data-metal');
-        appendMetalToProductNote(id, metal);
+        selectMetalBath(id, metal);
       });
     });
 
     // Botones de color rápido para Hilos / Neopreno con oro laminado
     container.querySelectorAll('.quick-color-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const col = btn.getAttribute('data-col');
-        appendMetalToProductNote(id, col.toLowerCase());
+        selectColorNote(id, col);
       });
     });
 
     // Input de nota libre (letras / colores)
     container.querySelectorAll('.prod-note-input').forEach(inp => {
       inp.addEventListener('input', () => {
-        const id = parseInt(inp.getAttribute('data-id'), 10);
+        const id = parseInt(inp.getAttribute('data-prod-id') || inp.getAttribute('data-id'), 10);
         const prod = BY_ID[id];
         const val = inp.value;
         state.cnote[id] = val;
@@ -1229,19 +1250,52 @@
     updateProductQty(id, Math.max(1, total));
   }
 
-  function appendMetalToProductNote(id, metalWord) {
+  function selectMetalBath(id, metalWord) {
+    const prod = BY_ID[id];
+    if (!prod) return;
+
+    // Normalizar capitalización: Dorado, Plateado, Negro, Rosado
+    const metalClean = metalWord.charAt(0).toUpperCase() + metalWord.slice(1).toLowerCase();
+
+    // Asignar inmediatamente al input de la nota
+    state.cnote[id] = metalClean;
+
+    // Si la cantidad actual en el carrito es 0, sumar 1 automáticamente
+    const currentQty = state.cart[id] || 0;
+    if (currentQty === 0) {
+      state.cart[id] = 1;
+    }
+    savePersistedState();
+
+    // Re-renderizar la tarjeta para reflejar el botón activo, el input con el valor y el carrito
+    const existingCard = document.getElementById(`prod-card-${id}`);
+    if (existingCard) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = renderProductCardHtml(prod);
+      const newCard = wrapper.firstElementChild;
+      existingCard.replaceWith(newCard);
+      bindProductCardEvents(newCard.parentElement || document);
+    }
+    updateCartBar();
+    showToast(`Acabado ${metalClean} seleccionado para #${prod.i}`);
+  }
+
+  function selectColorNote(id, colWord) {
+    const prod = BY_ID[id];
+    if (!prod) return;
+    const colClean = colWord.charAt(0).toUpperCase() + colWord.slice(1).toLowerCase();
     const current = state.cnote[id] || '';
-    const regex = new RegExp(`(\\d+)\\s*${metalWord}`, 'i');
     let nextNote = '';
-    if (regex.test(current)) {
-      nextNote = current.replace(regex, (_, num) => `${parseInt(num, 10) + 1} ${metalWord}`);
+    if (!current.trim()) {
+      nextNote = `1 ${colClean}`;
     } else {
-      nextNote = current.trim() ? `${current.trim()}, 1 ${metalWord}` : `1 ${metalWord}`;
+      nextNote = `${current.trim()}, 1 ${colClean}`;
     }
     state.cnote[id] = nextNote;
     const totalFromNote = parseNoteTotalQty(nextNote);
     const currentQty = state.cart[id] || 0;
     updateProductQty(id, Math.max(currentQty, totalFromNote, 1));
+    showToast(`Color ${colClean} agregado a #${prod.i}`);
   }
 
   function updateProductQty(id, newQty) {
@@ -1352,18 +1406,18 @@
     if (!q) {
       dropdown.innerHTML = `
         <div class="sugg-header">
-          <span>⚡ Búsquedas Populares</span>
+          <span><span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">bolt</span> Búsquedas Populares</span>
           <span style="font-size:10px;color:var(--muted);">Toca para buscar</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;background:var(--bg);">
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Corona">👑 Corona</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="San Benito">✝️ San Benito</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Van Cleef">🍀 Van Cleef</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Candongas">🌸 Candongas</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Letras">🔤 Letras</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Balines">🟡 Balines</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Cuarzo">💎 Cuarzo</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Cruces">📿 Cruces</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Corona"><span class="material-symbols-outlined icon-sm">crown</span> Corona</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="San Benito"><span class="material-symbols-outlined icon-sm">auto_awesome</span> San Benito</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Van Cleef"><span class="material-symbols-outlined icon-sm">spa</span> Van Cleef</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Candongas"><span class="material-symbols-outlined icon-sm">local_florist</span> Candongas</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Letras"><span class="material-symbols-outlined icon-sm">spellcheck</span> Letras</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Balines"><span class="material-symbols-outlined icon-sm">circle</span> Balines</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cuarzo"><span class="material-symbols-outlined icon-sm">diamond</span> Cuarzo</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cruces"><span class="material-symbols-outlined icon-sm">add</span> Cruces</button>
         </div>
       `;
       dropdown.style.display = 'block';
@@ -1377,7 +1431,7 @@
     if (topMatches.length === 0) {
       dropdown.innerHTML = `
         <div class="sugg-header">
-          <span>🔍 Sin resultados directos</span>
+          <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">search_off</span> Sin resultados directos</span>
         </div>
         <div style="padding:12px;text-align:center;font-size:13px;color:var(--muted);">
           No encontramos referencias con "${escapeHtml(q)}".<br/>
@@ -1402,7 +1456,7 @@
         const count = DATA.filter(p => p.l === lm.name).length;
         html += `
           <div class="sugg-category-jump" data-jump-line="${escapeHtml(lm.name)}">
-            <span>📁 Ver colección <strong>${escapeHtml(lm.name)}</strong></span>
+            <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">folder_open</span> Ver colección <strong>${escapeHtml(lm.name)}</strong></span>
             <span class="min-order-pill num">${count} ref.</span>
           </div>
         `;
@@ -1484,7 +1538,7 @@
         e.stopPropagation();
         const id = parseInt(btn.getAttribute('data-add-id'), 10);
         updateProductQty(id, (state.cart[id] || 0) + 1);
-        btn.textContent = '✓';
+        btn.innerHTML = '<span class="material-symbols-outlined icon-xs">check</span>';
         setTimeout(() => { btn.textContent = '+1'; }, 1000);
         showToast(`Agregado a tu pedido #${id}`);
       });
@@ -1513,7 +1567,7 @@
     if (!SpeechRec) {
       voiceBtn.title = 'Búsqueda por voz no disponible en este navegador';
       voiceBtn.addEventListener('click', () => {
-        showToast('ℹ️ Tu navegador no soporta búsqueda por voz. Puedes escribir directo.');
+        showToast('Tu navegador no soporta búsqueda por voz. Puedes escribir directo.');
       });
       return;
     }
@@ -1534,19 +1588,19 @@
         recognition.start();
         isListening = true;
         voiceBtn.classList.add('listening');
-        voiceBtn.textContent = '🔴';
-        showToast('🎤 Escuchando... Di el producto que buscas (ej: San Benito)');
+        voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
+        showToast('Escuchando... Di el producto que buscas (ej: San Benito)');
       } catch (e) {
         isListening = false;
         voiceBtn.classList.remove('listening');
-        voiceBtn.textContent = '🎤';
+        voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
       }
     });
 
     recognition.onresult = e => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
       const transcript = e.results && e.results[0] && e.results[0][0] ? e.results[0][0].transcript : '';
       if (transcript) {
         qInput.value = transcript;
@@ -1554,20 +1608,20 @@
         updateClearSearchBtn();
         updateQuickPillsActiveState();
         renderProductCatalog();
-        showToast(`🔍 Buscando: "${transcript}"`);
+        showToast(`Buscando: "${transcript}"`);
       }
     };
 
     recognition.onerror = () => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
     };
 
     recognition.onend = () => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
     };
   }
 
@@ -1579,10 +1633,10 @@
 
     function updateMobileViewBtn() {
       if (state.viewMode === 'compact') {
-        if (icon) icon.textContent = '🎴';
+        if (icon) icon.textContent = 'grid_view';
         if (txt) txt.textContent = 'Tarjetas';
       } else {
-        if (icon) icon.textContent = '📱';
+        if (icon) icon.textContent = 'view_list';
         if (txt) txt.textContent = 'Lista';
       }
     }
@@ -1630,7 +1684,7 @@
               `;
             }).join('')}
           </svg>
-          <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">📷 Vista de Referencia · ${label} (${escapeHtml(prod.t || 'Calibres #3 al #8')})</div>
+          <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">Vista de Referencia · ${label} (${escapeHtml(prod.t || 'Calibres #3 al #8')})</div>
         </div>
       `;
     }
@@ -1657,7 +1711,7 @@
             <rect x="118" y="21" width="6" height="78" rx="${isFlat ? 1 : 3}" fill="url(#goldRing)"/>
           </svg>
           <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">
-            📷 Bola de Neopreno con Argollas ${isFlat ? 'Planas' : 'Redondas'} en Oro Laminado
+            Bola de Neopreno con Argollas ${isFlat ? 'Planas' : 'Redondas'} en Oro Laminado
           </div>
         </div>
       `;
@@ -1706,7 +1760,7 @@
         <!-- Plano de escala milimétrica -->
         <div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:8px;">
-            📐 Proporción y Medida de Referencia
+            <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">straighten</span> Proporción y Medida de Referencia
           </div>
           <svg width="240" height="170" viewBox="0 0 240 170" style="background:var(--card);border:1px solid var(--line);border-radius:8px;">
             <!-- Cuadrícula milimétrica tenue -->
@@ -1738,7 +1792,7 @@
           <div style="font-size:22px;font-weight:800;color:var(--teal);" class="num">
             ${prod.v === 'AGOTADO' ? 'AGOTADO' : (prod.k > 0 ? fmtCOP(prod.k) + ' COP' : 'Consultar precio')}
           </div>
-          ${prod.o ? `<div class="meta-badge tier-badge" style="align-self:flex-start;">💡 ${escapeHtml(prod.o)}</div>` : ''}
+          ${prod.o ? `<div class="meta-badge tier-badge" style="align-self:flex-start;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(prod.o)}</div>` : ''}
           <p style="font-size:13.5px;color:var(--muted);">
             ${canvaUrl
               ? `La fotografía oficial de referencia de este producto se encuentra en la <strong>Página ${prod.p}</strong> del catálogo de Canva de <strong>${escapeHtml(prod.l)}</strong>.`
@@ -1746,7 +1800,7 @@
           </p>
           ${canvaUrl ? `
             <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" class="btn cat" style="width:100%;justify-content:center;">
-              📷 Abrir Foto en Canva · Página ${prod.p} ↗
+              <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Abrir Foto en Canva · Página ${prod.p} ↗
             </a>
           ` : ''}
         </div>
@@ -1994,7 +2048,7 @@
       tiersGrid.innerHTML = `
         <div class="neo-tier-box active-tier" style="grid-column: 1 / -1;">
           <span class="neo-tier-range">Tarifa especial para ${currentRefObj.ref} #${state.neoForm.size}</span>
-          <span class="neo-tier-price" style="color:var(--teal);">💬 Precio por confirmar en WhatsApp</span>
+          <span class="neo-tier-price" style="color:var(--teal);"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">chat</span> Precio por confirmar en WhatsApp</span>
         </div>
       `;
     } else {
@@ -2082,7 +2136,7 @@
     const photoUrl = getNeoCanvaPhotoUrl(currentRefObj.ref, activeColorObj);
     if (canvaRefLink) {
       canvaRefLink.href = photoUrl;
-      canvaRefLink.textContent = `📷 Ver foto de ${currentRefObj.ref} #${activeColorObj.num} en Canva ↗`;
+      canvaRefLink.innerHTML = `<span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Ver foto de ${currentRefObj.ref} #${activeColorObj.num} en Canva ↗`;
     }
 
     if (summaryBox) {
@@ -2133,7 +2187,7 @@
     savePersistedState();
     updateCartBar();
     renderNeoAddedMiniList();
-    showToast(`✅ Agregado: ${qty} und de ${neoEntry.r} #${neoEntry.s} (${neoEntry.cname})`);
+    showToast(`Agregado: ${qty} und de ${neoEntry.r} #${neoEntry.s} (${neoEntry.cname})`);
   }
 
   function renderNeoAddedMiniList() {
@@ -2146,7 +2200,7 @@
     box.innerHTML = `
       <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line);">
         <div style="font-size:12.5px;font-weight:800;color:var(--teal);text-transform:uppercase;margin-bottom:8px;">
-          ✓ Líneas de Neopreno en tu Cotización (${state.neo.length}):
+          <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--teal);">check_circle</span> Líneas de Neopreno en tu Cotización (${state.neo.length}):
         </div>
         <div style="display:grid;gap:6px;">
           ${state.neo.map((item, idx) => `
@@ -2157,7 +2211,7 @@
               </span>
               <span style="display:flex;align-items:center;gap:10px;">
                 <strong class="num">${item.k > 0 ? fmtCOP(item.q * item.k) : 'Por confirmar'}</strong>
-                <button type="button" class="remove-neo-line-btn" data-idx="${idx}" style="color:var(--warn);font-weight:800;" title="Quitar línea">✕</button>
+                <button type="button" class="remove-neo-line-btn" data-idx="${idx}" style="color:var(--warn);font-weight:800;" title="Quitar línea"><span class="material-symbols-outlined icon-sm">close</span></button>
               </span>
             </div>
           `).join('')}
@@ -2261,7 +2315,7 @@
     if (progLabel) {
       progLabel.classList.toggle('met', met);
       if (met) {
-        progLabel.textContent = '✓ Pedido mínimo ($30.000) alcanzado';
+        progLabel.textContent = 'Pedido mínimo ($30.000) alcanzado';
       } else {
         const missing = MIN_ORDER - totals.grandTotal;
         progLabel.textContent = `Faltan ${fmtCOP(missing)} para el mínimo ($30.000)`;
@@ -2330,11 +2384,11 @@
             </div>
             <div class="quote-line-sub">
               ${escapeHtml(prod.l)} › ${escapeHtml(prod.s)} · <span class="num">${fmtCOP(unitK)} c/u</span>
-              ${canvaUrl ? ` · <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;">📷 Pág. ${prod.p}</a>` : ''}
+              ${canvaUrl ? ` · <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Pág. ${prod.p}</a>` : ''}
             </div>
             <div style="margin-top:6px;">
               <input type="text" class="custom-note-input quote-item-note" data-id="${prod.i}"
-                placeholder="Nota de color, baño o letras (opcional)"
+                placeholder=""
                 value="${escapeHtml(note)}" style="font-size:12.5px;padding:5px 8px;" />
             </div>
           </div>
@@ -2365,7 +2419,7 @@
               Color #${escapeHtml(n.cn)} ${escapeHtml(n.cname)}
               ${n.m ? ` · Aro/Argolla: ${escapeHtml(n.m)}` : ''}
               · ${n.k > 0 ? `${fmtCOP(n.k)} c/u` : 'Precio por confirmar en WhatsApp'}
-              ${n.photoUrl ? ` · <a href="${escapeHtml(n.photoUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;">📷 Foto</a>` : ''}
+              ${n.photoUrl ? ` · <a href="${escapeHtml(n.photoUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Foto</a>` : ''}
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
@@ -2458,7 +2512,7 @@
         nameInput.focus();
       }
       if (warnBanner) warnBanner.style.display = 'block';
-      showToast('⚠️ Escribe tu nombre (mínimo 2 letras) para enviar o copiar tu pedido.');
+      showToast('Escribe tu nombre (mínimo 2 letras) para enviar o copiar tu pedido.');
       return false;
     }
     if (nameInput) nameInput.classList.remove('invalid');
@@ -2497,7 +2551,7 @@
 
         // Enlace de foto en Canva (no se incluye en Balines según §12.1)
         if (!prod.l.startsWith('Balines') && prod.u && prod.p) {
-          lines.push(`   📷 Foto *pág. ${prod.p}*: ${prod.u}#${prod.p}`);
+          lines.push(`   Foto *pág. ${prod.p}*: ${prod.u}#${prod.p}`);
         }
       });
       lines.push(`*Total productos: ${totals.prodUnits} und · ${fmtCOP(totals.prodTotal)} COP*`);
@@ -2748,7 +2802,7 @@
       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
       if (navigator.clipboard && window.ClipboardItem) {
         await navigator.clipboard.write([new window.ClipboardItem({ 'image/png': blob })]);
-        showToast('📋 ¡Imagen copiada! Ahora abre el WhatsApp elegido y pégala en el chat.');
+        showToast('¡Imagen copiada! Ahora abre el WhatsApp elegido y pégala en el chat.');
       } else {
         downloadCanvasAsPng();
       }
@@ -2765,7 +2819,7 @@
     link.download = `Cotizacion_KSM_${cleanName}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
-    showToast('💾 Imagen de tu cotización descargada en tu dispositivo.');
+    showToast('Imagen de tu cotización descargada en tu dispositivo.');
   }
 
   // Generador de PDF nativo autónomo (sin depender de CDNs externos) a partir del Canvas de alta resolución
@@ -2830,7 +2884,7 @@
       link.href = URL.createObjectURL(blob);
       link.click();
       setTimeout(() => URL.revokeObjectURL(link.href), 5000);
-      showToast('📄 PDF descargado. Adjúntalo en WhatsApp con el ícono de clip (📎 → Documento).');
+      showToast('PDF descargado. Adjúntalo en WhatsApp como documento.');
     } catch (err) {
       downloadCanvasAsPng();
     }
@@ -2860,7 +2914,7 @@
     if (/oring|o-ring|correa|hublot|cartier|versace|canal|ranura|bulgari|mortadela|exclusiv|18\s*k|oro 18/i.test(q)) {
       appendChatMessage(
         'bot',
-        `💎 <strong>Joyería Oro 18K:</strong> Eso lo tenemos en nuestro catálogo exclusivo de Joyería Oro 18K (separadores mín. 50 und, modelos exclusivos de neopreno, orings, correas y mortadelas).<br><br>
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">diamond</span> <strong>Joyería Oro 18K:</strong> Eso lo tenemos en nuestro catálogo exclusivo de Joyería Oro 18K (separadores mín. 50 und, modelos exclusivos de neopreno, orings, correas y mortadelas).<br><br>
         <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="btn primary" style="margin-top:4px;padding:6px 12px;font-size:12.5px;">Abrir Catálogo Joyería 18K ↗</a>`
       );
       return;
@@ -2882,22 +2936,22 @@
     if (q.includes('minimo') || q.includes('mínimo')) {
       appendChatMessage(
         'bot',
-        `🛍️ <strong>Pedido mínimo:</strong> Nuestro pedido mínimo en bisutería es de <strong>$30.000 COP</strong>. Puedes combinar dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno hasta completarlo.`
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">shopping_bag</span> <strong>Pedido mínimo:</strong> Nuestro pedido mínimo en bisutería es de <strong>$30.000 COP</strong>. Puedes combinar dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno hasta completarlo.`
       );
       return;
     }
     if (q.includes('envio') || q.includes('pago') || q.includes('tarjeta') || q.includes('transferencia')) {
       appendChatMessage(
         'bot',
-        `🚚 <strong>Envíos y Pagos:</strong> Enviamos a toda Colombia y al exterior 🌎. El valor del envío te lo confirma un asesor según tu ciudad o país.<br><br>
-        💳 <strong>Pagos:</strong> Recibimos tarjeta de crédito por nuestro link seguro (Colombia y exterior), transferencia bancaria u otros medios por WhatsApp.`
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">local_shipping</span> <strong>Envíos y Pagos:</strong> Enviamos a toda Colombia y al exterior. El valor del envío te lo confirma un asesor según tu ciudad o país.<br><br>
+        <span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">credit_card</span> <strong>Pagos:</strong> Recibimos tarjeta de crédito por nuestro link seguro (Colombia y exterior), transferencia bancaria u otros medios por WhatsApp.`
       );
       return;
     }
     if (q.includes('asesor') || q.includes('whatsapp') || q.includes('telefono')) {
       appendChatMessage(
         'bot',
-        `👤 <strong>Nuestros canales oficiales de WhatsApp:</strong><br>
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">support_agent</span> <strong>Nuestros canales oficiales de WhatsApp:</strong><br>
         • <a href="https://wa.me/573104337951?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Al Detal (310 433 7951) ↗</a><br>
         • <a href="https://wa.me/573162599541?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Mayorista (316 259 9541) ↗</a><br>
         • <a href="https://wa.me/573222604729?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Neox (322 260 4729) ↗</a>`
@@ -3003,7 +3057,7 @@
       switchWorkspaceTab('neopreno');
     }
 
-    // Botón Desplegable de Filtros Secundarios (⚙️ Filtros y Orden)
+    // Botón Desplegable de Filtros Secundarios (Filtros y Orden)
     const toggleExtraBtn = document.getElementById('toggleExtraFiltersBtn');
     const extraCollapse = document.getElementById('extraFiltersCollapse');
     if (toggleExtraBtn && extraCollapse) {
@@ -3014,7 +3068,7 @@
       });
     }
 
-    // Botón rápido "🛒 En mi pedido (X)"
+    // Botón rápido "En mi pedido (X)"
     const quickCartBtn = document.getElementById('quickCartFilterBtn');
     if (quickCartBtn) {
       quickCartBtn.addEventListener('click', () => {
@@ -3253,7 +3307,7 @@
         const txt = buildWhatsAppOrderText();
         try {
           await navigator.clipboard.writeText(txt);
-          showToast('📋 Texto de la cotización copiado al portapapeles.');
+          showToast('Texto de la cotización copiado al portapapeles.');
         } catch (e) {
           showToast('Selecciona el canal de WhatsApp para enviar el mensaje.');
         }
@@ -3357,7 +3411,7 @@
             <span class="min-order-pill">${escapeHtml(c.tag)}</span>
             <span style="color:var(--cat);font-weight:800;font-size:13px;">Abrir ↗</span>
           </div>
-          <div style="font-weight:800;font-size:15.5px;color:var(--fg);margin-top:4px;">📷 ${escapeHtml(c.title)}</div>
+          <div style="font-weight:800;font-size:15.5px;color:var(--fg);margin-top:4px;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> ${escapeHtml(c.title)}</div>
           <div style="font-size:13px;color:var(--muted);">${escapeHtml(c.sub)}</div>
         </a>
       `).join('');

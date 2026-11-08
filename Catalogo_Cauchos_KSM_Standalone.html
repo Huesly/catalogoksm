@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <style>
-/* CAUCHOS KSM - ESTILOS OFICIALES Y ADAPTABILIDAD MOVIL */
 /* ==========================================================================
    CAUCHOS KSM · CATÁLOGO INTERACTIVO & COTIZADOR WHATSAPP (V3)
    Paleta Oficial del Documento (.md) + UI/UX Ágil por Categorías
@@ -195,6 +195,36 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* ==========================================================================
+   ICONOGRAFÍA VECTORIAL GOOGLE MATERIAL SYMBOLS OUTLINED
+   ========================================================================== */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.material-symbols-outlined.icon-xs { font-size: 13px; }
+.material-symbols-outlined.icon-sm { font-size: 16px; }
+.material-symbols-outlined.icon-md { font-size: 20px; }
+.material-symbols-outlined.icon-lg { font-size: 24px; }
+.material-symbols-outlined.icon-xl { font-size: 32px; }
 
 :focus-visible {
   outline: 2px solid var(--gold);
@@ -422,12 +452,16 @@ a {
 }
 
 .tab-count-badge {
+  display: inline-flex;
+  align-items: center;
   font-size: 11.5px;
   font-weight: 700;
   padding: 2px 9px;
   border-radius: var(--radius-pill);
   background: rgba(31, 42, 46, 0.08);
   color: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .workspace-tab-btn.active.tab-dijes .tab-count-badge {
@@ -536,6 +570,8 @@ a {
   background: var(--goldsoft);
   color: var(--info);
   border: 1px solid var(--gold-border);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .min-order-pill {
@@ -549,6 +585,8 @@ a {
   background: var(--goldsoft);
   color: var(--info);
   border: 1px solid var(--gold-border);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .hero-info-card {
@@ -587,8 +625,8 @@ a {
 .search-row-clean {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
 }
 
 .search-box-wrap {
@@ -596,7 +634,7 @@ a {
   display: flex;
   align-items: center;
   flex: 1;
-  min-width: 220px;
+  min-width: 260px;
 }
 
 .search-icon {
@@ -909,7 +947,7 @@ a {
   border-bottom: 2px solid var(--hi);
 }
 
-/* Botón rápido "En mi pedido (X)" y Botón "⚙️ Filtros" */
+/* Botón rápido "En mi pedido (X)" y Botón "Filtros" */
 .quick-cart-filter-btn {
   display: inline-flex;
   align-items: center;
@@ -952,6 +990,38 @@ a {
   border-color: var(--teal);
   background: var(--teal-soft);
   color: var(--teal);
+}
+
+.search-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.results-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  border: 1.5px solid var(--line-strong);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--fg);
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#resultsCountLabel {
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--fg);
 }
 
 /* Cinta horizontal de las 11 Líneas */
@@ -1002,6 +1072,10 @@ a {
   border-radius: var(--radius-pill);
   background: rgba(31, 42, 46, 0.08);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
 }
 
 .line-chip[aria-pressed="true"] .line-chip-count {
@@ -1344,12 +1418,16 @@ a {
 }
 
 .line-badge-colored {
+  display: inline-flex;
+  align-items: center;
   font-size: 12px;
   font-weight: 700;
   padding: 2px 10px;
   border-radius: var(--radius-pill);
   background: #F3E7C9;
   color: #5B4E1A;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .sub-section {
@@ -1360,7 +1438,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 12px;
   padding: 8px 14px;
   background: var(--bg-elevated);
@@ -1384,18 +1462,24 @@ a {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  flex: 1;
 }
 
 .sub-header-right {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .sub-header-count {
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .sub-collapse-icon {
@@ -1751,18 +1835,31 @@ a {
 .metal-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
+  gap: 6px;
+  padding: 5px 12px;
   border-radius: var(--radius-pill);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
-  border: 1px solid var(--line-strong);
+  border: 1.5px solid var(--line-strong);
   background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
 }
 
 .metal-chip:hover {
   border-color: var(--gold);
   background: var(--goldsoft);
+  transform: translateY(-1px);
+}
+
+.metal-chip.active {
+  border-color: var(--gold);
+  background: var(--goldsoft);
+  color: var(--fg);
+  font-weight: 800;
+  box-shadow: 0 0 0 2.5px rgba(226, 188, 99, 0.45);
 }
 
 .metal-dot {
@@ -2667,62 +2764,65 @@ a {
     border-radius: 14px;
   }
   .search-row-clean {
-    gap: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
   }
   .search-box-wrap {
+    width: 100%;
     min-width: 100%;
-    order: 1;
   }
-  .search-input {
-    padding: 10px 64px 10px 34px;
-    font-size: 14px;
-    height: 42px;
+  .search-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
   }
-  .search-icon {
-    left: 11px;
-    font-size: 13px;
-  }
-  .search-voice-btn {
-    right: 32px;
-    width: 26px;
-    height: 26px;
-  }
-  .search-clear {
-    right: 6px;
-    width: 24px;
-    height: 24px;
+  .search-controls-right::-webkit-scrollbar {
+    display: none;
   }
   .quick-cart-filter-btn {
-    order: 2;
-    flex: 1;
     padding: 7px 10px;
     font-size: 12px;
     justify-content: center;
     height: 36px;
+    flex-shrink: 0;
   }
   .more-filters-btn {
-    order: 3;
     padding: 7px 10px;
     font-size: 12px;
     height: 36px;
+    flex-shrink: 0;
   }
   .mobile-view-quick-btn {
     display: inline-flex;
-    order: 4;
     padding: 7px 10px;
     font-size: 12px;
     height: 36px;
+    flex-shrink: 0;
   }
   #clearAllFiltersBtn {
-    order: 5;
     padding: 6px 8px;
     font-size: 12px;
     height: 36px;
+    flex-shrink: 0;
+  }
+  .results-count-pill {
+    margin-left: auto;
+    padding: 6px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   #resultsCountLabel {
-    order: 6;
-    font-size: 11.5px;
-    margin-left: auto;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   /* Cinta de Líneas en Móvil */
@@ -2955,16 +3055,16 @@ a {
       </div>
       <div class="topbar-actions">
         <button type="button" class="top-pill-btn open-catalogs-hub-btn" id="topCatalogsHubBtn">
-          📷 Catálogos en Canva (12)
+          <span class="material-symbols-outlined icon-sm">photo_library</span> Catálogos Canva (12)
         </button>
         <button type="button" class="top-pill-btn neo-pill go-neopreno-tab">
-          🟠 Configurar Neopreno
+          <span class="material-symbols-outlined icon-sm">radio_button_checked</span> Configurar Neopreno
         </button>
         <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="top-pill-btn joy18k">
-          💎 Catálogo Joyería 18K
+          <span class="material-symbols-outlined icon-sm">diamond</span> Joyería 18K
         </a>
         <button type="button" class="top-pill-btn" id="themeToggleBtn" title="Cambiar modo claro / oscuro">
-          🌗 Tema
+          <span class="material-symbols-outlined icon-sm">dark_mode</span> Tema
         </button>
       </div>
     </div>
@@ -2983,16 +3083,16 @@ a {
         <div>
           <div class="brand-eyebrow">Catálogo Oficial · Mayoristas y Detal · Pedido mínimo $30.000 COP</div>
           <h1 class="hero-title">Catálogo de Dijes, Insumos y Neopreno</h1>
-          <p class="hero-subtitle">Toca una categoría abajo o busca directo · Toca + para cotizar y enviar a WhatsApp</p>
+          <p class="hero-subtitle">Selecciona una categoría o busca directo · Toca el baño o + para cotizar a WhatsApp</p>
         </div>
       </div>
 
       <div class="hero-right-actions">
         <button type="button" class="btn cat open-catalogs-hub-btn">
-          📷 Catálogos Canva (12)
+          <span class="material-symbols-outlined">photo_library</span> Catálogos Canva (12)
         </button>
         <button type="button" class="btn primary open-quote-btn" id="heroVerPedidoBtn">
-          🧾 Ver mi cotización
+          <span class="material-symbols-outlined">receipt_long</span> Ver mi cotización
           <span class="pill-badge num" id="topOrderCountPill">0</span>
         </button>
       </div>
@@ -3001,11 +3101,13 @@ a {
     <!-- 3. SELECTOR DE 2 PESTAÑAS PRINCIPALES (DIJES E INSUMOS vs BOLAS DE NEOPRENO) -->
     <nav class="workspace-tabs" aria-label="Secciones principales del catálogo">
       <button type="button" id="tabBtnDijes" class="workspace-tab-btn tab-dijes active" data-tab="dijes">
-        <span>💍 Catálogo de Dijes, Joyería e Insumos</span>
+        <span class="material-symbols-outlined">diamond</span>
+        <span>Catálogo de Dijes, Joyería e Insumos</span>
         <span class="tab-count-badge">1.179 ref.</span>
       </button>
       <button type="button" id="tabBtnNeopreno" class="workspace-tab-btn tab-neopreno" data-tab="neopreno">
-        <span>🟠 Pedido de Bolas de Neopreno</span>
+        <span class="material-symbols-outlined">radio_button_checked</span>
+        <span>Pedido de Bolas de Neopreno</span>
         <span class="tab-count-badge">13 ref · 786 colores</span>
       </button>
     </nav>
@@ -3020,7 +3122,7 @@ a {
           <!-- Fila 1: Buscador limpio + Micrófono + Botón rápido "En mi pedido" + Filtros y Orden + Contador -->
           <div class="search-row-clean">
             <div class="search-box-wrap">
-              <span class="search-icon" aria-hidden="true">🔍</span>
+              <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
               <input
                 type="search"
                 id="q"
@@ -3033,54 +3135,66 @@ a {
                 inputmode="search"
                 enterkeyhint="search"
               />
-              <button type="button" id="voiceSearchBtn" class="search-voice-btn" title="Buscar por voz con micrófono" aria-label="Buscar por voz">🎤</button>
-              <button type="button" id="clearSearchBtn" class="search-clear" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">✕</button>
+              <button type="button" id="voiceSearchBtn" class="search-voice-btn" title="Buscar por voz con micrófono" aria-label="Buscar por voz">
+                <span class="material-symbols-outlined">mic</span>
+              </button>
+              <button type="button" id="clearSearchBtn" class="search-clear" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">
+                <span class="material-symbols-outlined icon-sm">close</span>
+              </button>
 
               <!-- Dropdown de autocompletado y sugerencias dinámicas en vivo -->
               <div id="searchSuggestionsDropdown" class="search-suggestions-dropdown" style="display:none;" role="listbox" aria-label="Sugerencias de búsqueda"></div>
             </div>
 
-            <button type="button" id="quickCartFilterBtn" class="quick-cart-filter-btn" title="Ver únicamente los productos que llevas en tu pedido">
-              <span>🛒 En mi pedido</span>
-              <span id="quickCartFilterCount" class="num">(0)</span>
-            </button>
+            <div class="search-controls-right">
+              <button type="button" id="quickCartFilterBtn" class="quick-cart-filter-btn" title="Ver únicamente los productos que llevas en tu pedido">
+                <span class="material-symbols-outlined icon-sm">shopping_bag</span>
+                <span>En mi pedido</span>
+                <span id="quickCartFilterCount" class="num">(0)</span>
+              </button>
 
-            <button type="button" id="toggleExtraFiltersBtn" class="more-filters-btn" aria-expanded="false" title="Mostrar u ocultar filtros de precio, medida y orden">
-              <span>⚙️ Filtros</span>
-              <span id="extraFiltersBadge" class="pill-badge num" style="display:none;min-width:19px;height:19px;font-size:11px;padding:0 5px;">0</span>
-            </button>
+              <button type="button" id="toggleExtraFiltersBtn" class="more-filters-btn" aria-expanded="false" title="Mostrar u ocultar filtros de precio, medida y orden">
+                <span class="material-symbols-outlined icon-sm">tune</span>
+                <span>Filtros</span>
+                <span id="extraFiltersBadge" class="pill-badge num" style="display:none;min-width:19px;height:19px;font-size:11px;padding:0 5px;">0</span>
+              </button>
 
-            <!-- Botón de cambio de vista rápido para móviles (Tarjetas / Lista) -->
-            <button type="button" id="mobileQuickViewBtn" class="mobile-view-quick-btn" title="Cambiar entre vista de tarjetas y vista de lista compacta">
-              <span id="mobileViewIcon">📱</span>
-              <span id="mobileViewText">Lista</span>
-            </button>
+              <!-- Botón de cambio de vista rápido para móviles (Tarjetas / Lista) -->
+              <button type="button" id="mobileQuickViewBtn" class="mobile-view-quick-btn" title="Cambiar entre vista de tarjetas y vista de lista compacta">
+                <span class="material-symbols-outlined icon-sm" id="mobileViewIcon">view_list</span>
+                <span id="mobileViewText">Lista</span>
+              </button>
 
-            <button type="button" id="clearAllFiltersBtn" class="btn ghost" style="padding:8px 11px;font-size:12.5px;color:var(--warn);display:none;">
-              ✕ Limpiar
-            </button>
+              <button type="button" id="clearAllFiltersBtn" class="btn ghost" style="padding:8px 11px;font-size:12.5px;color:var(--warn);display:none;">
+                <span class="material-symbols-outlined icon-sm">filter_alt_off</span>
+                <span>Limpiar</span>
+              </button>
 
-            <span id="resultsCountLabel" class="num" style="font-size:12.5px;color:var(--muted);white-space:nowrap;padding:0 4px;">
-              1.179 ref.
-            </span>
+              <div class="results-count-pill" id="resultsCountPill" title="Total de referencias filtradas en el catálogo">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">tag</span>
+                <span id="resultsCountLabel">1.179 ref.</span>
+              </div>
+            </div>
           </div>
 
           <!-- Fila 1.5: Chips Rápidos de Búsqueda Inteligente Móvil (1 Toque) -->
           <div class="quick-search-pills" id="quickSearchPills" role="region" aria-label="Búsquedas rápidas sugeridas">
-            <span class="quick-pills-label">⚡ Rápido:</span>
+            <span class="quick-pills-label">
+              <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">bolt</span> Rápido:
+            </span>
             <div class="quick-pills-scroll" id="quickPillsScroll">
-              <button type="button" class="quick-pill" data-q="Corona">👑 Coronas</button>
-              <button type="button" class="quick-pill" data-q="San Benito">✝️ San Benito</button>
-              <button type="button" class="quick-pill" data-q="Van Cleef">🍀 Van Cleef</button>
-              <button type="button" class="quick-pill" data-q="Candonga">🌸 Candongas</button>
-              <button type="button" class="quick-pill" data-q="Letra">🔤 Letras</button>
-              <button type="button" class="quick-pill" data-q="Balin">🟡 Balines</button>
-              <button type="button" class="quick-pill" data-q="Cuarzo">💎 Cuarzo & Piedras</button>
-              <button type="button" class="quick-pill" data-q="Cruz">📿 Cruces</button>
-              <button type="button" class="quick-pill" data-q="Futbol">⚽ Equipos / Balón</button>
-              <button type="button" class="quick-pill" data-q="Oso">🧸 Oso Tous</button>
-              <button type="button" class="quick-pill" data-q="Hilo">🧵 Hilos</button>
-              <button type="button" class="quick-pill" data-price="up-to-3k">💲 ≤ $3.000 COP</button>
+              <button type="button" class="quick-pill" data-q="Corona"><span class="material-symbols-outlined icon-sm">crown</span> Coronas</button>
+              <button type="button" class="quick-pill" data-q="San Benito"><span class="material-symbols-outlined icon-sm">auto_awesome</span> San Benito</button>
+              <button type="button" class="quick-pill" data-q="Van Cleef"><span class="material-symbols-outlined icon-sm">spa</span> Van Cleef</button>
+              <button type="button" class="quick-pill" data-q="Candonga"><span class="material-symbols-outlined icon-sm">local_florist</span> Candongas</button>
+              <button type="button" class="quick-pill" data-q="Letra"><span class="material-symbols-outlined icon-sm">spellcheck</span> Letras</button>
+              <button type="button" class="quick-pill" data-q="Balin"><span class="material-symbols-outlined icon-sm">circle</span> Balines</button>
+              <button type="button" class="quick-pill" data-q="Cuarzo"><span class="material-symbols-outlined icon-sm">diamond</span> Cuarzo & Piedras</button>
+              <button type="button" class="quick-pill" data-q="Cruz"><span class="material-symbols-outlined icon-sm">add</span> Cruces</button>
+              <button type="button" class="quick-pill" data-q="Futbol"><span class="material-symbols-outlined icon-sm">sports_soccer</span> Equipos / Balón</button>
+              <button type="button" class="quick-pill" data-q="Oso"><span class="material-symbols-outlined icon-sm">pets</span> Oso Tous</button>
+              <button type="button" class="quick-pill" data-q="Hilo"><span class="material-symbols-outlined icon-sm">texture</span> Hilos</button>
+              <button type="button" class="quick-pill" data-price="up-to-3k"><span class="material-symbols-outlined icon-sm">payments</span> ≤ $3.000 COP</button>
             </div>
           </div>
 
@@ -3141,10 +3255,11 @@ a {
       <section id="categoriesShowcaseSection" class="categories-showcase" aria-label="Explorar por categoría">
         <div class="categories-showcase-header">
           <div class="categories-showcase-title">
-            <span>👇 Elige una categoría para explorar sus colecciones rápidamente:</span>
+            <span class="material-symbols-outlined" style="color:var(--teal);">category</span>
+            <span>Elige una categoría para explorar sus colecciones rápidamente:</span>
           </div>
           <button type="button" id="toggleCategoriesShowcaseBtn" class="scale-btn">
-            Ocultar tarjetas de categorías ▲
+            <span class="material-symbols-outlined icon-sm">expand_less</span> Ocultar tarjetas de categorías
           </button>
         </div>
         <div id="categoriesBentoGrid" class="categories-bento-grid"></div>
@@ -3171,16 +3286,16 @@ a {
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button type="button" class="btn outline go-dijes-tab">
-              ← Volver a Dijes e Insumos
+              <span class="material-symbols-outlined icon-sm">arrow_back</span> Volver a Dijes e Insumos
             </button>
             <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="btn cat">
-              📷 Catálogo General Neopreno (Canva)
+              <span class="material-symbols-outlined icon-sm">photo_camera</span> Catálogo General Neopreno (Canva)
             </a>
             <a href="https://www.canva.com/design/DAG_JmgpRQA/HfmI6C6Yc-XZS6ADOxilcQ/view?utlId=h9854511ee0" target="_blank" rel="noopener" class="btn outline">
-              🎨 Catálogo Bola Lisa por Color
+              <span class="material-symbols-outlined icon-sm">palette</span> Catálogo Bola Lisa por Color
             </a>
             <a href="https://photos.app.goo.gl/NdrgHXMsU4NmMtVF8" target="_blank" rel="noopener" class="btn outline">
-              📷 Earcuffs de Neopreno
+              <span class="material-symbols-outlined icon-sm">photo_camera</span> Earcuffs de Neopreno
             </a>
           </div>
         </div>
@@ -3217,7 +3332,7 @@ a {
               <input
                 type="search"
                 id="neoColorSearchInput"
-                placeholder="🔍 Filtrar color (ej: negro, menta, colombia, #15)..."
+                placeholder="Filtrar color por nombre o #..."
                 style="padding:6px 12px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg);font-size:13px;width:270px;max-width:100%;"
               />
             </div>
@@ -3229,7 +3344,7 @@ a {
               <input
                 type="text"
                 id="neoCustomColorInput"
-                placeholder="Opcional: escribe otro color si no está en la lista"
+                placeholder=""
                 style="flex:1;min-width:220px;padding:7px 11px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg);font-size:13px;"
               />
             </div>
@@ -3259,7 +3374,7 @@ a {
           <div id="neoBallPreviewStage" class="ball-preview-stage"></div>
 
           <a id="neoCanvaColorLink" href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="ver-canva-btn" style="justify-content:center;">
-            📷 Ver foto de este color en Canva ↗
+            <span class="material-symbols-outlined icon-sm">photo_camera</span> Ver foto de este color en Canva ↗
           </a>
 
           <div id="neoLiveSummaryText"></div>
@@ -3287,15 +3402,15 @@ a {
           </div>
 
           <button type="button" id="addNeoToOrderBtn" class="btn neobtn" style="width:100%;padding:13px;font-size:15px;">
-            ✅ AGREGAR NEOPRENO AL PEDIDO
+            <span class="material-symbols-outlined">add_shopping_cart</span> AGREGAR NEOPRENO AL PEDIDO
           </button>
 
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button type="button" class="btn primary open-quote-btn" style="flex:1;">
-              🧾 Ver mi pedido
+              <span class="material-symbols-outlined">receipt_long</span> Ver mi pedido
             </button>
             <button type="button" class="btn outline open-pantallazo-btn" style="flex:1;">
-              📸 Ir al pantallazo
+              <span class="material-symbols-outlined">photo_camera</span> Ir al pantallazo
             </button>
           </div>
 
@@ -3308,7 +3423,7 @@ a {
     <!-- 6. PIE DE PÁGINA Y AVISOS DE NEGOCIO -->
     <footer class="site-footer">
       <p>
-        <strong>Nota de disponibilidad y envíos:</strong> Todos los pedidos están sujetos a verificación de existencias por WhatsApp. Pedido mínimo en bisutería: <strong>$30.000 COP</strong> (puedes combinar neopreno, oro laminado, acero, rodio, aretería, piedras e hilos). Realizamos envíos a toda Colombia y al exterior 🌎. Pagos con tarjeta de crédito mediante link seguro o transferencia bancaria.
+        <strong>Nota de disponibilidad y envíos:</strong> Todos los pedidos están sujetos a verificación de existencias por WhatsApp. Pedido mínimo en bisutería: <strong>$30.000 COP</strong> (puedes combinar neopreno, oro laminado, acero, rodio, aretería, piedras e hilos). Realizamos envíos a toda Colombia y al exterior. Pagos con tarjeta de crédito mediante link seguro o transferencia bancaria.
       </p>
       <p>
         © 2026 <strong>Cauchos KSM · Joyería y bisutería</strong> · Todos los derechos reservados. Prohibida la copia o reproducción total o parcial de esta lista de precios y de las fotos del catálogo sin autorización.
@@ -3335,10 +3450,10 @@ a {
 
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <button type="button" class="btn outline open-pantallazo-btn">
-          📸 Tarjeta / Pantallazo
+          <span class="material-symbols-outlined">photo_camera</span> Tarjeta / Pantallazo
         </button>
         <button type="button" class="btn wa open-quote-btn" style="padding:11px 20px;font-size:15px;">
-          📲 Ver y Enviar a WhatsApp
+          <span class="material-symbols-outlined">chat</span> Ver y Enviar a WhatsApp
         </button>
       </div>
     </div>
@@ -3347,10 +3462,10 @@ a {
   <!-- 8. BOTONES FLOTANTES: ASISTENTE KSM & IR ARRIBA -->
   <div class="floating-utils">
     <button type="button" id="toTopBtn" class="to-top-btn" title="Ir al inicio de la página" aria-label="Ir al inicio">
-      ⬆️
+      <span class="material-symbols-outlined">arrow_upward</span>
     </button>
     <button type="button" id="fabAssistantBtn" class="fab-btn">
-      <span>💬</span>
+      <span class="material-symbols-outlined">support_agent</span>
       <span>Asistente KSM</span>
     </button>
   </div>
@@ -3362,19 +3477,19 @@ a {
         <div style="font-size:11px;color:#E2BC63;font-weight:700;text-transform:uppercase;">Asistente Virtual</div>
         <h3 style="font-family:var(--font-display);font-size:18px;">Concierge Cauchos KSM</h3>
       </div>
-      <button type="button" id="closeAssistantBtn" class="modal-close" aria-label="Cerrar asistente">✕</button>
+      <button type="button" id="closeAssistantBtn" class="modal-close" aria-label="Cerrar asistente"><span class="material-symbols-outlined icon-sm">close</span></button>
     </div>
     <div id="assistantMessages" class="assistant-messages">
       <div class="chat-bubble bot">
-        ¡Hola! 👋 Soy el asistente de <strong>Cauchos KSM</strong>. ¿En qué te ayudo hoy? Puedes tocar una opción rápida o escribir el producto que buscas (ej: <em>corona rolex</em>, <em>san benito</em>, <em>cuarzo</em>, <em>orings 18k</em>).
+        ¡Hola! Soy el asistente de <strong>Cauchos KSM</strong>. ¿En qué te ayudo hoy? Puedes tocar una opción rápida o escribir el producto que buscas (ej: <em>corona rolex</em>, <em>san benito</em>, <em>cuarzo</em>, <em>orings 18k</em>).
       </div>
     </div>
     <div class="assistant-quick-chips">
-      <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cómo hago mi pedido?">✍️ ¿Cómo cotizar?</button>
-      <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cuál es el pedido mínimo?">🛍️ Pedido mínimo</button>
-      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Envíos y pagos">🚚 Envíos y pagos</button>
-      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Joyería 18K y orings">💎 Joyería 18K</button>
-      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Hablar con asesor por WhatsApp">👤 Asesores WhatsApp</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cómo hago mi pedido?"><span class="material-symbols-outlined icon-sm">edit_note</span> ¿Cómo cotizar?</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cuál es el pedido mínimo?"><span class="material-symbols-outlined icon-sm">shopping_bag</span> Pedido mínimo</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Envíos y pagos"><span class="material-symbols-outlined icon-sm">local_shipping</span> Envíos y pagos</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Joyería 18K y orings"><span class="material-symbols-outlined icon-sm">diamond</span> Joyería 18K</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Hablar con asesor por WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Asesores WhatsApp</button>
     </div>
     <div class="assistant-input-bar">
       <input
@@ -3395,7 +3510,7 @@ a {
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#E2BC63;font-weight:700;">Resumen y Envío Directo</div>
           <h2 id="quoteModalTitle">Tu Cotización · Cauchos KSM</h2>
         </div>
-        <button type="button" class="modal-close" data-close-modal="quoteSheetModal" aria-label="Cerrar">✕</button>
+        <button type="button" class="modal-close" data-close-modal="quoteSheetModal" aria-label="Cerrar"><span class="material-symbols-outlined icon-sm">close</span></button>
       </div>
 
       <div class="modal-body">
@@ -3404,8 +3519,8 @@ a {
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
             <span style="font-size:13px;font-weight:800;text-transform:uppercase;color:var(--gold);">1. Referencias Seleccionadas</span>
             <div style="display:flex;gap:8px;">
-              <button type="button" class="scale-btn go-neopreno-tab" data-close-modal="quoteSheetModal">➕ Agregar Neopreno</button>
-              <button type="button" id="clearOrderBtn" class="scale-btn" style="color:var(--warn);">🗑️ Vaciar todo</button>
+              <button type="button" class="scale-btn go-neopreno-tab" data-close-modal="quoteSheetModal"><span class="material-symbols-outlined icon-sm">add</span> Agregar Neopreno</button>
+              <button type="button" id="clearOrderBtn" class="scale-btn" style="color:var(--warn);"><span class="material-symbols-outlined icon-sm">delete</span> Vaciar todo</button>
             </div>
           </div>
           <div id="quoteItemsList" class="quote-items-list"></div>
@@ -3420,28 +3535,28 @@ a {
             2. Tus Datos de Contacto y Despacho
           </div>
           <div id="custNameWarn" style="display:none;background:var(--warnsoft);color:var(--warn);padding:8px 12px;border-radius:8px;font-size:13px;font-weight:700;margin-bottom:10px;">
-            ⚠️ Sin tu nombre completo no puedes copiar ni enviar el pedido por WhatsApp.
+            <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">warning</span> Sin tu nombre completo no puedes copiar ni enviar el pedido por WhatsApp.
           </div>
           <div class="customer-form-grid">
             <div class="form-field">
               <label for="custName">Nombre completo <span style="color:var(--warn);">* (Obligatorio)</span></label>
-              <input type="text" id="custName" placeholder="Ej: María Fernanda Gómez" required />
+              <input type="text" id="custName" placeholder="" required />
             </div>
             <div class="form-field">
               <label for="custPhone">Teléfono / WhatsApp (Opcional)</label>
-              <input type="tel" id="custPhone" placeholder="Ej: 310 000 0000" />
+              <input type="tel" id="custPhone" placeholder="" />
             </div>
             <div class="form-field">
               <label for="custCity">Ciudad / Municipio o País</label>
-              <input type="text" id="custCity" placeholder="Ej: Medellín, Antioquia" />
+              <input type="text" id="custCity" placeholder="" />
             </div>
             <div class="form-field">
               <label for="custIdNum">Cédula o NIT (Opcional · Para transportadora)</label>
-              <input type="text" id="custIdNum" placeholder="Ej: 1.020.304.050" />
+              <input type="text" id="custIdNum" placeholder="" />
             </div>
             <div class="form-field full-width">
               <label for="custAddress">Dirección de envío</label>
-              <input type="text" id="custAddress" placeholder="Ej: Calle 10 # 43A-25 Apto 302, Barrio El Poblado" />
+              <input type="text" id="custAddress" placeholder="" />
             </div>
           </div>
         </div>
@@ -3453,15 +3568,15 @@ a {
           </div>
           <div class="wa-channels-grid">
             <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573104337951">
-              <span class="wa-channel-name">📲 Enviar a Tienda (Detal)</span>
+              <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Enviar a Tienda (Detal)</span>
               <span class="wa-channel-phone">WhatsApp: 310 433 7951</span>
             </button>
             <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573162599541">
-              <span class="wa-channel-name">📲 Enviar a Mayorista</span>
+              <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Enviar a Mayorista</span>
               <span class="wa-channel-phone">WhatsApp: 316 259 9541</span>
             </button>
             <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573222604729">
-              <span class="wa-channel-name">📲 Enviar a Tienda Neox</span>
+              <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Enviar a Tienda Neox</span>
               <span class="wa-channel-phone">WhatsApp: 322 260 4729</span>
             </button>
           </div>
@@ -3470,13 +3585,13 @@ a {
         <!-- Opciones adicionales: Pantallazo Imagen, Descargar PDF y Copiar Texto -->
         <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--line);">
           <button type="button" class="btn primary open-pantallazo-btn" data-close-modal="quoteSheetModal" style="flex:1;">
-            📸 Generar Imagen / Pantallazo del Pedido
+            <span class="material-symbols-outlined">photo_camera</span> Generar Imagen / Pantallazo del Pedido
           </button>
           <button type="button" class="btn outline download-pdf-btn" style="flex:1;">
-            📄 Descargar Cotización en PDF
+            <span class="material-symbols-outlined">picture_as_pdf</span> Descargar Cotización en PDF
           </button>
           <button type="button" id="copyOrderTextBtn" class="btn outline">
-            📋 Copiar Texto
+            <span class="material-symbols-outlined">content_copy</span> Copiar Texto
           </button>
         </div>
       </div>
@@ -3491,36 +3606,36 @@ a {
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#E2BC63;font-weight:700;">Formato Visual Anti-Errores</div>
           <h2 id="pantallazoTitle">Tarjeta Imagen de tu Cotización</h2>
         </div>
-        <button type="button" class="modal-close" data-close-modal="pantallazoModal" aria-label="Cerrar">✕</button>
+        <button type="button" class="modal-close" data-close-modal="pantallazoModal" aria-label="Cerrar"><span class="material-symbols-outlined icon-sm">close</span></button>
       </div>
       <div class="modal-body">
         <div style="background:var(--goldsoft);border:1px solid var(--gold);border-radius:12px;padding:12px 16px;font-size:13.5px;color:var(--fg);">
-          <strong>Pasos recomendados:</strong> 1) Toca <strong>📋 Copiar la Foto de mi Pedido</strong>, 2) Toca el canal de WhatsApp (Tienda, Mayorista o Neox) para enviar el texto, 3) Mantén presionado en el chat de WhatsApp y elige <strong>PEGAR</strong> para enviar también la imagen.
+          <strong>Pasos recomendados:</strong> 1) Toca <strong>Copiar la Foto de mi Pedido</strong>, 2) Toca el canal de WhatsApp (Tienda, Mayorista o Neox) para enviar el texto, 3) Mantén presionado en el chat de WhatsApp y elige <strong>PEGAR</strong> para enviar también la imagen.
         </div>
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button type="button" id="copyCanvasImgBtn" class="btn primary" style="flex:1;padding:12px;">
-            📋 COPIAR LA FOTO DE MI PEDIDO
+            <span class="material-symbols-outlined">content_copy</span> COPIAR LA FOTO DE MI PEDIDO
           </button>
           <button type="button" id="downloadCanvasImgBtn" class="btn outline">
-            💾 Guardar Imagen PNG
+            <span class="material-symbols-outlined">download</span> Guardar Imagen PNG
           </button>
           <button type="button" class="btn outline download-pdf-btn">
-            📄 Descargar PDF
+            <span class="material-symbols-outlined">picture_as_pdf</span> Descargar PDF
           </button>
         </div>
 
         <div class="wa-channels-grid">
           <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573104337951">
-            <span class="wa-channel-name">📲 Abrir WhatsApp Tienda</span>
+            <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Abrir WhatsApp Tienda</span>
             <span class="wa-channel-phone">310 433 7951</span>
           </button>
           <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573162599541">
-            <span class="wa-channel-name">📲 Abrir WhatsApp Mayorista</span>
+            <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Abrir WhatsApp Mayorista</span>
             <span class="wa-channel-phone">316 259 9541</span>
           </button>
           <button type="button" class="wa-channel-btn send-wa-channel-btn" data-phone="573222604729">
-            <span class="wa-channel-name">📲 Abrir WhatsApp Neox</span>
+            <span class="wa-channel-name"><span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">chat</span> Abrir WhatsApp Neox</span>
             <span class="wa-channel-phone">322 260 4729</span>
           </button>
         </div>
@@ -3537,7 +3652,7 @@ a {
     <div class="modal-panel" style="max-width:640px;">
       <div class="modal-header">
         <h2 id="refScaleModalTitle" style="font-size:19px;">Referencia y Escala</h2>
-        <button type="button" class="modal-close" data-close-modal="refScaleModal" aria-label="Cerrar">✕</button>
+        <button type="button" class="modal-close" data-close-modal="refScaleModal" aria-label="Cerrar"><span class="material-symbols-outlined icon-sm">close</span></button>
       </div>
       <div id="refScaleModalBody" class="modal-body"></div>
     </div>
@@ -3551,7 +3666,7 @@ a {
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#E2BC63;font-weight:700;">Fotografías de Referencia</div>
           <h2 id="catalogsHubTitle">Catálogos Oficiales en Canva · Cauchos KSM</h2>
         </div>
-        <button type="button" class="modal-close" data-close-modal="catalogsHubModal" aria-label="Cerrar">✕</button>
+        <button type="button" class="modal-close" data-close-modal="catalogsHubModal" aria-label="Cerrar"><span class="material-symbols-outlined icon-sm">close</span></button>
       </div>
       <div class="modal-body">
         <p style="font-size:14px;color:var(--muted);">
@@ -3563,7 +3678,6 @@ a {
   </div>
 
   <script>
-/* CAUCHOS KSM - DATASET OFICIAL (1.179 PRODS + NEOPRENO) */
 // Auto-generated complete catalog dataset from Documentacion_Catalogo_KSM.md
 // Total Products: 1179 | Total Neopreno References: 13 | Total Neopreno Colors: 786
 
@@ -4364,7 +4478,6 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
 
 </script>
   <script>
-/* CAUCHOS KSM - LOGICA DE APLICACION & COTIZADOR */
 /* ==========================================================================
    CAUCHOS KSM · LÓGICA DE APLICACIÓN, FILTROS ADAPTADOS, NEOPRENO & COTIZADOR
    ========================================================================== */
@@ -4817,18 +4930,23 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
   // ICONOS REPRESENTATIVOS POR LÍNEA Y MINIATURAS SVG CON PALETA DEL .MD
   // ==========================================================================
   const LINE_ICONS = {
-    'Dijes de Rodio': '👑',
-    'Línea Económica': '✨',
-    'Dijes de Acero': '🛡️',
-    'Aretería': '🌸',
-    'Dijes de Oro Laminado': '💛',
-    'Pulseras de Expansión': '📿',
-    'Fimo y Piedras': '💎',
-    'Hilos': '🧵',
-    'Balines Oro Laminado': '🟡',
-    'Balines de Rodio': '⚪',
-    'Balines de Acero': '⚙️'
+    'Dijes de Rodio': 'crown',
+    'Línea Económica': 'auto_awesome',
+    'Dijes de Acero': 'shield',
+    'Aretería': 'local_florist',
+    'Dijes de Oro Laminado': 'workspace_premium',
+    'Pulseras de Expansión': 'all_inclusive',
+    'Fimo y Piedras': 'diamond',
+    'Hilos': 'texture',
+    'Balines Oro Laminado': 'radio_button_checked',
+    'Balines de Rodio': 'adjust',
+    'Balines de Acero': 'settings'
   };
+
+  function renderLineIcon(lineName, className = 'icon-sm') {
+    const symbol = LINE_ICONS[lineName] || 'diamond';
+    return `<span class="material-symbols-outlined ${className}">${symbol}</span>`;
+  }
 
   let categoriesShowcaseHiddenByUser = false;
 
@@ -4903,7 +5021,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     LINES_META.forEach(lm => {
       const prods = DATA.filter(p => p.l === lm.name);
       const count = prods.length;
-      const icon = LINE_ICONS[lm.name] || '💍';
+      const icon = renderLineIcon(lm.name, 'icon-md');
       html += `
         <div class="cat-bento-card" data-select-line="${escapeHtml(lm.name)}" role="button" tabindex="0">
           <div class="cat-bento-top">
@@ -4920,7 +5038,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
             <span class="cat-bento-enter">Explorar colección →</span>
             ${lm.canvaUrl ? `
               <a href="${escapeHtml(lm.canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link" title="Abrir catálogo con fotos en Canva">
-                📷 Fotos Canva
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Fotos Canva
               </a>
             ` : `<span class="meta-badge">${escapeHtml(lm.badge)}</span>`}
           </div>
@@ -4932,7 +5050,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     html += `
       <div class="cat-bento-card neopreno-highlight" data-open-neopreno="1" role="button" tabindex="0">
         <div class="cat-bento-top">
-          <div class="cat-bento-icon" aria-hidden="true">🟠</div>
+          <div class="cat-bento-icon" aria-hidden="true"><span class="material-symbols-outlined icon-md" style="color:var(--hi);">palette</span></div>
           <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
               <span class="cat-bento-name">Bolas de Neopreno</span>
@@ -4944,7 +5062,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         <div class="cat-bento-footer">
           <span class="cat-bento-enter" style="color:var(--cat);">Abrir configurador →</span>
           <a href="https://www.canva.com/design/DAGp_Y2KeZE/5-ToqWvRMYasDw8iwu6TIw/view?utlId=h0899514f3a" target="_blank" rel="noopener" class="ver-canva-btn bento-canva-link">
-            📷 Fotos Canva
+            <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Fotos Canva
           </a>
         </div>
       </div>
@@ -4953,7 +5071,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     grid.innerHTML = html;
     grid.dataset.rendered = '1';
 
-    // Evitar que clic en "📷 Fotos Canva" dispare el filtro de la tarjeta
+    // Evitar que clic en "Fotos Canva" dispare el filtro de la tarjeta
     grid.querySelectorAll('.bento-canva-link').forEach(link => {
       link.addEventListener('click', e => e.stopPropagation());
     });
@@ -4993,7 +5111,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     const totalCount = DATA.length;
     let html = `
       <button type="button" class="line-chip" aria-pressed="${state.activeLine === 'Todos'}" data-line="Todos">
-        <span>🏠 Todas las líneas</span>
+        <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">grid_view</span> Todas las líneas</span>
         <span class="line-chip-count">${totalCount}</span>
       </button>
     `;
@@ -5001,7 +5119,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     LINES_META.forEach(lm => {
       const count = DATA.filter(p => p.l === lm.name).length;
       const isPressed = state.activeLine === lm.name;
-      const icon = LINE_ICONS[lm.name] || '';
+      const icon = renderLineIcon(lm.name);
       html += `
         <button type="button" class="line-chip" aria-pressed="${isPressed}" data-line="${escapeHtml(lm.name)}">
           <span>${icon} ${escapeHtml(lm.short)}</span>
@@ -5116,7 +5234,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       } else {
         const meta = LINES_META.find(m => m.name === state.activeLine);
         if (meta) {
-          const icon = LINE_ICONS[meta.name] || '💍';
+          const icon = renderLineIcon(meta.name, 'icon-md');
           lineBanner.style.display = 'flex';
           lineBanner.innerHTML = `
             <div class="line-context-info">
@@ -5126,12 +5244,12 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
                 <span class="min-order-pill">${escapeHtml(meta.badge)}</span>
               </h2>
               <p>${escapeHtml(meta.desc)}</p>
-              ${meta.note ? `<div class="line-context-note">ℹ️ ${escapeHtml(meta.note)}</div>` : ''}
+              ${meta.note ? `<div class="line-context-note"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(meta.note)}</div>` : ''}
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               ${meta.canvaUrl ? `
                 <a href="${escapeHtml(meta.canvaUrl)}" target="_blank" rel="noopener" class="btn cat">
-                  📷 Abrir Catálogo Canva de ${escapeHtml(meta.short)}
+                  <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Abrir Catálogo Canva de ${escapeHtml(meta.short)}
                 </a>
               ` : ''}
               <button type="button" class="btn outline" id="resetLineBtn">← Volver a las 11 Categorías</button>
@@ -5208,7 +5326,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
 
       container.innerHTML = `
         <div class="hero-info-card" style="text-align:center;padding:38px 20px;margin:20px 0;">
-          <div style="font-size:32px;margin-bottom:8px;">${is18kQuery ? '💎' : '🔍'}</div>
+          <div style="font-size:36px;margin-bottom:8px;color:var(--gold);"><span class="material-symbols-outlined" style="font-size:42px;">${is18kQuery ? 'diamond' : 'search'}</span></div>
           <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:6px;">
             ${is18kQuery ? 'Producto del Catálogo Exclusivo Joyería Oro 18K' : 'No encontramos productos con esos filtros'}
           </h3>
@@ -5220,7 +5338,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
             ${is18kQuery ? `
               <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="btn primary">
-                💎 Abrir Catálogo Joyería Oro 18K
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">diamond</span> Abrir Catálogo Joyería Oro 18K
               </a>
             ` : ''}
             <button type="button" class="btn outline" id="emptyResetBtn">Restablecer todos los filtros</button>
@@ -5266,7 +5384,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     groupedByLine.forEach(lGroup => {
       const meta = LINES_META.find(m => m.name === lGroup.lineName);
       const lineTotal = lGroup.subs.reduce((acc, s) => acc + s.items.length, 0);
-      const icon = LINE_ICONS[lGroup.lineName] || '💍';
+      const icon = renderLineIcon(lGroup.lineName);
 
       html += `
         <section class="line-section" id="${meta ? meta.id : ''}">
@@ -5280,7 +5398,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                 ${meta && meta.canvaUrl ? `
                   <a href="${escapeHtml(meta.canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn">
-                    📷 Catálogo Canva · ${escapeHtml(meta.short)}
+                    <span class="material-symbols-outlined icon-sm" style="vertical-align:-3px;">photo_camera</span> Catálogo Canva · ${escapeHtml(meta.short)}
                   </a>
                 ` : ''}
                 <button type="button" class="scale-btn filter-this-line-btn" style="background:#F3E7C9;color:#5B4E1A;border-color:#DEC484;font-weight:700;" data-line="${escapeHtml(lGroup.lineName)}">
@@ -5292,10 +5410,10 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           ${lGroup.subs.map(subGroup => `
             <div class="sub-section">
               <div class="sub-header" title="Toca para colapsar o expandir esta subsección">
-                <h3><span>🔸</span> <span>${escapeHtml(subGroup.subName)}</span></h3>
+                <h3><span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">arrow_right</span> <span>${escapeHtml(subGroup.subName)}</span></h3>
                 <div class="sub-header-right">
                   <span class="sub-header-count num">${subGroup.items.length} ${subGroup.items.length === 1 ? 'referencia' : 'referencias'}</span>
-                  <span class="sub-collapse-icon">▾</span>
+                  <span class="sub-collapse-icon"><span class="material-symbols-outlined icon-xs">expand_more</span></span>
                 </div>
               </div>
               <div class="products-grid ${state.viewMode === 'compact' ? 'compact-view' : ''}">
@@ -5321,9 +5439,10 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     const noteVal = state.cnote[prod.i] || '';
     const isBalinDocena = prod.l === 'Balines de Rodio' || prod.l === 'Balines de Acero';
 
-    // Mostrar personalizador si el producto está en el carrito (qty > 0) o si es Letras / Hilos / Neopreno con oro laminado
+    // Mostrar personalizador si el producto no está agotado y es Letras / Hilos / Neopreno con oro laminado / o Líneas con baño de metal
+    const hasMetals = productHasMetalChips(prod);
     const showCustomizer = !isSoldOut && !isConsult && (
-      qty > 0 || productIsLetters(prod) || productNeedsColorNote(prod)
+      qty > 0 || productIsLetters(prod) || productNeedsColorNote(prod) || hasMetals
     );
 
     let customizerHtml = '';
@@ -5333,7 +5452,10 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>🔤 Toca las letras para agregar o escribe (ej: A2, M1):</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">spellcheck</span>
+                <span>Toca las letras para agregar o escribe:</span>
+              </span>
               <span class="num" style="color:var(--wa);">${qty} und</span>
             </div>
             <div class="letters-grid">
@@ -5344,7 +5466,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               `).join('')}
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: A2, B1, M1 (la cantidad se actualiza sola)"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
@@ -5353,7 +5475,10 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>🎨 Especifica colores y cantidades:</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">palette</span>
+                <span>Especifica colores y cantidades:</span>
+              </span>
             </div>
             <div class="metal-chips-row">
               ${quickColors.map(col => `
@@ -5363,32 +5488,41 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               `).join('')}
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: 2 rojo, 3 azul, 1 negro"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
-      } else if (productHasMetalChips(prod) && qty > 0) {
+      } else if (hasMetals) {
+        const currentLower = (noteVal || '').toLowerCase();
+        const isDorado = currentLower.includes('dorado');
+        const isPlateado = currentLower.includes('plateado');
+        const isNegro = currentLower.includes('negro');
+        const isRosado = currentLower.includes('rosado');
+
         customizerHtml = `
           <div class="prod-customizer" data-customizer-for="${prod.i}">
             <div class="customizer-label">
-              <span>✨ Color de baño / metal (opcional):</span>
+              <span style="display:flex;align-items:center;gap:4px;">
+                <span class="material-symbols-outlined icon-sm" style="color:var(--gold);">palette</span>
+                <span>Color de baño / metal (Toca para seleccionar):</span>
+              </span>
             </div>
             <div class="metal-chips-row">
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="dorado">
+              <button type="button" class="metal-chip metal-add-btn ${isDorado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Dorado">
                 <span class="metal-dot dorado"></span> Dorado
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="plateado">
+              <button type="button" class="metal-chip metal-add-btn ${isPlateado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Plateado">
                 <span class="metal-dot plateado"></span> Plateado
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="negro">
+              <button type="button" class="metal-chip metal-add-btn ${isNegro ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Negro">
                 <span class="metal-dot negro"></span> Negro
               </button>
-              <button type="button" class="metal-chip metal-add-btn" data-prod-id="${prod.i}" data-metal="rosado">
+              <button type="button" class="metal-chip metal-add-btn ${isRosado ? 'active' : ''}" data-prod-id="${prod.i}" data-metal="Rosado">
                 <span class="metal-dot rosado"></span> Rosado
               </button>
             </div>
             <input type="text" class="custom-note-input prod-note-input" data-prod-id="${prod.i}"
-              placeholder="Ej: 2 dorado, 3 plateado (o nota especial)"
+              placeholder=""
               value="${escapeHtml(noteVal)}" />
           </div>
         `;
@@ -5401,7 +5535,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           <div class="prod-visual-thumb open-ref-modal-btn" data-id="${prod.i}" title="Ver referencia, foto en Canva y escala en mm">
             <span class="prod-id-tag">#${prod.i}</span>
             ${getProductSvgThumb(prod)}
-            ${prod.p ? `<span class="prod-page-mini">Pág. ${prod.p}</span>` : (prod.f ? `<span class="prod-page-mini">📷 Foto</span>` : '')}
+            ${prod.p ? `<span class="prod-page-mini">Pág. ${prod.p}</span>` : (prod.f ? `<span class="prod-page-mini"><span class="material-symbols-outlined icon-sm" style="font-size:12px;vertical-align:-1px;">photo_camera</span> Foto</span>` : '')}
           </div>
           <div class="prod-main-info">
             <div class="prod-title-row">
@@ -5414,12 +5548,12 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
                       : `<span class="prod-price ${hasVolumeDiscountApplied ? 'tier-active' : ''}">${fmtCOP(effectiveUnit)}</span>`
                     )
                 }
-                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);">✓ En pedido: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
+                ${qty > 0 && prod.k > 0 ? `<div class="num" style="font-size:11.5px;font-weight:700;color:var(--wa);"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;">check_circle</span> En pedido: ${fmtCOP(effectiveUnit * qty)}</div>` : ''}
               </div>
             </div>
             <div class="prod-meta-tags">
-              ${prod.t ? `<span class="meta-badge">📏 ${escapeHtml(prod.t)}</span>` : ''}
-              ${prod.o ? `<span class="meta-badge ${/\d+\+\s*und|12\s*und/i.test(prod.o) ? 'tier-badge' : ''}">💡 ${escapeHtml(prod.o)}</span>` : ''}
+              ${prod.t ? `<span class="meta-badge"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;">straighten</span> ${escapeHtml(prod.t)}</span>` : ''}
+              ${prod.o ? `<span class="meta-badge ${/\d+\+\s*und|12\s*und/i.test(prod.o) ? 'tier-badge' : ''}"><span class="material-symbols-outlined icon-sm" style="font-size:13px;vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(prod.o)}</span>` : ''}
             </div>
           </div>
         </div>
@@ -5430,17 +5564,17 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           <div class="ref-links-group">
             ${canvaUrl ? `
               <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" class="ver-canva-btn" title="Abrir página ${prod.p} en el catálogo oficial de Canva">
-                📷 Canva · Pág. ${prod.p}
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Canva · Pág. ${prod.p}
               </a>
             ` : ''}
             ${prod.f ? `
               <button type="button" class="ver-canva-btn open-ref-modal-btn" data-id="${prod.i}">
-                📷 Ver foto ref.
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Ver foto ref.
               </button>
             ` : ''}
             ${prod.t ? `
               <button type="button" class="scale-btn open-ref-modal-btn" data-id="${prod.i}" title="Ver tamaño a escala real y detalles">
-                📐 Escala
+                <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">straighten</span> Escala
               </button>
             ` : ''}
           </div>
@@ -5524,34 +5658,34 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     // Botones de teclado de letras A-Z
     container.querySelectorAll('.letter-key').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const letter = btn.getAttribute('data-letter');
-        appendTokenToProductNote(id, letter, true);
+        appendTokenToProductNote(id, letter);
       });
     });
 
     // Botones de color de baño/metal (Dorado, Plateado, Negro, Rosado)
     container.querySelectorAll('.metal-add-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const metal = btn.getAttribute('data-metal');
-        appendMetalToProductNote(id, metal);
+        selectMetalBath(id, metal);
       });
     });
 
     // Botones de color rápido para Hilos / Neopreno con oro laminado
     container.querySelectorAll('.quick-color-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = parseInt(btn.getAttribute('data-id'), 10);
+        const id = parseInt(btn.getAttribute('data-prod-id') || btn.getAttribute('data-id'), 10);
         const col = btn.getAttribute('data-col');
-        appendMetalToProductNote(id, col.toLowerCase());
+        selectColorNote(id, col);
       });
     });
 
     // Input de nota libre (letras / colores)
     container.querySelectorAll('.prod-note-input').forEach(inp => {
       inp.addEventListener('input', () => {
-        const id = parseInt(inp.getAttribute('data-id'), 10);
+        const id = parseInt(inp.getAttribute('data-prod-id') || inp.getAttribute('data-id'), 10);
         const prod = BY_ID[id];
         const val = inp.value;
         state.cnote[id] = val;
@@ -5596,19 +5730,52 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     updateProductQty(id, Math.max(1, total));
   }
 
-  function appendMetalToProductNote(id, metalWord) {
+  function selectMetalBath(id, metalWord) {
+    const prod = BY_ID[id];
+    if (!prod) return;
+
+    // Normalizar capitalización: Dorado, Plateado, Negro, Rosado
+    const metalClean = metalWord.charAt(0).toUpperCase() + metalWord.slice(1).toLowerCase();
+
+    // Asignar inmediatamente al input de la nota
+    state.cnote[id] = metalClean;
+
+    // Si la cantidad actual en el carrito es 0, sumar 1 automáticamente
+    const currentQty = state.cart[id] || 0;
+    if (currentQty === 0) {
+      state.cart[id] = 1;
+    }
+    savePersistedState();
+
+    // Re-renderizar la tarjeta para reflejar el botón activo, el input con el valor y el carrito
+    const existingCard = document.getElementById(`prod-card-${id}`);
+    if (existingCard) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = renderProductCardHtml(prod);
+      const newCard = wrapper.firstElementChild;
+      existingCard.replaceWith(newCard);
+      bindProductCardEvents(newCard.parentElement || document);
+    }
+    updateCartBar();
+    showToast(`Acabado ${metalClean} seleccionado para #${prod.i}`);
+  }
+
+  function selectColorNote(id, colWord) {
+    const prod = BY_ID[id];
+    if (!prod) return;
+    const colClean = colWord.charAt(0).toUpperCase() + colWord.slice(1).toLowerCase();
     const current = state.cnote[id] || '';
-    const regex = new RegExp(`(\\d+)\\s*${metalWord}`, 'i');
     let nextNote = '';
-    if (regex.test(current)) {
-      nextNote = current.replace(regex, (_, num) => `${parseInt(num, 10) + 1} ${metalWord}`);
+    if (!current.trim()) {
+      nextNote = `1 ${colClean}`;
     } else {
-      nextNote = current.trim() ? `${current.trim()}, 1 ${metalWord}` : `1 ${metalWord}`;
+      nextNote = `${current.trim()}, 1 ${colClean}`;
     }
     state.cnote[id] = nextNote;
     const totalFromNote = parseNoteTotalQty(nextNote);
     const currentQty = state.cart[id] || 0;
     updateProductQty(id, Math.max(currentQty, totalFromNote, 1));
+    showToast(`Color ${colClean} agregado a #${prod.i}`);
   }
 
   function updateProductQty(id, newQty) {
@@ -5719,18 +5886,18 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (!q) {
       dropdown.innerHTML = `
         <div class="sugg-header">
-          <span>⚡ Búsquedas Populares</span>
+          <span><span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">bolt</span> Búsquedas Populares</span>
           <span style="font-size:10px;color:var(--muted);">Toca para buscar</span>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;background:var(--bg);">
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Corona">👑 Corona</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="San Benito">✝️ San Benito</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Van Cleef">🍀 Van Cleef</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Candongas">🌸 Candongas</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Letras">🔤 Letras</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Balines">🟡 Balines</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Cuarzo">💎 Cuarzo</button>
-          <button type="button" class="quick-pill sugg-shortcut" data-q="Cruces">📿 Cruces</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Corona"><span class="material-symbols-outlined icon-sm">crown</span> Corona</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="San Benito"><span class="material-symbols-outlined icon-sm">auto_awesome</span> San Benito</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Van Cleef"><span class="material-symbols-outlined icon-sm">spa</span> Van Cleef</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Candongas"><span class="material-symbols-outlined icon-sm">local_florist</span> Candongas</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Letras"><span class="material-symbols-outlined icon-sm">spellcheck</span> Letras</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Balines"><span class="material-symbols-outlined icon-sm">circle</span> Balines</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cuarzo"><span class="material-symbols-outlined icon-sm">diamond</span> Cuarzo</button>
+          <button type="button" class="quick-pill sugg-shortcut" data-q="Cruces"><span class="material-symbols-outlined icon-sm">add</span> Cruces</button>
         </div>
       `;
       dropdown.style.display = 'block';
@@ -5744,7 +5911,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (topMatches.length === 0) {
       dropdown.innerHTML = `
         <div class="sugg-header">
-          <span>🔍 Sin resultados directos</span>
+          <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">search_off</span> Sin resultados directos</span>
         </div>
         <div style="padding:12px;text-align:center;font-size:13px;color:var(--muted);">
           No encontramos referencias con "${escapeHtml(q)}".<br/>
@@ -5769,7 +5936,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         const count = DATA.filter(p => p.l === lm.name).length;
         html += `
           <div class="sugg-category-jump" data-jump-line="${escapeHtml(lm.name)}">
-            <span>📁 Ver colección <strong>${escapeHtml(lm.name)}</strong></span>
+            <span><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">folder_open</span> Ver colección <strong>${escapeHtml(lm.name)}</strong></span>
             <span class="min-order-pill num">${count} ref.</span>
           </div>
         `;
@@ -5851,7 +6018,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         e.stopPropagation();
         const id = parseInt(btn.getAttribute('data-add-id'), 10);
         updateProductQty(id, (state.cart[id] || 0) + 1);
-        btn.textContent = '✓';
+        btn.innerHTML = '<span class="material-symbols-outlined icon-xs">check</span>';
         setTimeout(() => { btn.textContent = '+1'; }, 1000);
         showToast(`Agregado a tu pedido #${id}`);
       });
@@ -5880,7 +6047,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (!SpeechRec) {
       voiceBtn.title = 'Búsqueda por voz no disponible en este navegador';
       voiceBtn.addEventListener('click', () => {
-        showToast('ℹ️ Tu navegador no soporta búsqueda por voz. Puedes escribir directo.');
+        showToast('Tu navegador no soporta búsqueda por voz. Puedes escribir directo.');
       });
       return;
     }
@@ -5901,19 +6068,19 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         recognition.start();
         isListening = true;
         voiceBtn.classList.add('listening');
-        voiceBtn.textContent = '🔴';
-        showToast('🎤 Escuchando... Di el producto que buscas (ej: San Benito)');
+        voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
+        showToast('Escuchando... Di el producto que buscas (ej: San Benito)');
       } catch (e) {
         isListening = false;
         voiceBtn.classList.remove('listening');
-        voiceBtn.textContent = '🎤';
+        voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
       }
     });
 
     recognition.onresult = e => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
       const transcript = e.results && e.results[0] && e.results[0][0] ? e.results[0][0].transcript : '';
       if (transcript) {
         qInput.value = transcript;
@@ -5921,20 +6088,20 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         updateClearSearchBtn();
         updateQuickPillsActiveState();
         renderProductCatalog();
-        showToast(`🔍 Buscando: "${transcript}"`);
+        showToast(`Buscando: "${transcript}"`);
       }
     };
 
     recognition.onerror = () => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
     };
 
     recognition.onend = () => {
       isListening = false;
       voiceBtn.classList.remove('listening');
-      voiceBtn.textContent = '🎤';
+      voiceBtn.innerHTML = '<span class="material-symbols-outlined">mic</span>';
     };
   }
 
@@ -5946,10 +6113,10 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
 
     function updateMobileViewBtn() {
       if (state.viewMode === 'compact') {
-        if (icon) icon.textContent = '🎴';
+        if (icon) icon.textContent = 'grid_view';
         if (txt) txt.textContent = 'Tarjetas';
       } else {
-        if (icon) icon.textContent = '📱';
+        if (icon) icon.textContent = 'view_list';
         if (txt) txt.textContent = 'Lista';
       }
     }
@@ -5997,7 +6164,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               `;
             }).join('')}
           </svg>
-          <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">📷 Vista de Referencia · ${label} (${escapeHtml(prod.t || 'Calibres #3 al #8')})</div>
+          <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">Vista de Referencia · ${label} (${escapeHtml(prod.t || 'Calibres #3 al #8')})</div>
         </div>
       `;
     }
@@ -6024,7 +6191,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
             <rect x="118" y="21" width="6" height="78" rx="${isFlat ? 1 : 3}" fill="url(#goldRing)"/>
           </svg>
           <div style="font-size:12.5px;font-weight:700;color:#E2BC63;margin-top:4px;">
-            📷 Bola de Neopreno con Argollas ${isFlat ? 'Planas' : 'Redondas'} en Oro Laminado
+            Bola de Neopreno con Argollas ${isFlat ? 'Planas' : 'Redondas'} en Oro Laminado
           </div>
         </div>
       `;
@@ -6073,7 +6240,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         <!-- Plano de escala milimétrica -->
         <div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:8px;">
-            📐 Proporción y Medida de Referencia
+            <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">straighten</span> Proporción y Medida de Referencia
           </div>
           <svg width="240" height="170" viewBox="0 0 240 170" style="background:var(--card);border:1px solid var(--line);border-radius:8px;">
             <!-- Cuadrícula milimétrica tenue -->
@@ -6105,7 +6272,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           <div style="font-size:22px;font-weight:800;color:var(--teal);" class="num">
             ${prod.v === 'AGOTADO' ? 'AGOTADO' : (prod.k > 0 ? fmtCOP(prod.k) + ' COP' : 'Consultar precio')}
           </div>
-          ${prod.o ? `<div class="meta-badge tier-badge" style="align-self:flex-start;">💡 ${escapeHtml(prod.o)}</div>` : ''}
+          ${prod.o ? `<div class="meta-badge tier-badge" style="align-self:flex-start;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--gold);">info</span> ${escapeHtml(prod.o)}</div>` : ''}
           <p style="font-size:13.5px;color:var(--muted);">
             ${canvaUrl
               ? `La fotografía oficial de referencia de este producto se encuentra en la <strong>Página ${prod.p}</strong> del catálogo de Canva de <strong>${escapeHtml(prod.l)}</strong>.`
@@ -6113,7 +6280,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
           </p>
           ${canvaUrl ? `
             <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" class="btn cat" style="width:100%;justify-content:center;">
-              📷 Abrir Foto en Canva · Página ${prod.p} ↗
+              <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Abrir Foto en Canva · Página ${prod.p} ↗
             </a>
           ` : ''}
         </div>
@@ -6361,7 +6528,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       tiersGrid.innerHTML = `
         <div class="neo-tier-box active-tier" style="grid-column: 1 / -1;">
           <span class="neo-tier-range">Tarifa especial para ${currentRefObj.ref} #${state.neoForm.size}</span>
-          <span class="neo-tier-price" style="color:var(--teal);">💬 Precio por confirmar en WhatsApp</span>
+          <span class="neo-tier-price" style="color:var(--teal);"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">chat</span> Precio por confirmar en WhatsApp</span>
         </div>
       `;
     } else {
@@ -6449,7 +6616,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     const photoUrl = getNeoCanvaPhotoUrl(currentRefObj.ref, activeColorObj);
     if (canvaRefLink) {
       canvaRefLink.href = photoUrl;
-      canvaRefLink.textContent = `📷 Ver foto de ${currentRefObj.ref} #${activeColorObj.num} en Canva ↗`;
+      canvaRefLink.innerHTML = `<span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Ver foto de ${currentRefObj.ref} #${activeColorObj.num} en Canva ↗`;
     }
 
     if (summaryBox) {
@@ -6500,7 +6667,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     savePersistedState();
     updateCartBar();
     renderNeoAddedMiniList();
-    showToast(`✅ Agregado: ${qty} und de ${neoEntry.r} #${neoEntry.s} (${neoEntry.cname})`);
+    showToast(`Agregado: ${qty} und de ${neoEntry.r} #${neoEntry.s} (${neoEntry.cname})`);
   }
 
   function renderNeoAddedMiniList() {
@@ -6513,7 +6680,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     box.innerHTML = `
       <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line);">
         <div style="font-size:12.5px;font-weight:800;color:var(--teal);text-transform:uppercase;margin-bottom:8px;">
-          ✓ Líneas de Neopreno en tu Cotización (${state.neo.length}):
+          <span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;color:var(--teal);">check_circle</span> Líneas de Neopreno en tu Cotización (${state.neo.length}):
         </div>
         <div style="display:grid;gap:6px;">
           ${state.neo.map((item, idx) => `
@@ -6524,7 +6691,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               </span>
               <span style="display:flex;align-items:center;gap:10px;">
                 <strong class="num">${item.k > 0 ? fmtCOP(item.q * item.k) : 'Por confirmar'}</strong>
-                <button type="button" class="remove-neo-line-btn" data-idx="${idx}" style="color:var(--warn);font-weight:800;" title="Quitar línea">✕</button>
+                <button type="button" class="remove-neo-line-btn" data-idx="${idx}" style="color:var(--warn);font-weight:800;" title="Quitar línea"><span class="material-symbols-outlined icon-sm">close</span></button>
               </span>
             </div>
           `).join('')}
@@ -6628,7 +6795,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (progLabel) {
       progLabel.classList.toggle('met', met);
       if (met) {
-        progLabel.textContent = '✓ Pedido mínimo ($30.000) alcanzado';
+        progLabel.textContent = 'Pedido mínimo ($30.000) alcanzado';
       } else {
         const missing = MIN_ORDER - totals.grandTotal;
         progLabel.textContent = `Faltan ${fmtCOP(missing)} para el mínimo ($30.000)`;
@@ -6697,11 +6864,11 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
             </div>
             <div class="quote-line-sub">
               ${escapeHtml(prod.l)} › ${escapeHtml(prod.s)} · <span class="num">${fmtCOP(unitK)} c/u</span>
-              ${canvaUrl ? ` · <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;">📷 Pág. ${prod.p}</a>` : ''}
+              ${canvaUrl ? ` · <a href="${escapeHtml(canvaUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Pág. ${prod.p}</a>` : ''}
             </div>
             <div style="margin-top:6px;">
               <input type="text" class="custom-note-input quote-item-note" data-id="${prod.i}"
-                placeholder="Nota de color, baño o letras (opcional)"
+                placeholder=""
                 value="${escapeHtml(note)}" style="font-size:12.5px;padding:5px 8px;" />
             </div>
           </div>
@@ -6732,7 +6899,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
               Color #${escapeHtml(n.cn)} ${escapeHtml(n.cname)}
               ${n.m ? ` · Aro/Argolla: ${escapeHtml(n.m)}` : ''}
               · ${n.k > 0 ? `${fmtCOP(n.k)} c/u` : 'Precio por confirmar en WhatsApp'}
-              ${n.photoUrl ? ` · <a href="${escapeHtml(n.photoUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;">📷 Foto</a>` : ''}
+              ${n.photoUrl ? ` · <a href="${escapeHtml(n.photoUrl)}" target="_blank" rel="noopener" style="color:var(--cat);font-weight:700;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> Foto</a>` : ''}
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
@@ -6825,7 +6992,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         nameInput.focus();
       }
       if (warnBanner) warnBanner.style.display = 'block';
-      showToast('⚠️ Escribe tu nombre (mínimo 2 letras) para enviar o copiar tu pedido.');
+      showToast('Escribe tu nombre (mínimo 2 letras) para enviar o copiar tu pedido.');
       return false;
     }
     if (nameInput) nameInput.classList.remove('invalid');
@@ -6864,7 +7031,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
 
         // Enlace de foto en Canva (no se incluye en Balines según §12.1)
         if (!prod.l.startsWith('Balines') && prod.u && prod.p) {
-          lines.push(`   📷 Foto *pág. ${prod.p}*: ${prod.u}#${prod.p}`);
+          lines.push(`   Foto *pág. ${prod.p}*: ${prod.u}#${prod.p}`);
         }
       });
       lines.push(`*Total productos: ${totals.prodUnits} und · ${fmtCOP(totals.prodTotal)} COP*`);
@@ -7115,7 +7282,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
       if (navigator.clipboard && window.ClipboardItem) {
         await navigator.clipboard.write([new window.ClipboardItem({ 'image/png': blob })]);
-        showToast('📋 ¡Imagen copiada! Ahora abre el WhatsApp elegido y pégala en el chat.');
+        showToast('¡Imagen copiada! Ahora abre el WhatsApp elegido y pégala en el chat.');
       } else {
         downloadCanvasAsPng();
       }
@@ -7132,7 +7299,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     link.download = `Cotizacion_KSM_${cleanName}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
-    showToast('💾 Imagen de tu cotización descargada en tu dispositivo.');
+    showToast('Imagen de tu cotización descargada en tu dispositivo.');
   }
 
   // Generador de PDF nativo autónomo (sin depender de CDNs externos) a partir del Canvas de alta resolución
@@ -7197,7 +7364,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       link.href = URL.createObjectURL(blob);
       link.click();
       setTimeout(() => URL.revokeObjectURL(link.href), 5000);
-      showToast('📄 PDF descargado. Adjúntalo en WhatsApp con el ícono de clip (📎 → Documento).');
+      showToast('PDF descargado. Adjúntalo en WhatsApp como documento.');
     } catch (err) {
       downloadCanvasAsPng();
     }
@@ -7227,7 +7394,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (/oring|o-ring|correa|hublot|cartier|versace|canal|ranura|bulgari|mortadela|exclusiv|18\s*k|oro 18/i.test(q)) {
       appendChatMessage(
         'bot',
-        `💎 <strong>Joyería Oro 18K:</strong> Eso lo tenemos en nuestro catálogo exclusivo de Joyería Oro 18K (separadores mín. 50 und, modelos exclusivos de neopreno, orings, correas y mortadelas).<br><br>
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">diamond</span> <strong>Joyería Oro 18K:</strong> Eso lo tenemos en nuestro catálogo exclusivo de Joyería Oro 18K (separadores mín. 50 und, modelos exclusivos de neopreno, orings, correas y mortadelas).<br><br>
         <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="btn primary" style="margin-top:4px;padding:6px 12px;font-size:12.5px;">Abrir Catálogo Joyería 18K ↗</a>`
       );
       return;
@@ -7249,22 +7416,22 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
     if (q.includes('minimo') || q.includes('mínimo')) {
       appendChatMessage(
         'bot',
-        `🛍️ <strong>Pedido mínimo:</strong> Nuestro pedido mínimo en bisutería es de <strong>$30.000 COP</strong>. Puedes combinar dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno hasta completarlo.`
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">shopping_bag</span> <strong>Pedido mínimo:</strong> Nuestro pedido mínimo en bisutería es de <strong>$30.000 COP</strong>. Puedes combinar dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno hasta completarlo.`
       );
       return;
     }
     if (q.includes('envio') || q.includes('pago') || q.includes('tarjeta') || q.includes('transferencia')) {
       appendChatMessage(
         'bot',
-        `🚚 <strong>Envíos y Pagos:</strong> Enviamos a toda Colombia y al exterior 🌎. El valor del envío te lo confirma un asesor según tu ciudad o país.<br><br>
-        💳 <strong>Pagos:</strong> Recibimos tarjeta de crédito por nuestro link seguro (Colombia y exterior), transferencia bancaria u otros medios por WhatsApp.`
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">local_shipping</span> <strong>Envíos y Pagos:</strong> Enviamos a toda Colombia y al exterior. El valor del envío te lo confirma un asesor según tu ciudad o país.<br><br>
+        <span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">credit_card</span> <strong>Pagos:</strong> Recibimos tarjeta de crédito por nuestro link seguro (Colombia y exterior), transferencia bancaria u otros medios por WhatsApp.`
       );
       return;
     }
     if (q.includes('asesor') || q.includes('whatsapp') || q.includes('telefono')) {
       appendChatMessage(
         'bot',
-        `👤 <strong>Nuestros canales oficiales de WhatsApp:</strong><br>
+        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">support_agent</span> <strong>Nuestros canales oficiales de WhatsApp:</strong><br>
         • <a href="https://wa.me/573104337951?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Al Detal (310 433 7951) ↗</a><br>
         • <a href="https://wa.me/573162599541?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Mayorista (316 259 9541) ↗</a><br>
         • <a href="https://wa.me/573222604729?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Neox (322 260 4729) ↗</a>`
@@ -7370,7 +7537,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       switchWorkspaceTab('neopreno');
     }
 
-    // Botón Desplegable de Filtros Secundarios (⚙️ Filtros y Orden)
+    // Botón Desplegable de Filtros Secundarios (Filtros y Orden)
     const toggleExtraBtn = document.getElementById('toggleExtraFiltersBtn');
     const extraCollapse = document.getElementById('extraFiltersCollapse');
     if (toggleExtraBtn && extraCollapse) {
@@ -7381,7 +7548,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       });
     }
 
-    // Botón rápido "🛒 En mi pedido (X)"
+    // Botón rápido "En mi pedido (X)"
     const quickCartBtn = document.getElementById('quickCartFilterBtn');
     if (quickCartBtn) {
       quickCartBtn.addEventListener('click', () => {
@@ -7620,7 +7787,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         const txt = buildWhatsAppOrderText();
         try {
           await navigator.clipboard.writeText(txt);
-          showToast('📋 Texto de la cotización copiado al portapapeles.');
+          showToast('Texto de la cotización copiado al portapapeles.');
         } catch (e) {
           showToast('Selecciona el canal de WhatsApp para enviar el mensaje.');
         }
@@ -7724,7 +7891,7 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
             <span class="min-order-pill">${escapeHtml(c.tag)}</span>
             <span style="color:var(--cat);font-weight:800;font-size:13px;">Abrir ↗</span>
           </div>
-          <div style="font-weight:800;font-size:15.5px;color:var(--fg);margin-top:4px;">📷 ${escapeHtml(c.title)}</div>
+          <div style="font-weight:800;font-size:15.5px;color:var(--fg);margin-top:4px;"><span class="material-symbols-outlined icon-sm" style="vertical-align:-2px;">photo_camera</span> ${escapeHtml(c.title)}</div>
           <div style="font-size:13px;color:var(--muted);">${escapeHtml(c.sub)}</div>
         </a>
       `).join('');
