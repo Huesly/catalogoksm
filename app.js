@@ -4022,7 +4022,7 @@
       btn.addEventListener('click', downloadOrderAsPdf);
     });
 
-    // Tema claro / oscuro (Sincronizado en Topbar y Sticky Compact Header)
+    // Tema claro / oscuro
     function toggleSiteTheme() {
       const cur = document.documentElement.getAttribute('data-theme');
       const next = cur === 'dark' ? 'light' : 'dark';
@@ -4031,15 +4031,11 @@
     }
     const themeBtn = document.getElementById('themeToggleBtn');
     if (themeBtn) themeBtn.addEventListener('click', toggleSiteTheme);
-    const stickyThemeBtn = document.getElementById('stickyThemeToggleBtn');
-    if (stickyThemeBtn) stickyThemeBtn.addEventListener('click', toggleSiteTheme);
 
-    // Cabecera Sticky Compacta Dinámica (§3.1) y Botón Ir al Inicio
-    const stickyHdr = document.getElementById('stickyCompactHeader');
+    // Botón Ir al Inicio
     const toTopBtn = document.getElementById('toTopBtn');
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
-      if (stickyHdr) stickyHdr.classList.toggle('visible', y > 80);
       if (toTopBtn) toTopBtn.classList.toggle('visible', y > 450);
     }, { passive: true });
 

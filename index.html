@@ -16,88 +16,43 @@
   <!-- Contenedor de Notificaciones Toast -->
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
-  <!-- 1. BARRA SUPERIOR MINIMALISTA -->
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand-mini">
-        <span class="co-flag" title="Colombia"></span>
-        <span class="brand-eyebrow">Cauchos KSM · Joyería y Bisutería · Colombia</span>
-      </div>
-      <div class="topbar-actions">
-        <button type="button" class="top-pill-btn open-catalogs-hub-btn" id="topCatalogsHubBtn">
-          <span class="material-symbols-outlined icon-sm">photo_library</span> Catálogos Canva (12)
-        </button>
-        <button type="button" class="top-pill-btn neo-pill go-neopreno-tab">
-          <span class="material-symbols-outlined icon-sm">radio_button_checked</span> Configurar Neopreno
-        </button>
-        <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="top-pill-btn joy18k">
-          <span class="material-symbols-outlined icon-sm">diamond</span> Joyería 18K
-        </a>
-        <button type="button" class="top-pill-btn" id="themeToggleBtn" title="Cambiar modo claro / oscuro">
-          <span class="material-symbols-outlined icon-sm">dark_mode</span> Tema
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 1.1 CABECERA COMPACTA STICKY DINÁMICA (Propuesta v5.1 §3.1 - Activada al Scroll > 80px) -->
-  <header id="stickyCompactHeader" class="sticky-compact-header" aria-label="Cabecera compacta de navegación rápida">
-    <div class="sticky-compact-inner">
-      <div class="sticky-brand-group">
-        <div class="ksm-emblem-mini" aria-hidden="true">KSM</div>
-        <div class="sticky-brand-info">
-          <span class="sticky-brand-name">Cauchos KSM</span>
-          <span class="sticky-min-state" id="stickyMinState">Mínimo: $30.000 COP</span>
+  <!-- NAVBAR PRINCIPAL FIJA / STICKY — FORMATO SERIO INSTITUCIONAL -->
+  <header class="navbar-serious" aria-label="Navegación principal Cauchos KSM">
+    <div class="navbar-serious-inner">
+      <div class="navbar-brand">
+        <div class="ksm-emblem" aria-label="Logo Cauchos KSM">
+          <span class="ksm-emblem-main">KSM</span>
+          <span class="ksm-emblem-sub">CAUCHOS</span>
+        </div>
+        <div class="navbar-brand-info">
+          <span class="navbar-brand-name">Cauchos KSM</span>
+          <span class="navbar-brand-tag">Catálogo Oficial · Joyería y Bisutería</span>
         </div>
       </div>
-      <div class="sticky-actions-group">
-        <button type="button" class="sticky-pill-btn open-categories-btn" id="stickyCategoriesBtn" title="Explorar todas las categorías">
-          <span class="material-symbols-outlined icon-sm">grid_view</span>
-          <span class="sticky-btn-text">Categorías</span>
-        </button>
-        <button type="button" class="sticky-pill-btn open-catalogs-hub-btn" title="Ver 12 Catálogos Canva">
+
+      <nav class="navbar-actions">
+        <button type="button" class="nav-pill-btn open-catalogs-hub-btn" title="Ver 12 Catálogos Oficiales en Canva">
           <span class="material-symbols-outlined icon-sm">photo_library</span>
-          <span class="sticky-btn-text">Canva</span>
+          <span class="nav-btn-text">Catálogos Canva</span>
         </button>
-        <button type="button" class="sticky-quote-btn open-quote-btn" title="Ver cotización">
-          <span class="material-symbols-outlined icon-sm">receipt_long</span>
-          <span class="sticky-quote-text">Cotización</span>
-          <span class="pill-badge num" id="stickyOrderCountPill">0</span>
-        </button>
-        <button type="button" class="sticky-icon-btn" id="stickyThemeToggleBtn" title="Cambiar tema claro / oscuro" aria-label="Cambiar tema">
+        <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="nav-pill-btn joy18k" title="Catálogo Joyería Oro 18K">
+          <span class="material-symbols-outlined icon-sm">diamond</span>
+          <span class="nav-btn-text">Joyería 18K</span>
+        </a>
+        <button type="button" class="nav-icon-btn" id="themeToggleBtn" title="Cambiar modo claro / oscuro" aria-label="Cambiar tema">
           <span class="material-symbols-outlined icon-sm">dark_mode</span>
         </button>
-      </div>
+        <button type="button" class="btn primary nav-quote-btn open-quote-btn" id="heroVerPedidoBtn" title="Ver mi cotización">
+          <span class="material-symbols-outlined icon-sm">receipt_long</span>
+          <span class="nav-btn-text">Cotización</span>
+          <span class="pill-badge num" id="topOrderCountPill">0</span>
+        </button>
+      </nav>
     </div>
   </header>
 
   <!-- CONTENEDOR PRINCIPAL -->
   <main class="app-shell">
-
-    <!-- 2. CABECERA LIMPIA Y AIREADA (PALETA OFICIAL KSM) -->
-    <header class="hero-clean">
-      <div class="hero-brand-group">
-        <div class="ksm-emblem" aria-hidden="true">
-          <span class="ksm-emblem-main">KSM</span>
-          <span class="ksm-emblem-sub">CAUCHOS</span>
-        </div>
-        <div>
-          <div class="brand-eyebrow">Catálogo Oficial · Mayoristas y Detal · Pedido mínimo $30.000 COP</div>
-          <h1 class="hero-title">Catálogo de Dijes, Insumos y Neopreno</h1>
-          <p class="hero-subtitle">Selecciona una categoría o busca directo · Toca el baño o + para cotizar a WhatsApp</p>
-        </div>
-      </div>
-
-      <div class="hero-right-actions">
-        <button type="button" class="btn cat open-catalogs-hub-btn">
-          <span class="material-symbols-outlined">photo_library</span> Catálogos Canva (12)
-        </button>
-        <button type="button" class="btn primary open-quote-btn" id="heroVerPedidoBtn">
-          <span class="material-symbols-outlined">receipt_long</span> Ver mi cotización
-          <span class="pill-badge num" id="topOrderCountPill">0</span>
-        </button>
-      </div>
-    </header>
 
     <!-- 3. SELECTOR DE 2 PESTAÑAS PRINCIPALES (DIJES E INSUMOS vs BOLAS DE NEOPRENO) -->
     <nav class="workspace-tabs" aria-label="Secciones principales del catálogo">

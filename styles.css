@@ -222,171 +222,185 @@ a {
 .app-shell {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 max(16px, env(safe-area-inset-left)) 40px max(16px, env(safe-area-inset-right));
+  padding: 14px max(16px, env(safe-area-inset-left)) 40px max(16px, env(safe-area-inset-right));
 }
 
 /* ==========================================================================
-   1. BARRA SUPERIOR INSTITUCIONAL (TEAL #2F4A55 + DORADO #9A7220)
+   1. NAVBAR PRINCIPAL FIJA / STICKY — FORMATO SERIO INSTITUCIONAL
    ========================================================================== */
-.topbar {
-  background: #2F4A55;
-  color: #FFFFFF;
+.navbar-serious {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: color-mix(in srgb, #2F4A55 98%, #16272D);
   border-bottom: 2px solid #9A7220;
-  position: relative;
-  z-index: 40;
+  box-shadow: 0 4px 18px rgba(18, 25, 28, 0.22);
+  z-index: 80;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.topbar-inner {
+.navbar-serious-inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 9px 16px;
+  height: 100%;
+  padding: 0 max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
-.brand-mini {
+.navbar-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.co-flag {
-  display: inline-block;
-  width: 20px;
-  height: 14px;
-  border-radius: 3px;
-  background: linear-gradient(
-    to bottom,
-    var(--co-y) 0%, var(--co-y) 50%,
-    var(--co-b) 50%, var(--co-b) 75%,
-    var(--co-r) 75%, var(--co-r) 100%
-  );
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-  flex-shrink: 0;
-}
-
-.brand-eyebrow {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.topbar .brand-eyebrow {
-  color: #F3E7C9;
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.top-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-  font-size: 12px;
-  font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.10);
-  color: #FFFFFF;
-  transition: all var(--transition-fast);
-}
-
-.top-pill-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.top-pill-btn.neo-pill {
-  background: var(--hi);
-  color: var(--onhi);
-  border-color: var(--hidark);
-  font-weight: 700;
-}
-
-.top-pill-btn.joy18k {
-  background: #141414;
-  color: #E2BC63;
-  border-color: #9A7220;
-}
-
-/* ==========================================================================
-   2. CABECERA PRINCIPAL Y PESTAÑAS DE TRABAJO (DIJES vs NEOPRENO)
-   ========================================================================== */
-.hero-clean {
-  padding: 22px 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.hero-brand-group {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .ksm-emblem {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  background: #2F4A55;
-  border: 2px solid #9A7220;
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: #233841;
+  border: 1.5px solid #E2BC63;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   flex-shrink: 0;
 }
 
 .ksm-emblem-main {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   line-height: 1;
   color: #F3E7C9;
 }
 
 .ksm-emblem-sub {
-  font-size: 8.5px;
+  font-size: 7.5px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: #E2BC63;
-  margin-top: 2px;
+  margin-top: 1.5px;
+  font-weight: 700;
 }
 
-.hero-title {
-  font-size: clamp(22px, 3.2vw, 30px);
+.navbar-brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.navbar-brand-name {
+  font-family: var(--font-display);
+  font-size: 16.5px;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  color: #FFFFFF;
   line-height: 1.15;
-  color: var(--teal);
+  letter-spacing: -0.01em;
 }
 
-.hero-subtitle {
-  font-size: 14px;
-  color: var(--muted);
-  margin-top: 3px;
+.navbar-brand-tag {
+  font-size: 11px;
+  color: #E2BC63;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
-.hero-right-actions {
+.navbar-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.09);
+  color: #FFFFFF;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+}
+
+.nav-pill-btn.joy18k {
+  background: #141414;
+  color: #E2BC63;
+  border-color: #9A7220;
+}
+
+.nav-pill-btn.joy18k:hover {
+  background: #222222;
+  border-color: #E2BC63;
+}
+
+.nav-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.09);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.nav-quote-btn {
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 8px rgba(154, 114, 32, 0.35);
+}
+
+@media (max-width: 768px) {
+  .navbar-serious {
+    height: 54px;
+  }
+  .navbar-brand-tag {
+    display: none;
+  }
+  .navbar-actions .nav-pill-btn .nav-btn-text {
+    display: none;
+  }
+  .navbar-actions .nav-pill-btn {
+    padding: 6px 9px;
+  }
+  .nav-quote-btn {
+    padding: 6px 11px;
+    font-size: 12px;
+  }
 }
 
 /* Selector Principal de 2 Pestañas (Dijes en Teal vs Neopreno en Naranja #F28C1B) */
@@ -2784,72 +2798,7 @@ body.has-cart-visible .floating-utils {
     padding-right: 10px;
   }
 
-  /* 1. Barra Superior Compacta para Móviles */
-  .topbar-inner {
-    padding: 6px 10px;
-    gap: 8px;
-  }
-  .brand-eyebrow {
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
-  }
-  .topbar-actions {
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 3px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .topbar-actions::-webkit-scrollbar {
-    display: none;
-  }
-  .top-pill-btn {
-    padding: 4px 10px;
-    font-size: 11px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
 
-  /* 2. Cabecera Hero Compacta en Móvil */
-  .hero-clean {
-    padding: 12px 0 10px;
-    gap: 12px;
-  }
-  .ksm-emblem {
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
-  }
-  .ksm-emblem-main {
-    font-size: 14px;
-  }
-  .ksm-emblem-sub {
-    font-size: 7.5px;
-  }
-  .hero-title {
-    font-size: 20px;
-    line-height: 1.2;
-  }
-  .hero-subtitle {
-    font-size: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .hero-right-actions {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-  }
-  .hero-right-actions .btn {
-    flex: 1;
-    padding: 8px 10px;
-    font-size: 12.5px;
-    text-align: center;
-    justify-content: center;
-  }
 
   /* 3. Pestañas de Trabajo en Móvil */
   .workspace-tabs {
@@ -3129,9 +3078,6 @@ body.has-cart-visible .floating-utils {
 }
 
 @media (max-width: 420px) {
-  .hero-title {
-    font-size: 18px;
-  }
   .search-row-clean {
     gap: 5px;
   }
@@ -3153,149 +3099,7 @@ body.has-cart-visible .floating-utils {
    PROPUESTA V5.1 — ESTILOS ADICIONALES DE MICRO-ERGONOMÍA Y LAYOUT
    ========================================================================== */
 
-/* 1. Cabecera Sticky Compacta Dinámica (§3.1) */
-.sticky-compact-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 52px;
-  background: color-mix(in srgb, #2F4A55 96%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: #FFFFFF;
-  border-bottom: 2px solid #9A7220;
-  box-shadow: 0 4px 18px rgba(20, 28, 31, 0.22);
-  z-index: 60;
-  transform: translateY(-110%);
-  transition: transform 260ms var(--ease-out);
-}
 
-.sticky-compact-header.visible {
-  transform: translateY(0);
-}
-
-.sticky-compact-inner {
-  max-width: 1180px;
-  margin: 0 auto;
-  height: 100%;
-  padding: 0 max(14px, env(safe-area-inset-left)) 0 max(14px, env(safe-area-inset-right));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.sticky-brand-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ksm-emblem-mini {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #233841;
-  border: 1.5px solid #E2BC63;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 800;
-  color: #F3E7C9;
-  flex-shrink: 0;
-}
-
-.sticky-brand-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.sticky-brand-name {
-  font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 800;
-  color: #FFFFFF;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.sticky-min-state {
-  font-size: 11px;
-  font-weight: 700;
-  color: #E2BC63;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.sticky-min-state.met {
-  color: #8CF0B6;
-}
-
-.sticky-actions-group {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.sticky-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 11px;
-  border-radius: var(--radius-pill);
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.sticky-pill-btn:hover {
-  background: rgba(255, 255, 255, 0.24);
-}
-
-.sticky-quote-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  font-size: 12.5px;
-  font-weight: 700;
-  background: #9A7220;
-  color: #FFFFFF;
-  border: 1px solid #E2BC63;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.sticky-quote-btn:hover {
-  background: #B8892B;
-}
-
-.sticky-icon-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-}
-
-.sticky-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.24);
-}
 
 /* 2. Selector de Familias Cromáticas de Neopreno (§3.4) */
 .neo-color-families-bar {
