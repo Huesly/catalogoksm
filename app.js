@@ -1976,8 +1976,14 @@
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" fill="${c0}"/><circle cx="7" cy="8" r="2.2" fill="${darkCavity}"/><circle cx="15" cy="6" r="1.6" fill="${darkCavity}"/><circle cx="21" cy="10" r="2.1" fill="${darkCavity}"/><circle cx="6" cy="16" r="1.8" fill="${darkCavity}"/><circle cx="14" cy="15" r="2.6" fill="${darkCavity}"/><circle cx="22" cy="18" r="1.9" fill="${darkCavity}"/><circle cx="9" cy="22" r="2.2" fill="${darkCavity}"/><circle cx="18" cy="23" r="2.0" fill="${darkCavity}"/></svg>`;
       return `url("data:image/svg+xml,${encodeURIComponent(svg)}") center / cover no-repeat`;
     }
-    if (refCode === 'RF14' || colors.length === 2) {
-      // Candy / Bicolor
+    if (refCode === 'RF14') {
+      if (colors.length <= 1) return c0;
+      if (colors.length === 2) return `linear-gradient(135deg, ${c0} 50%, ${c1} 50%)`;
+      if (colors.length === 3) return `linear-gradient(135deg, ${c0} 33%, ${c1} 33% 66%, ${c2} 66%)`;
+      return `conic-gradient(${colors.map((c, i) => `${c} ${(i * 100) / colors.length}% ${((i + 1) * 100) / colors.length}%`).join(', ')})`;
+    }
+    if (colors.length === 2) {
+      // Bicolor
       return `linear-gradient(135deg, ${c0} 50%, ${c1} 50%)`;
     }
     if (colors.length >= 3) {
@@ -2039,6 +2045,7 @@
     let secHex = '#6a2c91';
     let bandHex = null;
 
+    let multiColors = [];
     if (isZebra) {
       if (lowName.includes('banda')) {
         const parts = lowName.split('banda');
@@ -2053,9 +2060,9 @@
         secHex = zCols[1] || (mainHex.toLowerCase() === '#141414' ? '#ffffff' : '#141414');
       }
     } else {
-      const extracted = extractColorsForName(colorName);
-      mainHex = extracted[0] || '#222222';
-      secHex = extracted[1] || mainHex;
+      multiColors = extractColorsForName(colorName);
+      mainHex = multiColors[0] || '#222222';
+      secHex = multiColors[1] || mainHex;
     }
 
     const hx = cx + r * 0.44;
@@ -2146,10 +2153,47 @@
         <circle cx="${cx + r*0.2}" cy="${cy + r*0.55}" r="${r*0.06}" fill="${secHex}" opacity="0.7"/>
       `;
     } else if (isCandy) {
-      patternContent = `
-        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
-        <path d="M ${cx - r*1.05} ${cy - r*0.5} Q ${cx} ${cy - r*0.1} ${cx + r*1.05} ${cy + r*0.3} L ${cx + r*1.05} ${cy + r*1.05} L ${cx - r*1.05} ${cy + r*1.05} Z" fill="${secHex}"/>
-      `;
+      if (multiColors.length <= 1 || multiColors[0].toLowerCase() === (multiColors[1] || '').toLowerCase()) {
+        // Candy Monocolor (Negro, Blanco, Amarillo Neón, Esmeralda, etc.)
+        patternContent = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>`;
+      } else if (multiColors.length === 2) {
+        // Candy Bicolor: División diagonal en 3D esférico (135°)
+        const c0 = multiColors[0];
+        const c1 = multiColors[1];
+        patternContent = `
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="${c0}"/>
+          <path d="M ${cx - r*0.707} ${cy - r*0.707} 
+                   C ${cx - r*0.15} ${cy - r*0.35}, ${cx + r*0.35} ${cy + r*0.15}, ${cx + r*0.707} ${cy + r*0.707}
+                   A ${r} ${r} 0 0 1 ${cx - r*0.707} ${cy - r*0.707} Z" fill="${c1}"/>
+        `;
+      } else if (multiColors.length === 3) {
+        // Candy Tricolor (Colombia, 3 Azules, etc.)
+        const c0 = multiColors[0];
+        const c1 = multiColors[1];
+        const c2 = multiColors[2];
+        patternContent = `
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="${c0}"/>
+          <path d="M ${cx - r*0.92} ${cy - r*0.38}
+                   C ${cx - r*0.30} ${cy - r*0.10}, ${cx + r*0.10} ${cy + r*0.30}, ${cx + r*0.38} ${cy + r*0.92}
+                   L ${cx + r*0.82} ${cy + r*0.58}
+                   C ${cx + r*0.45} ${cy - r*0.05}, ${cx + r*0.05} ${cy - r*0.45}, ${cx - r*0.58} ${cy - r*0.82} Z" fill="${c1}"/>
+          <path d="M ${cx - r*0.38} ${cy + r*0.92}
+                   C ${cx - r*0.05} ${cy + r*0.55}, ${cx + r*0.55} ${cy - r*0.05}, ${cx + r*0.92} ${cy - r*0.38}
+                   A ${r} ${r} 0 0 1 ${cx - r*0.38} ${cy + r*0.92} Z" fill="${c2}"/>
+        `;
+      } else {
+        // Candy Multicolor (4+ tonos)
+        const c0 = multiColors[0];
+        const c1 = multiColors[1];
+        const c2 = multiColors[2];
+        const c3 = multiColors[3] || c2;
+        patternContent = `
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="${c0}"/>
+          <path d="M ${cx - r*0.98} ${cy - r*0.18} C ${cx - r*0.35} ${cy - r*0.05}, ${cx - r*0.05} ${cy + r*0.35}, ${cx + r*0.18} ${cy + r*0.98} L ${cx + r*0.58} ${cy + r*0.82} C ${cx + r*0.25} ${cy + r*0.25}, ${cx + r*0.25} ${cy + r*0.25}, ${cx - r*0.82} ${cy - r*0.58} Z" fill="${c1}"/>
+          <path d="M ${cx - r*0.58} ${cy + r*0.82} C ${cx - r*0.10} ${cy + r*0.45}, ${cx + r*0.45} ${cy - r*0.10}, ${cx + r*0.82} ${cy - r*0.58} L ${cx + r*0.95} ${cy - r*0.30} C ${cx + r*0.55} ${cy + r*0.15}, ${cx + r*0.15} ${cy + r*0.55}, ${cx - r*0.30} ${cy + r*0.95} Z" fill="${c2}"/>
+          <path d="M ${cx - r*0.30} ${cy + r*0.95} C ${cx + r*0.15} ${cy + r*0.55}, ${cx + r*0.55} ${cy + r*0.15}, ${cx + r*0.95} ${cy - r*0.30} A ${r} ${r} 0 0 1 ${cx - r*0.30} ${cy + r*0.95} Z" fill="${c3}"/>
+        `;
+      }
     } else if (isVolcanica) {
       const darkCavity = adjustHexBrightness(mainHex, -75);
       const hexNum = parseInt(mainHex.replace('#', ''), 16);
