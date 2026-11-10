@@ -82,6 +82,7 @@
       ref: 'RF3',
       size: 8,
       colorSearch: '',
+      colorFamily: 'all',
       colorIdx: 0,
       customColor: '',
       metal: 'Dorado',
@@ -1254,6 +1255,11 @@
     const prod = BY_ID[id];
     if (!prod) return;
 
+    // Haptic feedback en dispositivos móviles soportados (Propuesta v5.1 §3.3)
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      try { navigator.vibrate(15); } catch (_) {}
+    }
+
     // Normalizar capitalización: Dorado, Plateado, Negro, Rosado
     const metalClean = metalWord.charAt(0).toUpperCase() + metalWord.slice(1).toLowerCase();
 
@@ -1973,6 +1979,27 @@
     return c0;
   }
 
+  function getColorFamily(name) {
+    const n = norm(name);
+    if (n.includes('transparente') || n.includes('traslucido') || n.includes('camuflad') ||
+        n.includes('zebra') || n.includes('volcanic') || n.includes('bandera') ||
+        n.includes('reflectiv') || n.includes('candy') || n.includes('pimienta')) {
+      return 'specials';
+    }
+    if (n.includes('pastel') || n.includes('bebe') || n.includes('menta') ||
+        n.includes('salmon') || n.includes('lila') || n.includes('cielo') ||
+        n.includes('pitufo') || n.includes('rosado') || n.includes('turquesa') ||
+        n.includes('claro')) {
+      return 'pastels';
+    }
+    if (n.includes('negro') || n.includes('blanco') || n.includes('gris') ||
+        n.includes('beige') || n.includes('cafe') || n.includes('tierra') ||
+        n.includes('hueso') || n.includes('marfil')) {
+      return 'classics';
+    }
+    return 'vivid';
+  }
+
   function colorAllowedForSize(colorObj, sizeMm) {
     const n = colorObj.name.toLowerCase();
     if (n.includes('solo #8') && Number(sizeMm) !== 8) return false;
@@ -2061,11 +2088,30 @@
       `).join('');
     }
 
-    // 4. Renderizar cuadrícula de muestras de color (Swatches)
+    // 4. Actualizar barra de familias cromáticas y renderizar cuadrícula de muestras de color (Swatches)
+    const famBar = document.getElementById('neoColorFamiliesBar');
+    if (famBar) {
+      famBar.querySelectorAll('.neo-family-chip').forEach(chip => {
+        const fam = chip.getAttribute('data-family');
+        chip.classList.toggle('active', fam === (state.neoForm.colorFamily || 'all'));
+        chip.onclick = () => {
+          state.neoForm.colorFamily = fam;
+          if (typeof navigator !== 'undefined' && navigator.vibrate) {
+            try { navigator.vibrate(10); } catch (_) {}
+          }
+          renderNeoprenoStudio();
+        };
+      });
+    }
+
     const qCol = norm(state.neoForm.colorSearch);
     let swatchesHtml = '';
     currentRefObj.colors.forEach((cObj, idx) => {
       if (qCol && !norm(`${cObj.num} ${cObj.name}`).includes(qCol)) return;
+      if (state.neoForm.colorFamily && state.neoForm.colorFamily !== 'all') {
+        const fam = getColorFamily(cObj.name);
+        if (fam !== state.neoForm.colorFamily) return;
+      }
       const allowed = colorAllowedForSize(cObj, state.neoForm.size);
       const bgCss = buildSwatchBackgroundCss(currentRefObj.ref, cObj.name);
       const isSelected = idx === state.neoForm.colorIdx;
@@ -2080,10 +2126,13 @@
       `;
     });
 
-    swatchesBox.innerHTML = swatchesHtml || `<div style="grid-column:1/-1;padding:16px;text-align:center;color:var(--muted);">No hay colores que coincidan con "${escapeHtml(state.neoForm.colorSearch)}". Puedes usar la casilla de "Otro color" abajo.</div>`;
+    swatchesBox.innerHTML = swatchesHtml || `<div style="grid-column:1/-1;padding:16px;text-align:center;color:var(--muted);">No hay colores que coincidan en esta familia. Puedes cambiar de familia arriba o escribir en la casilla de "Otro color" abajo.</div>`;
 
     swatchesBox.querySelectorAll('.neo-color-item').forEach(btn => {
       btn.addEventListener('click', () => {
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+          try { navigator.vibrate(12); } catch (_) {}
+        }
         state.neoForm.colorIdx = parseInt(btn.getAttribute('data-cidx'), 10);
         state.neoForm.customColor = '';
         const customInp = document.getElementById('neoCustomColorInput');
@@ -2284,17 +2333,24 @@
     const countEl = document.getElementById('cartbarCountTxt');
     const progFill = document.getElementById('minProgressFill');
     const progLabel = document.getElementById('minProgressLabel');
+    const stickyOrderPill = document.getElementById('stickyOrderCountPill');
+    const stickyMinState = document.getElementById('stickyMinState');
 
     const totalItemsBadge = totals.prodRefs + totals.neoLines;
     if (topCounterPill) {
       topCounterPill.textContent = totalItemsBadge;
+    }
+    if (stickyOrderPill) {
+      stickyOrderPill.textContent = totalItemsBadge;
     }
     if (quickCartCount) {
       quickCartCount.textContent = `(${totals.prodRefs})`;
     }
 
     if (!cartbar) return;
-    cartbar.classList.toggle('visible', !totals.isEmpty);
+    const isCartVisible = !totals.isEmpty;
+    cartbar.classList.toggle('visible', isCartVisible);
+    document.body.classList.toggle('has-cart-visible', isCartVisible);
 
     if (totalEl) {
       totalEl.textContent = fmtCOP(totals.grandTotal) + ' COP';
@@ -2315,11 +2371,15 @@
     if (progLabel) {
       progLabel.classList.toggle('met', met);
       if (met) {
-        progLabel.textContent = 'Pedido mínimo ($30.000) alcanzado';
+        progLabel.textContent = '✓ Pedido mínimo alcanzado';
       } else {
         const missing = MIN_ORDER - totals.grandTotal;
-        progLabel.textContent = `Faltan ${fmtCOP(missing)} para el mínimo ($30.000)`;
+        progLabel.textContent = `Faltan ${fmtCOP(missing)} COP para el mínimo`;
       }
+    }
+    if (stickyMinState) {
+      stickyMinState.classList.toggle('met', met);
+      stickyMinState.textContent = met ? '✓ Mínimo completado' : `Faltan ${fmtCOP(MIN_ORDER - totals.grandTotal)}`;
     }
   }
 
@@ -3080,16 +3140,25 @@
       });
     }
 
-    // Botón Mostrar/Ocultar Tarjetas de Categoría al inicio
+    // Botón Mostrar/Ocultar Explorador Panorámico de Categorías (§3.2)
+    function toggleCategoriesSection(forceOpen) {
+      const sec = document.getElementById('categoriesShowcaseSection');
+      if (!sec) return;
+      const willOpen = forceOpen !== undefined ? forceOpen : (sec.style.display === 'none' || !sec.style.display);
+      sec.style.display = willOpen ? 'block' : 'none';
+      if (willOpen) {
+        renderCategoriesBentoGrid();
+        sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    document.querySelectorAll('.open-categories-btn').forEach(btn => {
+      btn.addEventListener('click', () => toggleCategoriesSection(true));
+    });
+
     const toggleCatsBtn = document.getElementById('toggleCategoriesShowcaseBtn');
     if (toggleCatsBtn) {
-      toggleCatsBtn.addEventListener('click', () => {
-        categoriesShowcaseHiddenByUser = !categoriesShowcaseHiddenByUser;
-        toggleCatsBtn.textContent = categoriesShowcaseHiddenByUser
-          ? 'Mostrar tarjetas de categorías ▼'
-          : 'Ocultar tarjetas de categorías ▲';
-        renderCategoriesBentoGrid();
-      });
+      toggleCatsBtn.addEventListener('click', () => toggleCategoriesSection());
     }
 
     // Buscador #q y Sugerencias Dinámicas
@@ -3344,23 +3413,28 @@
       btn.addEventListener('click', downloadOrderAsPdf);
     });
 
-    // Tema claro / oscuro
-    const themeBtn = document.getElementById('themeToggleBtn');
-    if (themeBtn) {
-      themeBtn.addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('ksm_theme', next); } catch (e) {}
-      });
+    // Tema claro / oscuro (Sincronizado en Topbar y Sticky Compact Header)
+    function toggleSiteTheme() {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('ksm_theme', next); } catch (e) {}
     }
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) themeBtn.addEventListener('click', toggleSiteTheme);
+    const stickyThemeBtn = document.getElementById('stickyThemeToggleBtn');
+    if (stickyThemeBtn) stickyThemeBtn.addEventListener('click', toggleSiteTheme);
 
-    // Botón Ir al Inicio (#toTop)
+    // Cabecera Sticky Compacta Dinámica (§3.1) y Botón Ir al Inicio
+    const stickyHdr = document.getElementById('stickyCompactHeader');
     const toTopBtn = document.getElementById('toTopBtn');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (stickyHdr) stickyHdr.classList.toggle('visible', y > 80);
+      if (toTopBtn) toTopBtn.classList.toggle('visible', y > 450);
+    }, { passive: true });
+
     if (toTopBtn) {
-      window.addEventListener('scroll', () => {
-        toTopBtn.classList.toggle('visible', window.scrollY > 500);
-      }, { passive: true });
       toTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
