@@ -508,11 +508,19 @@
     </div>
     <div id="assistantMessages" class="assistant-messages">
       <div class="chat-bubble bot">
-        ¡Hola! Soy el asistente de <strong>Cauchos KSM</strong>. ¿En qué te ayudo hoy? Puedes tocar una opción rápida o escribir el producto que buscas (ej: <em>corona rolex</em>, <em>san benito</em>, <em>cuarzo</em>, <em>orings 18k</em>).
+        ¡Hola! Soy el asistente concierge de <strong>Cauchos KSM</strong>. ¿En qué te ayudo hoy? Puedes tocar una opción rápida, consultar dudas de pedidos o escribir lo que buscas (ej: <em>hola</em>, <em>corona rolex</em>, <em>candy</em>, <em>cuánto llevo</em>, <em>envío a Cali</em>, <em>orings 18k</em>).
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno</button>
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="¿Cómo hago mi pedido?"><span class="material-symbols-outlined icon-sm">help</span> ¿Cómo pedir?</button>
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="Pedido mínimo y envíos"><span class="material-symbols-outlined icon-sm">local_shipping</span> Envíos y mínimo</button>
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Asesor WhatsApp</button>
+        </div>
       </div>
     </div>
     <div class="assistant-quick-chips">
       <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cómo hago mi pedido?"><span class="material-symbols-outlined icon-sm">edit_note</span> ¿Cómo cotizar?</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Bolas de neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno</button>
+      <button type="button" class="sub-pill assistant-chip-btn" data-ask="Precios y mayorista"><span class="material-symbols-outlined icon-sm">payments</span> Precios y por mayor</button>
       <button type="button" class="sub-pill assistant-chip-btn" data-ask="¿Cuál es el pedido mínimo?"><span class="material-symbols-outlined icon-sm">shopping_bag</span> Pedido mínimo</button>
       <button type="button" class="sub-pill assistant-chip-btn" data-ask="Envíos y pagos"><span class="material-symbols-outlined icon-sm">local_shipping</span> Envíos y pagos</button>
       <button type="button" class="sub-pill assistant-chip-btn" data-ask="Joyería 18K y orings"><span class="material-symbols-outlined icon-sm">diamond</span> Joyería 18K</button>
@@ -4770,56 +4778,347 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
 
     const q = norm(text);
 
-    // 1. Verificar palabras clave de Joyería 18K (§13)
+    // Detección de saludo en el texto
+    const hasGreeting = /\b(hola|buen(as|os)?|buenos dias|buenas tardes|buenas noches|hey|saludos|que tal|como estas|como te va|alo|hi|hello)\b/i.test(q);
+
+    // 1. Detección de cortesía pura (Sólo saludo sin preguntas de fondo)
+    const isPureGreeting = hasGreeting && (
+      q.length < 25 ||
+      /^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|saludos|que tal|como estas|como te va|alo|hi|hello)\s*(como estas|que tal|amigo|amiga|ksm|senor|senora|cordial saludo)?[\s!?.,]*$/i.test(q)
+    );
+
+    if (isPureGreeting) {
+      const hour = new Date().getHours();
+      let timeGreeting = '¡Hola!';
+      if (hour >= 5 && hour < 12) timeGreeting = '¡Buenos días!';
+      else if (hour >= 12 && hour < 19) timeGreeting = '¡Buenas tardes!';
+      else timeGreeting = '¡Buenas noches!';
+
+      const totals = calculateQuoteTotals();
+      let cartNotice = '';
+      if (!totals.isEmpty) {
+        cartNotice = `<br><br><span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">shopping_bag</span> <em>Actualmente tienes <strong>${totals.prodRefs + totals.neoLines} referencias</strong> en tu cotización por un subtotal estimado de <strong>${fmtCOP(totals.grandTotal)} COP</strong>.</em>`;
+      }
+
+      appendChatMessage(
+        'bot',
+        `<strong>${timeGreeting} ¡Bienvenido a Cauchos KSM!</strong><br><br>
+        Soy tu asistente concierge virtual. Estoy aquí para acompañarte en todo tu proceso: explorar insumos de bisutería, personalizar bolas de neopreno con vista 3D, consultar el estado de tu cotización o responder tus dudas sobre pedidos y envíos a todo el país.${cartNotice}<br><br>
+        <strong>¿Cómo deseas comenzar?</strong>
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno</button>
+          <button type="button" class="chat-action-btn" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">diamond</span> Dijes e Insumos</button>
+          ${!totals.isEmpty ? `<button type="button" class="chat-action-btn" data-action="quote"><span class="material-symbols-outlined icon-sm">shopping_cart</span> Ver mi Cotización</button>` : ''}
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="¿Cómo hago mi pedido?"><span class="material-symbols-outlined icon-sm">help</span> ¿Cómo cotizar?</button>
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="Pedido mínimo y envíos"><span class="material-symbols-outlined icon-sm">local_shipping</span> Envíos y mínimo</button>
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Asesores WhatsApp</button>
+        </div>`
+      );
+      return;
+    }
+
+    // Prefijo cordial si el usuario incluyó un saludo antes de su pregunta
+    const greetingPrefix = hasGreeting ? `<strong>¡Hola! Con mucho gusto te oriento:</strong><br><br>` : '';
+
+    // 2. Agradecimientos y confirmaciones
+    if (/\b(gracias|muchas gracias|mil gracias|agradecid|muy amable|ok gracias|vale gracias|perfecto|excelente|genial|super|muy bien|ok|vale|dale)\b/i.test(q) && !/como|cuanto|precio|envio|pago/i.test(q)) {
+      const totals = calculateQuoteTotals();
+      appendChatMessage(
+        'bot',
+        `<strong>¡Con muchísimo gusto!</strong> En <strong>Cauchos KSM</strong> estamos para servirte y brindarte los mejores insumos para tus creaciones.<br><br>
+        ¿Deseas revisar tu cotización, seguir buscando o hablar con un asesor humano en WhatsApp?
+        <div class="chat-actions">
+          ${!totals.isEmpty ? `<button type="button" class="chat-action-btn primary" data-action="quote"><span class="material-symbols-outlined icon-sm">shopping_cart</span> Ver mi Cotización (${fmtCOP(totals.grandTotal)})</button>` : ''}
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Estudio de Neopreno</button>
+          <button type="button" class="chat-action-btn" data-action="canva"><span class="material-symbols-outlined icon-sm">auto_stories</span> Catálogos Canva</button>
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Asesor WhatsApp</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 3. Despedidas
+    if (/\b(adios|chao|hasta luego|nos vemos|bye|hasta pronto|descansa|que pases bien|hasta manana)\b/i.test(q)) {
+      const totals = calculateQuoteTotals();
+      appendChatMessage(
+        'bot',
+        `<strong>¡Hasta pronto!</strong> Recuerda que todo lo que agregues a tu cotización se guarda automáticamente en este dispositivo.<br><br>
+        Cuando quieras enviar tu pedido o continuar comprando, estaremos listos para atenderte. ¡Que tengas un excelente día!
+        <div class="chat-actions">
+          ${!totals.isEmpty ? `<button type="button" class="chat-action-btn primary" data-action="quote"><span class="material-symbols-outlined icon-sm">shopping_cart</span> Mi Pedido Guardado</button>` : ''}
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> WhatsApp KSM</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 4. Estado de la cotización actual / Carrito ("cuánto llevo", "mi pedido", "mi cotización", "ver carrito")
+    if (/\b(mi pedido|mi cotizacion|mi carrito|cuanto llevo|ver pedido|ver carrito|total|que tengo|mis productos|revisar pedido|resumen)\b/i.test(q)) {
+      const totals = calculateQuoteTotals();
+      if (totals.isEmpty) {
+        appendChatMessage(
+          'bot',
+          `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--muted);vertical-align:-2px;">shopping_cart</span> <strong>Tu cotización está actualmente vacía.</strong><br><br>
+          Puedes explorar más de 2.000 referencias de bisutería tocando <strong>+</strong> en cualquier tarjeta, o armar tus bolas de neopreno personalizadas en el estudio.
+          <div class="chat-actions">
+            <button type="button" class="chat-action-btn primary" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">diamond</span> Explorar Dijes e Insumos</button>
+            <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Estudio de Neopreno</button>
+          </div>`
+        );
+      } else {
+        const meetsMin = totals.grandTotal >= MIN_ORDER;
+        appendChatMessage(
+          'bot',
+          `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">receipt_long</span> <strong>Resumen de tu Cotización en Curso:</strong><br><br>
+          • <strong>${totals.prodRefs} referencias</strong> de catálogo (${totals.prodUnits} unidades).<br>
+          • <strong>${totals.neoLines} configuraciones</strong> de bolas de neopreno (${totals.neoUnits} unidades).<br>
+          • <strong>Subtotal estimado:</strong> <span style="font-size:15px;font-weight:800;color:var(--gold);">${fmtCOP(totals.grandTotal)} COP</span>.<br><br>
+          ${meetsMin 
+            ? '<span class="badge-pill active" style="font-size:11px;padding:3px 8px;">¡Superas el pedido mínimo ($30.000 COP)! Listo para enviar.</span>' 
+            : `<span style="color:var(--gold);font-size:12.5px;">Te faltan <strong>${fmtCOP(MIN_ORDER - totals.grandTotal)} COP</strong> para completar el pedido mínimo ($30.000 COP).</span>`
+          }
+          <div class="chat-actions">
+            <button type="button" class="chat-action-btn primary" data-action="quote"><span class="material-symbols-outlined icon-sm">shopping_cart</span> Abrir mi Cotización Completa</button>
+            <button type="button" class="chat-action-btn" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">add_circle</span> Seguir agregando</button>
+            <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">send</span> Enviar por WhatsApp</button>
+          </div>`
+        );
+      }
+      return;
+    }
+
+    // 5. Verificar palabras clave de Joyería 18K (§13)
     if (/oring|o-ring|correa|hublot|cartier|versace|canal|ranura|bulgari|mortadela|exclusiv|18\s*k|oro 18/i.test(q)) {
       appendChatMessage(
         'bot',
-        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">diamond</span> <strong>Joyería Oro 18K:</strong> Eso lo tenemos en nuestro catálogo exclusivo de Joyería Oro 18K (separadores mín. 50 und, modelos exclusivos de neopreno, orings, correas y mortadelas).<br><br>
-        <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="btn primary" style="margin-top:4px;padding:6px 12px;font-size:12.5px;">Abrir Catálogo Joyería 18K ↗</a>`
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">diamond</span> <strong>Joyería Especializada Oro 18K:</strong><br><br>
+        Contamos con un catálogo digital exclusivo para talleres y orfebres de joyería en Oro 18K:<br>
+        • O-rings y correas tipo Hublot, Cartier y Versace.<br>
+        • Separadores y mortadelas con canal/ranura especial para engaste.<br>
+        • Modelos exclusivos de neopreno con pedido mínimo de <strong>50 unidades</strong> por referencia.<br><br>
+        Puedes abrir el catálogo interactivo o consultar directamente con un asesor de la línea 18K:
+        <div class="chat-actions">
+          <a href="https://claude.ai/artifact/FgquqwfhHdULUhq3DcdMPB" target="_blank" rel="noopener" class="chat-action-btn primary"><span class="material-symbols-outlined icon-sm">auto_stories</span> Abrir Catálogo Joyería 18K ↗</a>
+          <a href="https://wa.me/573162599541?text=Hola%2C%20quisiera%20cotizar%20referencias%20de%20Joyer%C3%ADa%20Oro%2018K%20y%20Orings." target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">support_agent</span> WhatsApp 18K / Mayorista ↗</a>
+        </div>`
       );
       return;
     }
 
-    // 2. Preguntas frecuentes predefinidas (§13)
-    if (q.includes('como hago') || q.includes('como cotizar') || q.includes('pasos')) {
+    // 6. ¿Cómo hacer el pedido? / Paso a paso / Instrucciones
+    if (q.includes('como hago') || q.includes('como cotizar') || q.includes('como comprar') || q.includes('como ordenar') || q.includes('como funciona') || q.includes('pasos') || q.includes('proceso') || q.includes('tutorial')) {
       appendChatMessage(
         'bot',
-        `<strong>Así haces tu pedido en Cauchos KSM:</strong><br>
-        1. Busca el producto o filtra por línea y toca <strong>+</strong>.<br>
-        2. Si pide color, baño o letra, elígelo en la tarjeta.<br>
-        3. Para bolas de neopreno, usa el <strong>Estudio de Neopreno</strong>.<br>
-        4. Toca <strong>Ver mi cotización</strong> abajo, escribe tu nombre y ciudad.<br>
-        5. Envíalo con 1 clic por <strong>WhatsApp</strong> (en texto, imagen pantallazo o PDF).`
-      );
-      return;
-    }
-    if (q.includes('minimo') || q.includes('mínimo')) {
-      appendChatMessage(
-        'bot',
-        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">shopping_bag</span> <strong>Pedido mínimo:</strong> Nuestro pedido mínimo en bisutería es de <strong>$30.000 COP</strong>. Puedes combinar dijes de rodio, acero, oro laminado, aretería, piedras, hilos y bolas de neopreno hasta completarlo.`
-      );
-      return;
-    }
-    if (q.includes('envio') || q.includes('pago') || q.includes('tarjeta') || q.includes('transferencia')) {
-      appendChatMessage(
-        'bot',
-        `<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">local_shipping</span> <strong>Envíos y Pagos:</strong> Enviamos a toda Colombia y al exterior. El valor del envío te lo confirma un asesor según tu ciudad o país.<br><br>
-        <span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">credit_card</span> <strong>Pagos:</strong> Recibimos tarjeta de crédito por nuestro link seguro (Colombia y exterior), transferencia bancaria u otros medios por WhatsApp.`
-      );
-      return;
-    }
-    if (q.includes('asesor') || q.includes('whatsapp') || q.includes('telefono')) {
-      appendChatMessage(
-        'bot',
-        `<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">support_agent</span> <strong>Nuestros canales oficiales de WhatsApp:</strong><br>
-        • <a href="https://wa.me/573104337951?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Al Detal (310 433 7951) ↗</a><br>
-        • <a href="https://wa.me/573162599541?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Mayorista (316 259 9541) ↗</a><br>
-        • <a href="https://wa.me/573222604729?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">Tienda Neox (322 260 4729) ↗</a>`
+        `${greetingPrefix}<strong>Así de fácil haces tu pedido en Cauchos KSM:</strong><br><br>
+        1. <strong>Explora el catálogo:</strong> Busca dijes, balines, hilos o piedras y toca <strong>+</strong>.<br>
+        2. <strong>Personaliza opciones:</strong> Selecciona baño (dorado, rodio), letra o color en las tarjetas que lo indiquen.<br>
+        3. <strong>Bolas de Neopreno:</strong> Ve a la pestaña <em>Estudio de Neopreno</em> para elegir acabado (Candy, Zebra, Volcánica, Lisa...), medida (6 a 12mm) y color.<br>
+        4. <strong>Revisa tu cotización:</strong> Toca <em>Ver mi cotización</em> en la barra inferior, escribe tu nombre y ciudad.<br>
+        5. <strong>Envía por WhatsApp:</strong> Presiona el botón del asesor (Tienda o Mayorista) para enviar tu lista con 1 clic (en texto, pantallazo o PDF).
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">diamond</span> Ver Catálogo</button>
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Estudio de Neopreno</button>
+          <button type="button" class="chat-action-btn" data-action="quote"><span class="material-symbols-outlined icon-sm">receipt_long</span> Ver mi Cotización</button>
+        </div>`
       );
       return;
     }
 
-    // 3. Búsqueda directa de productos en el catálogo
+    // 7. Bolas de Neopreno (referencias, medidas, acabados Candy, Zebra, Volcánica, etc.)
+    if (/neopreno|bolas?|caucho|candy|zebra|volcanica|pimienta|craquelad|mate|brillante|liso|6mm|8mm|10mm|12mm|14mm|estudio/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">lens</span> <strong>Línea Exclusiva de Bolas de Neopreno KSM:</strong><br><br>
+        Somos fabricantes con formulación de alta resistencia y tacto aterciopelado satinado:<br>
+        • <strong>Candy (RF14):</strong> Bicolores divididos con curvatura 3D a 135°, tricolores y multicolor.<br>
+        • <strong>Zebra (RF15):</strong> Rayas onduladas orgánicas y fluidas con orificio pasante.<br>
+        • <strong>Volcánica (RF17):</strong> Textura porosa natural con orificios y cavidades profundas.<br>
+        • <strong>Pimienta (RF13):</strong> Salpicado micro-splash en contraste.<br>
+        • <strong>Lisas Mate y Brillantes (RF01 - RF05):</strong> Más de 30 colores sólidos.<br>
+        • <strong>Medidas:</strong> 6mm, 8mm, 10mm, 12mm y orings 18K.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">visibility</span> Abrir Estudio 3D de Neopreno</button>
+          <button type="button" class="chat-action-btn" data-action="neo-ref" data-val="RF14"><span class="material-symbols-outlined icon-sm">palette</span> Candy RF14</button>
+          <button type="button" class="chat-action-btn" data-action="neo-ref" data-val="RF15"><span class="material-symbols-outlined icon-sm">texture</span> Zebra RF15</button>
+          <button type="button" class="chat-action-btn" data-action="neo-ref" data-val="RF17"><span class="material-symbols-outlined icon-sm">grain</span> Volcánica RF17</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 8. Pedido mínimo
+    if (q.includes('minimo') || q.includes('mínimo') || q.includes('compra minima') || q.includes('monto minimo') || q.includes('desde cuanto') || q.includes('cuanto es lo minimo')) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">shopping_bag</span> <strong>Pedido Mínimo en Cauchos KSM:</strong><br><br>
+        • El pedido mínimo en bisutería e insumos es de <strong>$30.000 COP</strong>.<br>
+        • <strong>¡100% Combinable!</strong> No tienes que pedir cantidades grandes de un solo producto: puedes mezclar dijes de rodio, acero, piedras naturales, hilos, balines y paquetes de bolas de neopreno hasta completar el valor.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="quote"><span class="material-symbols-outlined icon-sm">receipt_long</span> Ver mi Cotización</button>
+          <button type="button" class="chat-action-btn" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">diamond</span> Explorar Catálogo</button>
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 9. Precios, Descuentos por Mayor y Escalas Mayoristas
+    if (/precios?|cuanto cuesta|costo|descuento|descuentos|por mayor|mayorista|al por mayor|docena|paquetes?|escala|promocion|rebaja/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">payments</span> <strong>Precios y Beneficios al por Mayor:</strong><br><br>
+        • <strong>Precios Transparentes:</strong> Cada producto del catálogo muestra su precio unitario en COP.<br>
+        • <strong>Balines y Separadores:</strong> Cuentan con botón rápido <strong>+12 (Docena)</strong> con tarifa preferencial automática.<br>
+        • <strong>Bolas de Neopreno:</strong> Dispones de escalas por paquete (50, 100, 500 y 1.000 unidades) con tarifa decreciente por volumen.<br>
+        • <strong>Línea Mayorista:</strong> Si compras en grandes volúmenes para reventa o distribución, comunícate con nuestro canal mayorista.
+        <div class="chat-actions">
+          <a href="https://wa.me/573162599541?text=Hola%2C%20quisiera%20cotizar%20compras%20al%20por%20mayor%20de%20insumos." target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">support_agent</span> WhatsApp Mayorista ↗</a>
+          <button type="button" class="chat-action-btn" data-action="line" data-val="Balines de Rodio"><span class="material-symbols-outlined icon-sm">shopping_bag</span> Balines por Docena</button>
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Neopreno por Paquete</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 10. Envíos, fletes, tiempos de entrega y ciudades
+    if (/envio|envios|flete|fletes|cuanto vale el envio|cuanto tarda|cuanto demora|tiempo de entrega|despacho|domicilio|transportadora|servientrega|interrapidisimo|envia|coordinadora|ciudades|medellin|bogota|cali|barranquilla|bucaramanga|pereira|cartagena|internacional|exterior|eeuu|estados unidos|mexico|chile|ecuador|espana|panama/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">local_shipping</span> <strong>Envíos, Cobertura y Tiempos de Entrega:</strong><br><br>
+        • <strong>Cobertura Nacional (Colombia):</strong> Despachamos a todos los municipios con <em>Inter Rapidísimo</em>, <em>Servientrega</em> y <em>Envía</em>.<br>
+        • <strong>Tiempos de entrega:</strong> Habitualmente entre <strong>24 y 72 horas hábiles</strong> según el destino.<br>
+        • <strong>Envíos Internacionales:</strong> Enviamos a Estados Unidos, México, España y Latinoamérica vía <em>DHL</em> o <em>FedEx</em>.<br>
+        • <strong>Valor del flete:</strong> El valor exacto se calcula con base en el peso del paquete y la transportadora al confirmar con tu asesor en WhatsApp.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Cotizar Flete con Asesor</button>
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="Formas de pago"><span class="material-symbols-outlined icon-sm">credit_card</span> Medios de Pago</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 11. Formas y medios de pago
+    if (/pago|pagos|como pago|como pagar|metodos de pago|formas de pago|transferencia|tarjeta|credito|debito|bancolombia|nequi|daviplata|efectivo|pse|contraentrega|contra entrega/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">credit_card</span> <strong>Medios de Pago Disponibles:</strong><br><br>
+        • <strong>Transferencias en Colombia:</strong> Bancolombia, Nequi y Daviplata sin recargos.<br>
+        • <strong>Tarjetas de Crédito / Débito:</strong> Link de pago en línea seguro para compras nacionales e internacionales.<br>
+        • <strong>Giros Internacionales:</strong> Western Union o MoneyGram coordinados con tu asesor.<br>
+        • <strong>Contraentrega:</strong> No se ofrece pago contraentrega debido a la personalización de las referencias y preparación sobre pedido.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Contactar Asesor para Pagar</button>
+          <button type="button" class="chat-action-btn" data-action="ask" data-val="¿Cómo hago mi pedido?"><span class="material-symbols-outlined icon-sm">help</span> ¿Cómo pedir?</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 12. Asesores humanos y WhatsApp
+    if (/asesor|whatsapp|telefono|celular|contacto|atencion|humano|persona|hablar con alguien|llamar|numero/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">support_agent</span> <strong>Canales Oficiales de WhatsApp Cauchos KSM:</strong><br><br>
+        Nuestros asesores están listos para recibir tu cotización y ayudarte:<br>
+        • <strong>Tienda Al Detal:</strong> <a href="https://wa.me/573104337951?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">310 433 7951 ↗</a><br>
+        • <strong>Línea Mayorista:</strong> <a href="https://wa.me/573162599541?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">316 259 9541 ↗</a><br>
+        • <strong>Tienda Neox:</strong> <a href="https://wa.me/573222604729?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" style="color:var(--wa);font-weight:700;">322 260 4729 ↗</a>
+        <div class="chat-actions">
+          <a href="https://wa.me/573104337951?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">chat</span> Tienda Al Detal</a>
+          <a href="https://wa.me/573162599541?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">chat</span> Mayorista</a>
+          <a href="https://wa.me/573222604729?text=Hola%2C%20vengo%20del%20cat%C3%A1logo%20Cauchos%20KSM." target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">chat</span> Tienda Neox</a>
+        </div>`
+      );
+      return;
+    }
+
+    // 13. Ubicación, sede física y horarios
+    if (/donde estan|ubicacion|direccion|tienda fisica|sede|local|horario|horarios|atienden hoy|sabados|domingos/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--teal);vertical-align:-2px;">storefront</span> <strong>Sede y Horarios de Atención:</strong><br><br>
+        • <strong>Despacho y Fábrica:</strong> Sede principal de distribución en Colombia, con envíos diarios a nivel nacional e internacional.<br>
+        • <strong>Horario de Asesoría WhatsApp:</strong> Lunes a Viernes de 8:00 AM a 6:00 PM y Sábados de 8:00 AM a 2:00 PM.<br>
+        • <strong>Catálogo Virtual 24/7:</strong> Puedes consultar referencias, armar tu cotización y guardar borradores a cualquier hora.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn wa" data-action="ask" data-val="Asesores WhatsApp"><span class="material-symbols-outlined icon-sm">support_agent</span> Hablar con Asesor</button>
+          <button type="button" class="chat-action-btn" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">diamond</span> Ver Catálogo</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 14. Catálogos en Canva, fotos y PDF
+    if (/canva|fotos|catalogo canva|descargar|pdf|imagenes|ver fotos|enlace/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">auto_stories</span> <strong>Catálogos Interactivos en Canva y Formato PDF:</strong><br><br>
+        • Disponemos de más de 12 catálogos interactivos en Canva organizados por líneas temáticas (Rodio, Balines, Neopreno, Oro Laminado, etc.).<br>
+        • Además, al armar tu lista puedes generar un **PDF descargable** o un pantallazo con código QR listo para enviar por WhatsApp.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="canva"><span class="material-symbols-outlined icon-sm">auto_stories</span> Abrir Hub de Catálogos Canva</button>
+          <button type="button" class="chat-action-btn" data-action="quote"><span class="material-symbols-outlined icon-sm">receipt_long</span> Mi Cotización en PDF</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 15. Calidad, materiales y durabilidad
+    if (/material|materiales|calidad|se pela|se negrea|se oxida|rodio|acero|oro laminado|garantia|piedras naturales|circon|microcircon/i.test(q)) {
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}<span class="material-symbols-outlined icon-sm" style="color:var(--gold);vertical-align:-2px;">verified</span> <strong>Guía de Calidad y Materiales KSM:</strong><br><br>
+        • <strong>Bolas de Neopreno KSM:</strong> Caucho vulcanizado satinado. No se decolora con el agua, sudor ni perfumes, manteniendo su flexibilidad y acabado aterciopelado.<br>
+        • <strong>Dijes de Rodio y Microcircones:</strong> Baño de rodio de alto brillo con engaste micro-pavé suizo.<br>
+        • <strong>Oro Laminado:</strong> Múltiples micras de oro sobre metal base con excelente vida útil y resistencia al uso diario.<br>
+        • <strong>Acero Inoxidable:</strong> Grado quirúrgico, hipoalergénico e inalterable ante el agua.<br>
+        • <strong>Piedras Naturales:</strong> Cuarzos, amatistas, ágatas y piedra volcánica 100% minerales genuinos.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn" data-action="line" data-val="Dijes de Rodio"><span class="material-symbols-outlined icon-sm">diamond</span> Dijes de Rodio</button>
+          <button type="button" class="chat-action-btn" data-action="line" data-val="Dijes de Oro Laminado"><span class="material-symbols-outlined icon-sm">diamond</span> Oro Laminado</button>
+          <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 16. Filtro directo por línea de catálogo (cuando el usuario pide ver una categoría entera)
+    const lineMappings = [
+      { regex: /\b(dijes de rodio|linea de rodio)\b/i, line: 'Dijes de Rodio' },
+      { regex: /\b(dijes de acero|linea de acero)\b/i, line: 'Dijes de Acero' },
+      { regex: /\b(oro laminado|dijes de oro laminado)\b/i, line: 'Dijes de Oro Laminado' },
+      { regex: /\b(areteria|candongas?|topos?)\b/i, line: 'Aretería' },
+      { regex: /\b(balines de rodio)\b/i, line: 'Balines de Rodio' },
+      { regex: /\b(balines de acero)\b/i, line: 'Balines de Acero' },
+      { regex: /\b(balines oro laminado)\b/i, line: 'Balines Oro Laminado' },
+      { regex: /\b(hilos?|terlenka|guaya)\b/i, line: 'Hilos' },
+      { regex: /\b(fimo y piedras|piedras naturales?)\b/i, line: 'Fimo y Piedras' },
+      { regex: /\b(pulseras de expansion|pulseras?)\b/i, line: 'Pulseras de Expansión' },
+      { regex: /\b(linea economica|economica)\b/i, line: 'Línea Económica' }
+    ];
+
+    const matchedLineObj = lineMappings.find(m => m.regex.test(q));
+    if (matchedLineObj && q.length < 35 && !/cuanto|precio|envio|como|minimo/i.test(q)) {
+      switchWorkspaceTab('dijes');
+      state.activeLine = matchedLineObj.line;
+      state.activeSub = 'Todas';
+      state.sizeFilter = 'all';
+      renderAllCatalogControls();
+      renderProductCatalog();
+
+      appendChatMessage(
+        'bot',
+        `${greetingPrefix}He activado el filtro para mostrarte la línea <strong>${matchedLineObj.line}</strong> en el catálogo:<br>
+        Encontrarás todas las referencias listas para cotizar.
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">visibility</span> Ver productos en pantalla</button>
+          <button type="button" class="chat-action-btn" data-action="line" data-val="Todos"><span class="material-symbols-outlined icon-sm">apps</span> Ver todas las líneas</button>
+        </div>`
+      );
+      return;
+    }
+
+    // 17. Búsqueda directa de referencias en el catálogo
     const matches = DATA.filter(p => matchesSearchQuery(p, text) && p.v !== 'AGOTADO').slice(0, 5);
     if (matches.length > 0) {
       switchWorkspaceTab('dijes');
@@ -4829,17 +5128,42 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
       updateClearSearchBtn();
       renderProductCatalog();
 
+      const itemsHtml = matches.map(m => `
+        <div class="chat-product-item">
+          <div class="chat-product-info">
+            <div class="chat-product-title">#${m.i} ${escapeHtml(m.n)}</div>
+            <div class="chat-product-meta">${escapeHtml(m.l)} · ${escapeHtml(m.v)}</div>
+          </div>
+          <strong style="color:var(--gold);font-size:12px;">${fmtCOP(m.k)}</strong>
+        </div>
+      `).join('');
+
       appendChatMessage(
         'bot',
-        `Encontré <strong>${matches.length}+</strong> referencias para "<em>${escapeHtml(text)}</em>" y filtré el catálogo por ti:<br>` +
-        matches.map(m => `• <strong>#${m.i} ${escapeHtml(m.n)}</strong> (${m.v})`).join('<br>')
+        `${greetingPrefix}Encontré <strong>${matches.length}+</strong> referencias para "<em>${escapeHtml(text)}</em>" y filtré el catálogo por ti:
+        <div style="margin-top:6px;">${itemsHtml}</div>
+        <div class="chat-actions">
+          <button type="button" class="chat-action-btn primary" data-action="tab-dijes"><span class="material-symbols-outlined icon-sm">visibility</span> Ver en el Catálogo</button>
+          <button type="button" class="chat-action-btn" data-action="clear-search"><span class="material-symbols-outlined icon-sm">close</span> Limpiar Búsqueda</button>
+          <button type="button" class="chat-action-btn" data-action="quote"><span class="material-symbols-outlined icon-sm">shopping_cart</span> Ver mi Cotización</button>
+        </div>`
       );
       return;
     }
 
+    // 18. Fallback inteligente y dinámico
     appendChatMessage(
       'bot',
-      `No encontré una coincidencia exacta para "${escapeHtml(text)}", pero puedes usar los filtros de línea arriba o consultar directamente con un asesor en WhatsApp.`
+      `${greetingPrefix}No encontré una referencia exacta con el término "<strong>${escapeHtml(text)}</strong>", pero en <strong>Cauchos KSM</strong> contamos con más de 2.000 insumos disponibles.<br><br>
+      <strong>¿Qué te gustaría hacer?</strong><br>
+      • Prueba con palabras clave comunes como <em>san benito</em>, <em>corona</em>, <em>balines</em>, <em>hilo</em>, <em>cruz</em> o <em>cuarzo</em>.<br>
+      • O explora nuestras secciones principales o consulta por foto con un asesor en WhatsApp:
+      <div class="chat-actions">
+        <button type="button" class="chat-action-btn primary" data-action="line" data-val="Todos"><span class="material-symbols-outlined icon-sm">apps</span> Ver todas las líneas</button>
+        <button type="button" class="chat-action-btn" data-action="tab-neopreno"><span class="material-symbols-outlined icon-sm">lens</span> Bolas de Neopreno 3D</button>
+        <button type="button" class="chat-action-btn" data-action="canva"><span class="material-symbols-outlined icon-sm">auto_stories</span> Catálogos en Canva</button>
+        <a href="https://wa.me/573104337951?text=Hola%2C%20estoy%20buscando%20esta%20referencia%20en%20el%20cat%C3%A1logo%3A%20${encodeURIComponent(text)}" target="_blank" rel="noopener" class="chat-action-btn wa"><span class="material-symbols-outlined icon-sm">support_agent</span> Preguntar por foto en WhatsApp ↗</a>
+      </div>`
     );
   }
 
@@ -5272,6 +5596,67 @@ window.KSM_DATA = [{"i": 0, "l": "Dijes de Rodio", "s": "Mundial Edition", "n": 
         if (e.key === 'Enter') {
           handleAssistantQuery(assistantInput.value);
           assistantInput.value = '';
+        }
+      });
+    }
+
+    const assistantMessagesBox = document.getElementById('assistantMessages');
+    if (assistantMessagesBox) {
+      assistantMessagesBox.addEventListener('click', e => {
+        const btn = e.target.closest('.chat-action-btn');
+        if (!btn) return;
+        if (btn.tagName === 'A' && btn.getAttribute('href')) return;
+
+        e.preventDefault();
+        const action = btn.getAttribute('data-action');
+        const val = btn.getAttribute('data-val');
+
+        if (action === 'ask') {
+          handleAssistantQuery(val || btn.textContent.trim());
+        } else if (action === 'tab-neopreno') {
+          switchWorkspaceTab('neopreno');
+          showToast('Estudio de Neopreno abierto');
+          if (assistantDrawer && window.innerWidth < 768) {
+            assistantDrawer.classList.remove('open');
+          }
+        } else if (action === 'tab-dijes') {
+          switchWorkspaceTab('dijes');
+          showToast('Catálogo de Dijes e Insumos');
+          if (assistantDrawer && window.innerWidth < 768) {
+            assistantDrawer.classList.remove('open');
+          }
+        } else if (action === 'quote') {
+          openQuoteDrawer();
+        } else if (action === 'canva') {
+          const m = document.getElementById('catalogsHubModal');
+          if (m) m.classList.add('open');
+        } else if (action === 'line') {
+          switchWorkspaceTab('dijes');
+          state.activeLine = val || 'Todos';
+          state.activeSub = 'Todas';
+          state.sizeFilter = 'all';
+          renderAllCatalogControls();
+          renderProductCatalog();
+          showToast(`Línea ${val} activada`);
+          if (assistantDrawer && window.innerWidth < 768) {
+            assistantDrawer.classList.remove('open');
+          }
+        } else if (action === 'neo-ref') {
+          switchWorkspaceTab('neopreno');
+          state.neoForm.ref = val;
+          state.neoForm.colorIdx = 0;
+          renderNeoprenoStudio();
+          showToast(`Referencia ${val} seleccionada`);
+          if (assistantDrawer && window.innerWidth < 768) {
+            assistantDrawer.classList.remove('open');
+          }
+        } else if (action === 'clear-search') {
+          state.query = '';
+          const qInp = document.getElementById('q');
+          if (qInp) qInp.value = '';
+          updateClearSearchBtn();
+          renderProductCatalog();
+          showToast('Búsqueda restablecida');
         }
       });
     }

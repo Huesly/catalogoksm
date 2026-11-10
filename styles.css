@@ -2583,8 +2583,8 @@ body.has-cart-visible .floating-utils {
   position: fixed;
   bottom: 140px;
   right: 18px;
-  width: min(380px, calc(100vw - 32px));
-  max-height: 500px;
+  width: min(390px, calc(100vw - 32px));
+  max-height: 540px;
   background: var(--card);
   border: 1.5px solid var(--gold);
   border-radius: var(--radius-lg);
@@ -2605,17 +2605,19 @@ body.has-cart-visible .floating-utils {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   background: var(--bg);
-  max-height: 300px;
+  max-height: 350px;
+  min-height: 220px;
+  scroll-behavior: smooth;
 }
 
 .chat-bubble {
-  padding: 10px 13px;
+  padding: 11px 14px;
   border-radius: 12px;
   font-size: 13.5px;
-  line-height: 1.45;
-  max-width: 88%;
+  line-height: 1.5;
+  max-width: 90%;
 }
 
 .chat-bubble.bot {
@@ -2629,6 +2631,89 @@ body.has-cart-visible .floating-utils {
   background: #2F4A55;
   color: #FFFFFF;
   align-self: flex-end;
+}
+
+.chat-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.chat-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(226, 188, 99, 0.12);
+  border: 1px solid rgba(226, 188, 99, 0.35);
+  color: var(--fg);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-decoration: none;
+  user-select: none;
+}
+
+.chat-action-btn:hover {
+  background: var(--gold);
+  color: #121212;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.chat-action-btn.primary {
+  background: var(--gold);
+  color: #121212;
+  font-weight: 700;
+  border-color: var(--gold);
+}
+
+.chat-action-btn.wa {
+  background: rgba(37, 211, 102, 0.15);
+  border-color: rgba(37, 211, 102, 0.4);
+  color: var(--wa);
+}
+
+.chat-action-btn.wa:hover {
+  background: var(--wa);
+  color: #FFFFFF;
+}
+
+.chat-product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.chat-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.chat-product-title {
+  font-weight: 700;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-product-meta {
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .assistant-quick-chips {
@@ -2647,6 +2732,7 @@ body.has-cart-visible .floating-utils {
   background: var(--card);
   border-top: 1px solid var(--line);
 }
+
 
 .toast-container {
   position: fixed;
