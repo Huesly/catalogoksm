@@ -1966,8 +1966,9 @@
       return `radial-gradient(circle at 30% 30%, ${c1} 18%, transparent 20%), radial-gradient(circle at 70% 65%, ${c2} 16%, transparent 18%), radial-gradient(circle at 40% 75%, ${c1} 14%, transparent 16%), ${c0}`;
     }
     if (refCode === 'RF15') {
-      // Zebra: rayas diagonales
-      return `repeating-linear-gradient(135deg, ${c0} 0px, ${c0} 4px, ${c1} 4px, ${c1} 8px)`;
+      // Zebra: líneas onduladas tipo cebra
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" fill="${c0}"/><path d="M-2 5 Q6 10 14 4 T30 6 L30 11 Q18 9 12 14 T-2 10 Z M-2 16 Q7 21 15 15 T30 18 L30 23 Q19 20 13 25 T-2 22 Z" fill="${c1}"/></svg>`;
+      return `url("data:image/svg+xml,${encodeURIComponent(svg)}") center / cover no-repeat`;
     }
     if (refCode === 'RF14' || colors.length === 2) {
       // Candy / Bicolor
@@ -2005,6 +2006,210 @@
     if (n.includes('solo #8') && Number(sizeMm) !== 8) return false;
     if (n.includes('solo #6 y #8') && Number(sizeMm) !== 6 && Number(sizeMm) !== 8) return false;
     return true;
+  }
+
+  function renderNeoprenoBallSvg(refObj, colorObj, customColor, sizeMm, metalName) {
+    const colorName = (customColor && customColor.trim()) ? customColor.trim() : (colorObj ? colorObj.name : '');
+    const lowName = colorName.toLowerCase();
+    const isZebra = (refObj && refObj.ref === 'RF15') || (refObj && refObj.pattern === 'zebra') || lowName.includes('zebra');
+    const isPimienta = (refObj && refObj.ref === 'RF13') || (refObj && refObj.pattern === 'pimienta') || lowName.includes('pimienta');
+    const isCandy = (refObj && refObj.ref === 'RF14') || (refObj && refObj.pattern === 'candy') || lowName.includes('candy');
+    const isRayada = (refObj && refObj.ref === 'RF2');
+    const isVolcanica = (refObj && refObj.ref === 'RF17') || (refObj && refObj.pattern === 'volcanica');
+    const isBandera = (refObj && refObj.ref === 'RF18') || (refObj && refObj.pattern === 'flag');
+
+    const colorHasArgolla = lowName.includes('argolla');
+    const hasRing = Boolean((refObj && refObj.hasRing) || colorHasArgolla);
+
+    const cx = 80;
+    const cy = 58;
+    const radiusPx = 22 + Number(sizeMm || 6) * 2.4;
+    const r = radiusPx;
+
+    const ringStroke = (metalName || '').includes('Plateado') ? '#D0D7DC'
+      : ((metalName || '').includes('Rosado') ? '#E6A498' : '#E5C158');
+
+    let mainHex = '#e0218a';
+    let secHex = '#6a2c91';
+    let bandHex = null;
+
+    if (isZebra) {
+      if (lowName.includes('banda')) {
+        const parts = lowName.split('banda');
+        const zCols = extractColorsForName(parts[0]);
+        const bCols = extractColorsForName(parts[1]);
+        mainHex = zCols[0] || '#ffffff';
+        secHex = zCols[1] || (mainHex.toLowerCase() === '#141414' ? '#ffffff' : '#141414');
+        bandHex = bCols[0] || '#1f9d3a';
+      } else {
+        const zCols = extractColorsForName(colorName);
+        mainHex = zCols[0] || '#ffffff';
+        secHex = zCols[1] || (mainHex.toLowerCase() === '#141414' ? '#ffffff' : '#141414');
+      }
+    } else {
+      const extracted = extractColorsForName(colorName);
+      mainHex = extracted[0] || '#222222';
+      secHex = extracted[1] || mainHex;
+    }
+
+    const hx = cx + r * 0.44;
+    const hy = cy - r * 0.42;
+    const hrx = r * 0.11;
+    const hry = r * 0.16;
+
+    let patternContent = '';
+
+    if (isZebra) {
+      patternContent = `
+        <!-- Base Spherical Color -->
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
+
+        <!-- Sinuous Wavy Zebra Stripes (Líneas onduladas con curvas orgánicas) -->
+        <g transform="rotate(-15 ${cx} ${cy})">
+          <!-- Franja 1: Corona superior con curvatura y conicidad -->
+          <path d="M ${cx - r*0.75} ${cy - r*0.72}
+                   C ${cx - r*0.4} ${cy - r*0.92}, ${cx - r*0.05} ${cy - r*0.70}, ${cx + r*0.3} ${cy - r*0.84}
+                   S ${cx + r*0.7} ${cy - r*0.60}, ${cx + r*0.8} ${cy - r*0.65}
+                   L ${cx + r*0.82} ${cy - r*0.50}
+                   C ${cx + r*0.52} ${cy - r*0.44}, ${cx + r*0.18} ${cy - r*0.66}, ${cx - r*0.12} ${cy - r*0.56}
+                   S ${cx - r*0.55} ${cy - r*0.76}, ${cx - r*0.75} ${cy - r*0.72} Z" fill="${secHex}"/>
+
+          <!-- Franja 2: Cinturón ondulado latitudinal con grosor dinámico -->
+          <path d="M ${cx - r*1.02} ${cy - r*0.40}
+                   C ${cx - r*0.68} ${cy - r*0.58}, ${cx - r*0.28} ${cy - r*0.30}, ${cx + r*0.08} ${cy - r*0.48}
+                   C ${cx + r*0.4} ${cy - r*0.64}, ${cx + r*0.72} ${cy - r*0.28}, ${cx + r*1.02} ${cy - r*0.36}
+                   L ${cx + r*1.02} ${cy - r*0.20}
+                   C ${cx + r*0.75} ${cy - r*0.12}, ${cx + r*0.45} ${cy - r*0.46}, ${cx + r*0.10} ${cy - r*0.26}
+                   C ${cx - r*0.22} ${cy - r*0.12}, ${cx - r*0.65} ${cy - r*0.38}, ${cx - r*1.02} ${cy - r*0.24} Z" fill="${secHex}"/>
+
+          <!-- Franja 3: Curva S bifurcada sub-ecuatorial -->
+          <path d="M ${cx - r*1.05} ${cy - r*0.08}
+                   C ${cx - r*0.72} ${cy - r*0.26}, ${cx - r*0.35} ${cy + r*0.10}, ${cx - r*0.02} ${cy - r*0.14}
+                   C ${cx + r*0.3} ${cy - r*0.32}, ${cx + r*0.65} ${cy + r*0.08}, ${cx + r*1.05} ${cy - r*0.06}
+                   L ${cx + r*1.05} ${cy + r*0.09}
+                   C ${cx + r*0.72} ${cy + r*0.26}, ${cx + r*0.36} ${cy - r*0.12}, ${cx} ${cy + r*0.08}
+                   C ${cx - r*0.32} ${cy + r*0.26}, ${cx - r*0.7} ${cy - r*0.06}, ${cx - r*1.05} ${cy + r*0.11} Z" fill="${secHex}"/>
+
+          <!-- Franja 4: Onda media-inferior sinuosa -->
+          <path d="M ${cx - r*1.05} ${cy + r*0.25}
+                   C ${cx - r*0.68} ${cy + r*0.08}, ${cx - r*0.3} ${cy + r*0.38}, ${cx + r*0.08} ${cy + r*0.18}
+                   C ${cx + r*0.42} ${cy - r*0.04}, ${cx + r*0.75} ${cy + r*0.36}, ${cx + r*1.05} ${cy + r*0.24}
+                   L ${cx + r*1.02} ${cy + r*0.40}
+                   C ${cx + r*0.72} ${cy + r*0.54}, ${cx + r*0.4} ${cy + r*0.18}, ${cx + r*0.06} ${cy + r*0.38}
+                   C ${cx - r*0.28} ${cy + r*0.54}, ${cx - r*0.68} ${cy + r*0.28}, ${cx - r*1.02} ${cy + r*0.42} Z" fill="${secHex}"/>
+
+          <!-- Franja 5: Cinturón inferior ondulante -->
+          <path d="M ${cx - r*0.95} ${cy + r*0.54}
+                   C ${cx - r*0.62} ${cy + r*0.40}, ${cx - r*0.24} ${cy + r*0.70}, ${cx + r*0.16} ${cy + r*0.48}
+                   C ${cx + r*0.5} ${cy + r*0.32}, ${cx + r*0.78} ${cy + r*0.64}, ${cx + r*0.92} ${cy + r*0.54}
+                   L ${cx + r*0.88} ${cy + r*0.70}
+                   C ${cx + r*0.7} ${cy + r*0.80}, ${cx + r*0.44} ${cy + r*0.54}, ${cx + r*0.12} ${cy + r*0.68}
+                   C ${cx - r*0.22} ${cy + r*0.82}, ${cx - r*0.6} ${cy + r*0.58}, ${cx - r*0.92} ${cy + r*0.68} Z" fill="${secHex}"/>
+
+          <!-- Franja 6: Contorno polar inferior -->
+          <path d="M ${cx - r*0.72} ${cy + r*0.80}
+                   C ${cx - r*0.42} ${cy + r*0.72}, ${cx - r*0.1} ${cy + r*0.92}, ${cx + r*0.26} ${cy + r*0.78}
+                   C ${cx + r*0.52} ${cy + r*0.68}, ${cx + r*0.68} ${cy + r*0.84}, ${cx + r*0.74} ${cy + r*0.80}
+                   L ${cx + r*0.62} ${cy + r*0.94}
+                   C ${cx + r*0.36} ${cy + r*1.0}, ${cx - r*0.06} ${cy + r*0.94}, ${cx - r*0.38} ${cy + r*0.98}
+                   S ${cx - r*0.65} ${cy + r*0.90}, ${cx - r*0.72} ${cy + r*0.80} Z" fill="${secHex}"/>
+        </g>
+        ${bandHex ? `
+          <g transform="rotate(-15 ${cx} ${cy})">
+            <rect x="${cx - r*1.05}" y="${cy - r*0.14}" width="${r*2.1}" height="${r*0.28}" fill="${bandHex}" rx="${r*0.04}" stroke="rgba(0,0,0,0.3)" stroke-width="0.8"/>
+          </g>
+        ` : ''}
+      `;
+    } else if (isRayada) {
+      patternContent = `
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
+        <line x1="${cx - r * 0.42}" y1="${cy - r * 0.88}" x2="${cx - r * 0.42}" y2="${cy + r * 0.88}" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="${cx}" y1="${cy - r * 0.98}" x2="${cx}" y2="${cy + r * 0.98}" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="${cx + r * 0.42}" y1="${cy - r * 0.88}" x2="${cx + r * 0.42}" y2="${cy + r * 0.88}" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/>
+      `;
+    } else if (isPimienta) {
+      patternContent = `
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
+        <circle cx="${cx - r*0.4}" cy="${cy - r*0.3}" r="${r*0.08}" fill="${secHex}" opacity="0.85"/>
+        <circle cx="${cx - r*0.2}" cy="${cy - r*0.6}" r="${r*0.06}" fill="${secHex}" opacity="0.75"/>
+        <circle cx="${cx + r*0.1}" cy="${cy - r*0.2}" r="${r*0.07}" fill="${secHex}" opacity="0.9"/>
+        <circle cx="${cx - r*0.5}" cy="${cy + r*0.2}" r="${r*0.09}" fill="${secHex}" opacity="0.8"/>
+        <circle cx="${cx}" cy="${cy + r*0.3}" r="${r*0.08}" fill="${secHex}" opacity="0.85"/>
+        <circle cx="${cx + r*0.4}" cy="${cy + r*0.2}" r="${r*0.07}" fill="${secHex}" opacity="0.75"/>
+        <circle cx="${cx - r*0.2}" cy="${cy + r*0.6}" r="${r*0.08}" fill="${secHex}" opacity="0.8"/>
+        <circle cx="${cx + r*0.2}" cy="${cy + r*0.55}" r="${r*0.06}" fill="${secHex}" opacity="0.7"/>
+      `;
+    } else if (isCandy) {
+      patternContent = `
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
+        <path d="M ${cx - r*1.05} ${cy - r*0.5} Q ${cx} ${cy - r*0.1} ${cx + r*1.05} ${cy + r*0.3} L ${cx + r*1.05} ${cy + r*1.05} L ${cx - r*1.05} ${cy + r*1.05} Z" fill="${secHex}"/>
+      `;
+    } else {
+      patternContent = `
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="${mainHex}"/>
+      `;
+    }
+
+    const ringSvg = hasRing ? `
+      <rect x="${cx - 4.5}" y="${cy - r - 4}" width="9" height="${r * 2 + 8}" rx="4.5" fill="${ringStroke}" stroke="#3a2e0a" stroke-width="0.9"/>
+      <line x1="${cx}" y1="${cy - r - 2}" x2="${cx}" y2="${cy + r + 2}" stroke="rgba(255,255,255,0.6)" stroke-width="1.8"/>
+    ` : '';
+
+    return `
+      <svg width="160" height="125" viewBox="0 0 160 125" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="neoBallClipDynamic">
+            <circle cx="${cx}" cy="${cy}" r="${r}"/>
+          </clipPath>
+          <radialGradient id="sphereShadeGradNeo" cx="32%" cy="26%" r="72%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.36"/>
+            <stop offset="34%" stop-color="#ffffff" stop-opacity="0.08"/>
+            <stop offset="64%" stop-color="#000000" stop-opacity="0.0"/>
+            <stop offset="84%" stop-color="#000000" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.70"/>
+          </radialGradient>
+          <radialGradient id="matteSheenNeo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.42"/>
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+          </radialGradient>
+          <radialGradient id="holeDepthNeo" cx="42%" cy="36%" r="62%">
+            <stop offset="0%" stop-color="#2a1824"/>
+            <stop offset="55%" stop-color="#140a12"/>
+            <stop offset="100%" stop-color="#030103"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Ground Drop Shadow -->
+        <ellipse cx="${cx}" cy="${cy + r + 9}" rx="${r * 0.88}" ry="7" fill="rgba(15,22,28,0.18)"/>
+        <ellipse cx="${cx}" cy="${cy + r + 7}" rx="${r * 0.62}" ry="4.2" fill="rgba(15,22,28,0.28)"/>
+
+        <!-- Spherical Ball Body -->
+        <g clip-path="url(#neoBallClipDynamic)">
+          ${patternContent}
+
+          <!-- 3D Spherical Volume Overlay -->
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#sphereShadeGradNeo)"/>
+
+          <!-- Matte Velvet Specular Sheen -->
+          <ellipse cx="${cx - r*0.34}" cy="${cy - r*0.34}" rx="${r*0.40}" ry="${r*0.25}" 
+                   transform="rotate(-28 ${cx - r*0.34} ${cy - r*0.34})" fill="url(#matteSheenNeo)"/>
+        </g>
+
+        <!-- Outer Spherical Rim Contour -->
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(0,0,0,0.24)" stroke-width="1.1"/>
+
+        <!-- Perforation Hole (Orificio de ensarte de la bola de neopreno) -->
+        <g transform="rotate(26 ${hx} ${hy})">
+          <ellipse cx="${hx}" cy="${hy}" rx="${hrx * 1.25}" ry="${hry * 1.25}" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="0.8"/>
+          <ellipse cx="${hx}" cy="${hy}" rx="${hrx * 1.15}" ry="${hry * 1.15}" fill="rgba(0,0,0,0.35)"/>
+          <ellipse cx="${hx}" cy="${hy}" rx="${hrx}" ry="${hry}" fill="url(#holeDepthNeo)"/>
+          <ellipse cx="${hx - hrx*0.15}" cy="${hy - hry*0.1}" rx="${hrx * 0.7}" ry="${hry * 0.75}" fill="#000000" opacity="0.85"/>
+        </g>
+
+        ${ringSvg}
+      </svg>
+    `;
   }
 
   function renderNeoprenoStudio() {
@@ -2143,42 +2348,14 @@
     });
 
     // 5. Mostrar/ocultar selector de color de aro/argolla
+    const colorHasArgolla = (activeColorObj.name || '').toLowerCase().includes('argolla');
     if (ringBlock) {
-      ringBlock.style.display = currentRefObj.hasRing ? 'block' : 'none';
+      ringBlock.style.display = (currentRefObj.hasRing || colorHasArgolla) ? 'block' : 'none';
     }
 
     // 6. Renderizar Vista Previa 3D interactiva de la bola de neopreno
-    const extractedHexes = extractColorsForName(activeColorObj.name);
-    const mainHex = extractedHexes[0] || '#222';
-    const secHex = extractedHexes[1] || mainHex;
-    const radiusPx = 22 + Number(state.neoForm.size) * 2.4;
-
-    const ringStroke = state.neoForm.metal.includes('Plateado') ? '#D0D7DC'
-      : (state.neoForm.metal.includes('Rosado') ? '#E6A498' : '#E5C158');
-
     if (ballStage) {
-      ballStage.innerHTML = `
-        <svg width="160" height="125" viewBox="0 0 160 125">
-          <defs>
-            <radialGradient id="neoLiveGrad" cx="35%" cy="30%" r="68%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
-              <stop offset="35%" stop-color="${mainHex}"/>
-              <stop offset="80%" stop-color="${secHex}"/>
-              <stop offset="100%" stop-color="#0a0a0a"/>
-            </radialGradient>
-          </defs>
-          <ellipse cx="80" cy="108" rx="${radiusPx * 0.75}" ry="6" fill="rgba(0,0,0,0.16)"/>
-          <circle cx="80" cy="58" r="${radiusPx}" fill="url(#neoLiveGrad)" stroke="rgba(0,0,0,0.25)" stroke-width="1.2"/>
-          ${currentRefObj.ref === 'RF2' ? `
-            <line x1="${80 - radiusPx * 0.4}" y1="${58 - radiusPx * 0.85}" x2="${80 - radiusPx * 0.4}" y2="${58 + radiusPx * 0.85}" stroke="rgba(255,255,255,0.45)" stroke-width="2.2"/>
-            <line x1="80" y1="${58 - radiusPx * 0.95}" x2="80" y2="${58 + radiusPx * 0.95}" stroke="rgba(255,255,255,0.45)" stroke-width="2.2"/>
-            <line x1="${80 + radiusPx * 0.4}" y1="${58 - radiusPx * 0.85}" x2="${80 + radiusPx * 0.4}" y2="${58 + radiusPx * 0.85}" stroke="rgba(255,255,255,0.45)" stroke-width="2.2"/>
-          ` : ''}
-          ${currentRefObj.hasRing ? `
-            <rect x="76" y="${58 - radiusPx - 3}" width="8" height="${radiusPx * 2 + 6}" rx="3" fill="${ringStroke}" stroke="#5A4310" stroke-width="0.8"/>
-          ` : ''}
-        </svg>
-      `;
+      ballStage.innerHTML = renderNeoprenoBallSvg(currentRefObj, activeColorObj, state.neoForm.customColor, state.neoForm.size, state.neoForm.metal);
     }
 
     const unitPrice = getNeoUnitPrice(currentRefObj.ref, state.neoForm.size, activeColorObj.num, state.neoForm.qty);
